@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem_in.h                                           :+:      :+:    :+:   */
+/*   print_buffer.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/18 21:41:43 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/18 21:36:23 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/18 22:14:36 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILLER_H
-# define FILLER_H
+#include "lem_in.h"
 
-# include "libft.h"
-
-typedef struct		s_str
+void				print_buffer(t_vector *buffer)
 {
+	char			*line;
+	size_t			len;
 
-}					t_str;
-
-void				read_stdin(t_vector **buffer);
-void				print_buffer(t_vector *buffer);
-
-#endif
+	buffer->iter = -1;
+	while (buffer->iter < buffer->head)
+	{
+		line = (char*)ft_vnext_con(buffer);
+		len = ft_strlen(line);
+		line[len] = '\n';
+		write(1, line, len + 1);
+		line[len] = '\0';
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/18 20:52:19 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/18 21:36:15 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@ int					main(int ac, char **av)
 	t_vector		*buffer;
 
 	read_stdin(&buffer);
+	print_buffer(buffer);
 	return (0);
 }
