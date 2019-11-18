@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lem_in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/18 20:52:19 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/18 20:58:55 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#ifndef FILLER_H
+# define FILLER_H
 
-int					main(int ac, char **av)
-{
-	t_vector		*buffer;
+# include "libft.h"
 
-	read_stdin(&buffer);
-	return (0);
-}
+void				read_stdin(t_vector **buffer);
+
+#endif
