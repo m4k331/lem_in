@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/18 21:41:43 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/19 14:21:25 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 # define FILLER_H
 
 # include "libft.h"
-
-typedef struct		s_str
-{
-
-}					t_str;
 
 void				read_stdin(t_vector **buffer);
 void				print_buffer(t_vector *buffer);
