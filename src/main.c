@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/18 21:36:15 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/19 22:58:13 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 int					main(int ac, char **av)
 {
-	t_vector		*buffer;
+	t_farm			farm;
 
-	read_stdin(&buffer);
-	print_buffer(buffer);
+	read_stdin(&farm.buffer);
+	if (set_ants(&farm) == FALSE)
+	{
+		perror("ERROR parsing ants");
+		/// to do destroy farm
+		exit(1);
+	}
 	return (0);
 }

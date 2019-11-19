@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_stdin.c                                       :+:      :+:    :+:   */
+/*   set_ants.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 20:52:22 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/19 18:09:25 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/19 18:18:13 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/19 22:27:07 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				read_stdin(t_vector **buffer)
+int				set_ants(t_farm *farm)
 {
-	t_vector		*data;
-	char			*line;
-	int				state;
+	char		*line;
+	long		ants;
 
-	data = ft_vnew(1024, sizeof(char*));
-	state = (data ? 1 : -1);
-	while (state > 0)
-	{
-		state = get_next_line(STDIN_FILENO, &line);
-		ft_vpush_back(data, line, sizeof(char*));
-	}
-	if (state == -1)
-	{
-		perror("ERROR in read stdin");
-		if (data)
-			ft_vdel(&data);
-		exit(1);
-	}
-	*buffer = data;
+	line = ft_vnext_con(farm->buffer);
+	if (ft_isnumeric_str(line) == FALSE)
+		return (FALSE);
+	ants = ft_atol(line);
+	if (ants < 0)
+		return (FALSE);
+	farm->ants = (ants > INT_MAX ? INT_MAX : (int)ants);
+	return (TRUE);
 }
