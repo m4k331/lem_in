@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:52:22 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/19 18:09:25 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 01:13:21 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 
 void				read_stdin(t_vector **buffer)
 {
-	t_vector		*data;
-	char			*line;
-	int				state;
+	t_str			*str;
+	char			*con;
+	int				len;
 
-	data = ft_vnew(1024, sizeof(char*));
-	state = (data ? 1 : -1);
-	while (state > 0)
+	len = 0;
+	*buffer = ft_vnew(VBUFFER_STDIN_SIZE * sizeof(t_str*), sizeof(t_str*));
+	int fd = open("/Users/ahugh/lem_in_gh/mp", O_RDONLY);
+	while (*buffer)
 	{
-		state = get_next_line(STDIN_FILENO, &line);
-		ft_vpush_back(data, line, sizeof(char*));
+		len = get_next_line(fd, &con);
+		if (len == -1)
+			break ;
+		if (con == NULL)
+			break ;
+		str = ft_tstrbuilt(con, len++);
+		if (str == NULL)
+			break ;
+		if (ft_vpush_back(*buffer, &str, sizeof(t_str*)) == FALSE)
+			break ;
 	}
-	if (state == -1)
+	close(fd);
+	if (*buffer == NULL || len != 0)
 	{
+		destroy_buffer(buffer);
 		perror("ERROR in read stdin");
-		if (data)
-			ft_vdel(&data);
 		exit(1);
 	}
-	*buffer = data;
 }

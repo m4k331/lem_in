@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 18:18:13 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/19 22:27:07 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/21 22:27:53 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int				set_ants(t_farm *farm)
 {
-	char		*line;
+	t_str		*str;
 	long		ants;
 
-	line = ft_vnext_con(farm->buffer);
-	if (ft_isnumeric_str(line) == FALSE)
+	str = *(t_str**)ft_vnext_con(farm->buffer);
+	if (ft_isnumeric_str(str->con, FALSE) == FALSE)
 		return (FALSE);
-	ants = ft_atol(line);
+	ants = ft_atol(str->con);
 	if (ants < 0)
 		return (FALSE);
 	farm->ants = (ants > INT_MAX ? INT_MAX : (int)ants);

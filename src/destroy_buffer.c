@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   destroy_buffer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/21 23:25:07 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/21 21:25:15 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/21 23:10:36 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int					main(int ac, char **av)
+static int			del(void *str)
 {
-	t_farm			farm;
+	ft_tstrdel((t_str**)str);
+	return (TRUE);
+}
 
-	read_stdin(&farm.buffer);
-	if (set_ants(&farm) == FALSE)
+void				destroy_buffer(t_vector **buffer)
+{
+	if (buffer && *buffer)
 	{
-		perror("ERROR parsing ants");
-		/// to do destroy farm
-		exit(1);
+		(*buffer)->iter = -1;
+		ft_vmap(*buffer, del);
+		ft_vdel(buffer);
 	}
-	print_buffer(farm.buffer);
-	printf("ants:%d\n", farm.ants);
-	destroy_buffer(&farm.buffer);
-///	set_rooms(&farm);
-	return (0);
 }
