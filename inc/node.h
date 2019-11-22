@@ -6,12 +6,14 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 19:04:55 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 19:51:16 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 19:52:00 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NODE_H
 # define NODE_H
+
+# include "edge.h"
 
 typedef struct		s_node
 {
