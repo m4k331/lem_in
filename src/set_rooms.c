@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 20:17:46 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 20:22:02 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static inline int8_t	add_room(t_farm *farm, t_str *str, uint8_t specifier)
 ** set_rooms - parses the buffer and creates rooms in the farm
 ** returns: 0 in case of parsing completion and -1 in case of error
 */
-int8_t					set_rooms(t_farm *farm)
+int8_t					set_rooms(t_farm *farm, t_vector *buffer)
 {
 	t_str				*str;
 	int8_t				state;
@@ -51,7 +51,7 @@ int8_t					set_rooms(t_farm *farm)
 	specifier = MASK_COMMON;
 	while (TRUE)
 	{
-		str = *(t_str**)ft_vnext_con(farm->buffer);
+		str = *(t_str**)ft_vnext_con(buffer);
 		if (str == NULL)
 			return (ERROR);
 		if (IS_COMMON(specifier) && STARTS_WITH_HASH(str->con))

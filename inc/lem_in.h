@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 21:11:29 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 22:11:38 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ typedef struct		s_farm
 t_farm				*build_farm(t_vector *buffer);
 void				destroy_farm(t_farm **farm);
 
-int8_t				set_ants(t_farm *farm);
-int8_t				set_rooms(t_farm *farm);
+int8_t				set_ants(t_farm *farm, t_vector *buffer);
+int8_t				set_rooms(t_farm *farm, t_vector *buffer);
 
-void				destroy_buffer(t_vector **buffer);
 t_vector			*get_fd_buffer(int fd);
 void				print_buffer(t_vector *buffer);
+void				destroy_buffer(t_vector **buffer);
 
 #endif
