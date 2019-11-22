@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 22:11:38 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 02:22:28 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define CMD_START "##start"
 # define CMD_END "##end"
 # define SPACE ' '
+# define SEP '-'
+# define IS_FORBIDDEN_SYMBOLS(x) ((x) == '#' || (x) == 'L')
 # define NULL_TERMINATE '\0'
 # define MASK_COMMON 1U
 # define MASK_START 2U
