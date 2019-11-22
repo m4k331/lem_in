@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 16:36:09 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 19:01:59 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static inline int	get_space_idx(t_str *str, int last_idx)
 {
 	char			*space;
 
-	space = ft_memrchr(str->con, ' ', last_idx);
+	space = ft_memrchr(str->con, SPACE, last_idx);
 	if (space == NULL)
 		return (-1);
-	*space++ = '\0';
+	*space++ = NULL_TERMINATE;
 	return ((int)((size_t)space - (size_t)str->con));
 }
 
 
-static inline int	add_room(t_farm *farm, t_str *str)
+static inline int	add_room(t_farm *farm, t_str *str, uint8_t specifier)
 {
 	char			*x;
 	char			*y;
@@ -39,34 +39,41 @@ static inline int	add_room(t_farm *farm, t_str *str)
 		printf("name->|%s|\n", str->con);
 	else
 		printf("Not name\n");
-	str->con[ix - 1] = ' ';
-	str->con[iy - 1] = ' ';
+	str->con[ix - 1] = SPACE;
+	str->con[iy - 1] = SPACE;
 	printf("%s\n\n", str->con);
 	return (TRUE);
 }
 
-
-int					set_rooms(t_farm *farm)
+/*
+** set_rooms - parses the buffer and creates rooms in the farm
+** returns: 0 in case of parsing completion and -1 in case of error
+*/
+int8_t				set_rooms(t_farm *farm)
 {
 	t_str			*str;
-	int				state;
+	int8_t			state;
+	uint8_t			specifier;
 
-	state = SUCCESS;
+	specifier = MASK_COMMON;
 	while (TRUE)
 	{
 		str = *(t_str**)ft_vnext_con(farm->buffer);
 		if (str == NULL)
 			return (ERROR);
-		if (STARTS_WITH_HASH(str->con))
+		if (IS_COMMON(specifier) && STARTS_WITH_HASH(str->con))
 		{
 			if (ft_strcmp(CMD_START, str->con) == 0)
-				state = add_start(farm, *(t_str**)ft_vnext_con(farm->buffer));
+				specifier = MASK_START;
 			else if (ft_strcmp(CMD_END, str->con) == 0)
-				state = add_end(farm, *(t_str**)ft_vnext_con(farm->buffer));
+				specifier = MASK_END;
 		}
 		else
-			state = add_room(farm, str);
-		if (state != SUCCESS)
-			return (state);
+		{
+			state = add_room(farm, str, specifier);
+			specifier = MASK_COMMON;
+			if (state != SUCCESS)
+				return (state);
+		}
 	}
 }

@@ -12,7 +12,7 @@
 
 #include "lem_in.h"
 
-int				set_ants(t_farm *farm)
+int8_t			set_ants(t_farm *farm)
 {
 	t_str		*str;
 	long		ants;
