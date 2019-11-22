@@ -1,41 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   build_farm.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 21:14:51 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/22 22:01:16 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int					main(int ac, char **av)
+static inline t_farm	*init_farm(void)
 {
-	t_farm			*farm;
-	t_vector		*buffer;
-	const int		fd = open("/home/ahugh/lem_in/mp", O_RDONLY);
+	t_farm				*farm;
 
-	buffer = get_fd_buffer(fd);
-	if (buffer == NULL)
-	{
-		perror("ERROR reading fd");
-		return (1);
-	}
-	if (close(fd) == -1)
-	{
-		destroy_buffer(&buffer);
-		perror("ERROR closing fd");
-		return (1);
-	}
-	farm = build_farm(buffer);
+	farm = (t_farm*)ft_memalloc(sizeof(t_farm));
 	if (farm == NULL)
+		return (NULL);
+	farm->rooms = ft_dictnew(LEMIN_INIT_DICT_SIZE);
+	if (farm->rooms == NULL)
 	{
-		destroy_buffer(&buffer);
-		perror("ERROR building farm");
-		return (1);
+		ft_memdel((void**)&farm);
+		return (NULL);
 	}
-	return (0);
+	return (farm);
+}
+
+t_farm					*build_farm(t_vector *buffer)
+{
+
 }

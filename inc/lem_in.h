@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 19:56:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 21:11:29 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 # include "room.h"
 
 # define INF (MAX_INT)
-# define VBUFFER_STDIN_SIZE 1024U
+# define VBUFFER_SIZE 1024U
+# define LEMIN_INIT_DICT_SIZE 16U
 # define STARTS_WITH_HASH(str) (*(str) == '#')
 # define CMD_START "##start"
 # define CMD_END "##end"
@@ -33,15 +34,21 @@
 
 typedef struct		s_farm
 {
-	long			ants;
-	t_vector		*buffer;
+	int64_t			ants;
+	t_dict			*rooms;
+	t_str			*start;
+	t_str			*end;
+	int8_t			direct;
 }					t_farm;
+
+t_farm				*build_farm(t_vector *buffer);
+void				destroy_farm(t_farm **farm);
 
 int8_t				set_ants(t_farm *farm);
 int8_t				set_rooms(t_farm *farm);
 
 void				destroy_buffer(t_vector **buffer);
-void				read_stdin(t_vector **buffer);
+t_vector			*get_fd_buffer(int fd);
 void				print_buffer(t_vector *buffer);
 
 #endif

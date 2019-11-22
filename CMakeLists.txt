@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0)
 project(lem_in)
 
 #set(GCC_FLAGS "-Wall -Werror -Wextra")
-#gcc src/main.c src/read_stdin.c -I./inc/ -I./c/includes c/c.a -o t
+#gcc src/main.c src/get_fd_buffer.c -I./inc/ -I./c/includes c/c.a -o t
 
 file(GLOB SRC_LEMIN "src/*.c")
 

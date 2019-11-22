@@ -6,54 +6,47 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 19:01:59 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 20:17:46 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-
-static inline int	get_space_idx(t_str *str, int last_idx)
+static inline char		*get_split_content(t_str *str, int last_idx)
 {
-	char			*space;
+	char				*content;
 
-	space = ft_memrchr(str->con, SPACE, last_idx);
-	if (space == NULL)
-		return (-1);
-	*space++ = NULL_TERMINATE;
-	return ((int)((size_t)space - (size_t)str->con));
+	content = ft_memrchr(str->con, SPACE, last_idx);
+	if (content == NULL)
+		return (NULL);
+	*content++ = NULL_TERMINATE;
+	return (content);
+//	return ((int)((size_t)content - (size_t)str->con));
 }
 
 
-static inline int	add_room(t_farm *farm, t_str *str, uint8_t specifier)
+static inline int8_t	add_room(t_farm *farm, t_str *str, uint8_t specifier)
 {
-	char			*x;
-	char			*y;
-	size_t			len;
-
-	int ix = get_space_idx(str, str->len);
-	printf("idx[%d]->|%s|\n", ix, &str->con[ix]);
-	int iy = get_space_idx(str, ix);
-	printf("idx[%d]->|%s|\n", iy, &str->con[iy]);
-	if (iy > 1)
-		printf("name->|%s|\n", str->con);
-	else
-		printf("Not name\n");
-	str->con[ix - 1] = SPACE;
-	str->con[iy - 1] = SPACE;
-	printf("%s\n\n", str->con);
-	return (TRUE);
+//	char			*x;
+//	char			*y;
+//	size_t			len;
+//
+//	int ix = get_split_content(str, str->len);
+//	int iy = get_split_content(str, ix);
+//	str->con[ix - 1] = SPACE;
+//	str->con[iy - 1] = SPACE;
+//	return (TRUE);
 }
 
 /*
 ** set_rooms - parses the buffer and creates rooms in the farm
 ** returns: 0 in case of parsing completion and -1 in case of error
 */
-int8_t				set_rooms(t_farm *farm)
+int8_t					set_rooms(t_farm *farm)
 {
-	t_str			*str;
-	int8_t			state;
-	uint8_t			specifier;
+	t_str				*str;
+	int8_t				state;
+	uint8_t				specifier;
 
 	specifier = MASK_COMMON;
 	while (TRUE)
