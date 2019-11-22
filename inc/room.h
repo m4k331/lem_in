@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   room.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 04:44:45 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/22 17:29:34 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/22 17:36:13 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#ifndef ROOM_H
+# define ROOM_H
 
-int					main(int ac, char **av)
+typedef struct		s_room
 {
-	t_farm			farm;
+	t_str			name;
+	long			ant;
+	char			color[16];
+}					t_room;
 
-	read_stdin(&farm.buffer);
-	if (set_ants(&farm) == FALSE)
-	{
-		perror("ERROR parsing ants");
-		/// to do destroy farm
-		exit(1);
-	}
-//	print_buffer(farm.buffer);
-	printf("ants:%d\n", farm.ants);
-//	destroy_buffer(&farm.buffer);
-	set_rooms(&farm);
-	return (0);
-}
+t_room				*create_room(t_str *name);
+void				destroy_room(t_room **room);
+void				add_ant_to_room(t_room *room, long ant);
+
+#endif

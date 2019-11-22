@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/21 21:40:32 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 16:15:30 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 # define LEM_IN_H
 
 # include "libft.h"
+# include "room.h"
 
 # define VBUFFER_STDIN_SIZE 1024
+# define STARTS_WITH_HASH(str) (*(str) == '#')
+# define CMD_START "##start"
+# define CMD_END "##end"
 
 typedef struct		s_farm
 {

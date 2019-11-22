@@ -20,7 +20,7 @@ void				read_stdin(t_vector **buffer)
 
 	len = 0;
 	*buffer = ft_vnew(VBUFFER_STDIN_SIZE * sizeof(t_str*), sizeof(t_str*));
-	int fd = open("/Users/ahugh/lem_in_gh/mp", O_RDONLY);
+	int fd = open("/home/ahugh/lem_in/mp", O_RDONLY);
 	while (*buffer)
 	{
 		len = get_next_line(fd, &con);
