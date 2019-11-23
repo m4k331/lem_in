@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 16:20:51 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 16:55:42 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,18 @@ static inline t_node	*get_node(t_str *str, size_t len)
 
 static inline int8_t	add_common(t_farm *farm, t_node *node)
 {
+	t_node				*hash_node;
+
+	hash_node = create_hash_node(node->name);
+	if (hash_node == NULL)
+		return (ERROR);
 
 }
 
 static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 {
 	if (add_node_to_farm(farm, node) == FALSE)
-	{
-		destroy_node(&node);
 		return (ERROR);
-	}
 	if (IS_START(type))
 	{
 		if (farm->start != NULL)
@@ -73,14 +75,12 @@ static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 		farm->start = node->name;
 		node->delta = 0;
 	}
-	else if (IS_END(type))
+	else
 	{
 		if (farm->end != NULL)
 			return (ERROR);
 		farm->end = node->name;
 	}
-	else
-		return (ERROR);
 	return (SUCCESS);
 }
 
@@ -88,6 +88,7 @@ static inline int8_t	add_node(t_farm *farm, t_str *str, uint8_t specifier)
 {
 	t_node				*node;
 	size_t				len;
+	int8_t				state;
 
 	len = get_length_node_name(str);
 	if (len == 0)
@@ -96,9 +97,12 @@ static inline int8_t	add_node(t_farm *farm, t_str *str, uint8_t specifier)
 	if (node == NULL)
 		return (ERROR);
 	if (IS_COMMON(specifier))
-		return (add_common(farm, node));
+		state = add_common(farm, node);
 	else
-		return (add_special(farm, node, specifier));
+		state = add_special(farm, node, specifier);
+	if (state == ERROR)
+		destroy_node(&node);
+	return (state);
 }
 
 /*
