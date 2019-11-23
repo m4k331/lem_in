@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 22:57:54 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 23:15:13 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int						prnt(void *e)
 	t_node				*node;
 
 	node = *(t_node**)e;
-	printf("%s|%zu|%ld\n", node->name->con, node->name->len, node->delta);
+	print_node(node);
 }
 
 t_farm					*build_farm(t_vector *buffer)
