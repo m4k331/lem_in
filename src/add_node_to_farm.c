@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_farm.c                                     :+:      :+:    :+:   */
+/*   add_node_to_farm.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 22:25:16 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 22:32:47 by ahugh            ###   ########.fr       */
+/*   Created: 2019/11/23 04:49:29 by ahugh             #+#    #+#             */
+/*   Updated: 2019/11/23 04:49:29 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void			del(void *node)
+int8_t					add_node_to_farm(t_farm *farm, t_node *node)
 {
-	///to do del_node
-}
-
-void				destroy_farm(t_farm **farm)
-{
-	if ((*farm)->nodes)
-		ft_dictdel(&(*farm)->nodes, del);
-	ft_memdel((void**)farm);
+	if (ft_dictget(farm->nodes, node->name->con) != NULL)
+		return (FALSE);
+	if (ft_dictset(farm->nodes, node->name->con, node) == FALSE)
+		return (FALSE);
+	return (TRUE);
 }

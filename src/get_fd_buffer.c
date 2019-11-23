@@ -6,12 +6,16 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:52:22 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 21:07:49 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 02:39:29 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
+/*
+** creates a buffer and writes to it line by line data read from fd
+** if successful returns a buffer otherwise zero
+*/
 t_vector			*get_fd_buffer(int fd)
 {
 	t_vector		*buffer;

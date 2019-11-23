@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 23:20:24 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 23:22:27 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 23:49:42 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@ t_node				*create_node(t_str *name)
 	node->name = ft_tstrdup(name);
 	if (node->name == NULL)
 	{
+		ft_memdel((void**)&node);
+		return (NULL);
+	}
+	node->edge = ft_dictnew(0);
+	if (node->edge == NULL)
+	{
+		ft_tstrdel(&node->name);
 		ft_memdel((void**)&node);
 		return (NULL);
 	}

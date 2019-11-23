@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 23:05:23 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 04:21:57 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static inline t_farm	*init_farm(void)
 	farm = (t_farm*)ft_memalloc(sizeof(t_farm));
 	if (farm == NULL)
 		return (NULL);
-	farm->rooms = ft_dictnew(LEMIN_INIT_DICT_SIZE);
-	if (farm->rooms == NULL)
+	farm->nodes = ft_dictnew(LEMIN_INIT_DICT_SIZE);
+	if (farm->nodes == NULL)
 	{
 		ft_memdel((void**)&farm);
 		return (NULL);
@@ -40,7 +40,7 @@ t_farm					*build_farm(t_vector *buffer)
 		destroy_farm(&farm);
 		return (NULL);
 	}
-	if (set_rooms(farm, buffer) == ERROR)
+	if (set_nodes(farm, buffer) == ERROR)
 	{
 		destroy_farm(&farm);
 		return (NULL);
