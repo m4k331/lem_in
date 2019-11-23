@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 19:04:55 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 19:52:00 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 16:15:19 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define NODE_H
 
 # include "edge.h"
+# define MASK_MARKED 1U
+# define MASK_VISITED 2U
+
+# define IS_MARKED(x) ((x) & MASK_MARKED)
+# define IS_VISITED(x) ((x) & MASK_VISITED)
 
 typedef struct		s_node
 {
@@ -26,6 +31,7 @@ typedef struct		s_node
 }					t_node;
 
 t_node				*create_node(t_str *name);
+t_node				*create_hash_node(t_str *name);
 void				destroy_node(t_node **node);
 t_edge				*get_node_connections(t_node *node);
 int8_t				add_edge_to_node(t_node *node, t_str *neighbor, long wght);

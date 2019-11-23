@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 04:39:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 04:49:23 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "node.h"
 # include "room.h"
 
-# define INF (MAX_INT)
+# define INF (INT_MAX)
 # define VBUFFER_SIZE 1024U
 # define LEMIN_INIT_DICT_SIZE 16U
 # define STARTS_WITH_HASH(str) (*(str) == '#')

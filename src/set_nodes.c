@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 04:49:23 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 16:20:51 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ static inline t_node	*get_node(t_str *str, size_t len)
 	return (node);
 }
 
-
-
 static inline int8_t	add_common(t_farm *farm, t_node *node)
 {
 
@@ -73,6 +71,7 @@ static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 		if (farm->start != NULL)
 			return (ERROR);
 		farm->start = node->name;
+		node->delta = 0;
 	}
 	else if (IS_END(type))
 	{
