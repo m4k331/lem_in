@@ -6,13 +6,13 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:06:18 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 17:06:18 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 20:25:03 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				del_edge(t_edge **edge)
+void				del_edge(void *edge)
 {
 	ft_memdel((void**)edge);
 }

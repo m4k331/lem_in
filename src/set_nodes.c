@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 16:55:42 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 19:32:59 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,23 @@ static inline int8_t	add_common(t_farm *farm, t_node *node)
 	hash_node = create_hash_node(node->name);
 	if (hash_node == NULL)
 		return (ERROR);
-
+	if (add_edge_to_node(hash_node, node->name, 1) == FALSE)
+	{
+		destroy_node(&hash_node);
+		return (ERROR);
+	}
+	if (add_node_to_farm(farm, node) == FALSE)
+	{
+		destroy_node(&hash_node);
+		return (ERROR);
+	}
+	if (add_node_to_farm(farm, hash_node) == FALSE)
+	{
+		destroy_node(&hash_node);
+		ft_dictunset(farm->nodes, node->name->con, NULL);
+		return (ERROR);
+	}
+	return (SUCCESS);
 }
 
 static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)

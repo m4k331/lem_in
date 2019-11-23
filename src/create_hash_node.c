@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 16:21:00 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 16:26:58 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 16:30:57 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static inline t_str		*get_hash_name(t_str *name)
 	t_str				*hash_name;
 	char				*hash_con;
 
-	hash_con = (char*)malloc(name->len + 1);
+	hash_con = (char*)malloc(name->len + 2);
 	if (hash_con == NULL)
 		return (NULL);
 	INSERT_HASH(hash_con);

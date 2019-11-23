@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 19:56:18 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 20:00:34 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/22 20:00:59 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ typedef struct		s_edge
 }					t_edge;
 
 t_edge				*create_edge(t_str *from, t_str *to, int64_t weight);
-void				del_edge(t_edge **edge);
+void				del_edge(void *edge);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 04:21:57 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 22:57:54 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,14 @@ static inline t_farm	*init_farm(void)
 	return (farm);
 }
 
+int						prnt(void *e)
+{
+	t_node				*node;
+
+	node = *(t_node**)e;
+	printf("%s|%zu|%ld\n", node->name->con, node->name->len, node->delta);
+}
+
 t_farm					*build_farm(t_vector *buffer)
 {
 	t_farm				*farm;
@@ -45,5 +53,6 @@ t_farm					*build_farm(t_vector *buffer)
 		destroy_farm(&farm);
 		return (NULL);
 	}
+	ft_dictiterate(farm->nodes, prnt);
 	return (farm);
 }
