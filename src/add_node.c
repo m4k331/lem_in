@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:22:51 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 01:59:04 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/24 17:31:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static inline t_node	*get_node(t_str *raw_str, size_t len)
 	t_node				*node;
 
 	ft_swap64(&raw_str->len, &len);
-	HIDE_SPACE(&raw_str->con[raw_str->len]);
+	HIDE_SYMBOL(&raw_str->con[raw_str->len]);
 	node = create_node(raw_str);
-	REVEAL_SPACE(&raw_str->con[raw_str->len]);
+	REVEAL_SYMBOL(&raw_str->con[raw_str->len], SPACE);
 	ft_swap64(&raw_str->len, &len);
 	return (node);
 }
@@ -81,14 +81,14 @@ static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 	{
 		if (farm->start != NULL)
 			return (ERROR);
-		farm->start = node->name;
+		farm->start = node;
 		node->delta = 0;
 	}
 	else
 	{
 		if (farm->end != NULL)
 			return (ERROR);
-		farm->end = node->name;
+		farm->end = node;
 	}
 	return (SUCCESS);
 }

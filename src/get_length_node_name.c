@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:37:10 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 01:37:10 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/24 17:29:31 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ size_t					get_length_node_name(t_str *raw_str)
 		return (0);
 	len = (size_t)first - (size_t)raw_str->con;
 	second = ft_memrchr(raw_str->con, SPACE, len);
-	HIDE_SPACE(first);
+	HIDE_SYMBOL(first);
 	if (second == NULL || ft_isnumeric_str(second + 1, FALSE) == FALSE)
 	{
-		REVEAL_SPACE(first);
+		REVEAL_SYMBOL(first, SPACE);
 		return (0);
 	}
-	REVEAL_SPACE(first);
+	REVEAL_SYMBOL(first, SPACE);
 	len = (size_t)second - (size_t)raw_str->con;
 	if (FORBIDDEN_SYMBOLS(*raw_str->con) || ft_memchr(raw_str->con, SEP, len))
 		return (0);

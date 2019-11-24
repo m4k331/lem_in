@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 23:15:13 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/24 21:23:45 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ t_farm					*build_farm(t_vector *buffer)
 		destroy_farm(&farm);
 		return (NULL);
 	}
+	if (set_edges(farm, buffer) == ERROR)
+	{
+		destroy_farm(&farm);
+		return (NULL);
+	}
+	if (ft_vnext_con(buffer) == NULL && buffer->iter == buffer->head)
+		printf("OK\n");
 	ft_dictiterate(farm->nodes, prnt);
 	return (farm);
 }

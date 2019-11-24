@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 01:38:15 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/24 19:46:24 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@
 # define MASK_END 4U
 # define IS_COMMON(x) ((x) & MASK_COMMON)
 # define IS_START(x) ((x) & MASK_START)
-# define HIDE_SPACE(x)   (*(x) = NULL_TERMINATE)
-# define REVEAL_SPACE(x) (*(x) = SPACE)
+# define HIDE_SYMBOL(str)      (*(str) = NULL_TERMINATE)
+# define REVEAL_SYMBOL(str, s) (*(str) = (s))
 
 typedef struct		s_farm
 {
 	int64_t			ants;
 	t_dict			*nodes;
-	t_str			*start;
-	t_str			*end;
+	t_node			*start;
+	t_node			*end;
 	int8_t			direct;
 }					t_farm;
 
@@ -49,9 +49,12 @@ void				destroy_farm(t_farm **farm);
 
 int8_t				set_ants(t_farm *farm, t_vector *buffer);
 int8_t				set_nodes(t_farm *farm, t_vector *buffer);
-int8_t				add_node(t_farm *farm, t_str *raw_str, uint8_t type);
+int8_t				set_edges(t_farm *farm, t_vector *buffer);
 
+int8_t				add_node(t_farm *farm, t_str *raw_str, uint8_t type);
 size_t				get_length_node_name(t_str *raw_str);
+t_str				*get_hash_name(t_str *name);
+t_node				*get_hash_node(t_farm *farm, t_str *name);
 
 t_vector			*get_fd_buffer(int fd);
 void				print_buffer(t_vector *buffer);
