@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 19:56:05 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/25 05:45:57 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # define IS_START(x) ((x) & MASK_START)
 # define HIDE_SYMBOL(str)      (*(str) = NULL_TERMINATE)
 # define REVEAL_SYMBOL(str, s) (*(str) = (s))
+# define QUEUE_IS_EMPTY(q) ((q)->head == 0)
+# define MARK(x)   ((x) | 1U)
+# define MARKED(x) ((x) & 1U)
+# define UNMARKING(x) ((x) ^ 1U)
 
 typedef struct		s_farm
 {
@@ -47,6 +51,7 @@ typedef struct		s_farm
 t_farm				*build_farm(t_vector *buffer);
 int8_t				fill_farm(t_farm *farm, t_vector *buffer);
 void				destroy_farm(t_farm **farm);
+void				marks_reachable_nodes(t_farm *farm);
 
 int8_t				set_ants(t_farm *farm, t_vector *buffer);
 int8_t				set_nodes(t_farm *farm, t_vector *buffer);
