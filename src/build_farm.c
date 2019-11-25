@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/26 00:26:43 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/26 00:55:49 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int8_t					fill_farm(t_farm *farm, t_vector *buffer)
 
 static inline int8_t	farm_validation(t_farm *farm)
 {
-	t_vector			*stack;
-
 	if (farm->start == NULL || farm->end == NULL)
 		return (FALSE);
 	farm->direct = ft_dictget(farm->start->edge, farm->end->name->con) != NULL;
@@ -72,6 +70,7 @@ static inline int8_t	farm_validation(t_farm *farm)
 	marks_reachable_nodes(farm);
 	if (MARKED(farm->end->marks) == FALSE)
 		return (FALSE);
+	del_unmarked_nodes(farm);
 	return (TRUE);
 }
 
@@ -99,6 +98,7 @@ t_farm					*build_farm(t_vector *buffer)
 		destroy_farm(&farm);
 		return (NULL);
 	}
+//	ft_dictiterate(farm->nodes, prnt);
 	if (farm_validation(farm) == FALSE)
 	{
 		perror("ERROR farm structure");

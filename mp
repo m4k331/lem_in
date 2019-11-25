@@ -15,6 +15,17 @@ i 9 4
 j 9 6
 k 7 8
 l 12 8
+Q 1 2
+W 3 4
+E 5 6
+R 7 8
+T 9 10
+Y 11 12
+U 13 14
+Q-W
+W-E
+E-R
+T-Y
 a-start
 start-d
 d-f

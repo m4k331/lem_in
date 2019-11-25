@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/26 00:35:58 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/26 00:36:07 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_farm				*build_farm(t_vector *buffer);
 int8_t				fill_farm(t_farm *farm, t_vector *buffer);
 void				destroy_farm(t_farm **farm);
 void				marks_reachable_nodes(t_farm *farm);
+void				del_unmarked_nodes(t_farm *farm);
 
 int8_t				set_ants(t_farm *farm, t_vector *buffer);
 int8_t				set_nodes(t_farm *farm, t_vector *buffer);
