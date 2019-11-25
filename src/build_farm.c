@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/26 00:55:49 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/26 01:46:32 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static inline t_farm	*init_farm(void)
 ** fills the farm with valid information:
 ** set number of ants, creates nodes and links between them
 */
-int8_t					fill_farm(t_farm *farm, t_vector *buffer)
+static inline int8_t	fill_farm(t_farm *farm, t_vector *buffer)
 {
 	if (set_ants(farm, buffer) == FALSE)
 	{
@@ -60,6 +60,10 @@ int8_t					fill_farm(t_farm *farm, t_vector *buffer)
 	return (TRUE);
 }
 
+/*
+** function checks the reachability of the start node to the end
+** 												and removes unreachable nodes
+*/
 static inline int8_t	farm_validation(t_farm *farm)
 {
 	if (farm->start == NULL || farm->end == NULL)
@@ -74,15 +78,10 @@ static inline int8_t	farm_validation(t_farm *farm)
 	return (TRUE);
 }
 
-int						prnt(void *n)
-{
-	t_node				*node;
-
-	node = *(t_node**)n;
-	print_node(node);
-	return (TRUE);
-}
-
+/*
+** creates an ant farm from the buffer
+** returns farm, otherwise returns NULL
+*/
 t_farm					*build_farm(t_vector *buffer)
 {
 	t_farm				*farm;
@@ -98,13 +97,11 @@ t_farm					*build_farm(t_vector *buffer)
 		destroy_farm(&farm);
 		return (NULL);
 	}
-//	ft_dictiterate(farm->nodes, prnt);
 	if (farm_validation(farm) == FALSE)
 	{
 		perror("ERROR farm structure");
 		destroy_farm(&farm);
 		return (NULL);
 	}
-	ft_dictiterate(farm->nodes, prnt);
 	return (farm);
 }

@@ -6,18 +6,12 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 19:04:55 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/25 20:21:56 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/25 21:21:38 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NODE_H
 # define NODE_H
-
-# define MASK_MARKED 1U
-# define MASK_VISITED 2U
-
-# define IS_MARKED(x) ((x) & MASK_MARKED)
-# define IS_VISITED(x) ((x) & MASK_VISITED)
 
 typedef struct		s_node
 {
