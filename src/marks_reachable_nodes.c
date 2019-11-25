@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 03:36:16 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/25 21:30:11 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/26 00:29:43 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void				marks_reachable_nodes(t_farm *farm)
 	t_node			*u;
 
 	queue = ft_vnew((long)(farm->nodes->used * sizeof(void*)), sizeof(void*));
+	ft_vpush_back(queue, &farm->start, sizeof(void*));
 	if (queue)
 	{
 		while (QUEUE_IS_EMPTY(queue) == FALSE)
 		{
-			u = *(t_node**)ft_vpop_back(queue);
+			u = *(t_node**)ft_vnext_con(queue);
 			MARK(u->marks);
 			add_unmarked_neighbors_to_queue(queue, u);
 		}

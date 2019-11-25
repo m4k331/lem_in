@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/25 20:30:33 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/26 00:35:58 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define IS_START(x) ((x) & MASK_START)
 # define HIDE_SYMBOL(str)      (*(str) = NULL_TERMINATE)
 # define REVEAL_SYMBOL(str, s) (*(str) = (s))
-# define QUEUE_IS_EMPTY(q) ((q)->head == 0)
+# define QUEUE_IS_EMPTY(q) ((q)->iter == (q)->head - 1)
 # define MARK(x)   ((x) |= 1U)
 # define MARKED(x) ((x) & 1U)
 # define UNMARKING(x) ((x) ^= 1U)
