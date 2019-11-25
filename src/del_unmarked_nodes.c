@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 00:44:36 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/26 01:07:55 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/26 01:08:11 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void				del_unmarked_nodes(t_farm *farm)
 		node = *(t_node**)raw_node;
 		if (MARKED(node->marks) == FALSE)
 			ft_dictunset(farm->nodes, node->name->con, destroy_node);
+		else
+			UNMARKING(node->marks);
 		raw_node = ft_dictnext_item(farm->nodes);
 	}
 }
