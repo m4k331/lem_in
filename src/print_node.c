@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 00:59:39 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 01:11:54 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/25 20:33:03 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int			prnt(void *e)
 	t_edge			*edge;
 
 	edge = *(t_edge**)e;
-	t = edge->to ? edge->to->con : NULL;
+	t = edge->neighbor ? edge->neighbor->name->con : NULL;
 	w = edge->weight;
 	fl = edge->flow;
 	printf(" (%s, %ld, %d) ", t, w, fl);
@@ -30,7 +30,7 @@ static int			prnt(void *e)
 void				print_node(t_node *node)
 {
 	char			*n = node->name->con;
-	char			*p = (node->predecessor ? node->predecessor->con : NULL);
+	char			*p = (node->predecessor ? node->predecessor->name->con : NULL);
 	long			d = node->delta;
 	long			pot = node->potential;
 	uint8_t			m = node->marks;

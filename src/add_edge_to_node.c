@@ -6,20 +6,20 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/23 17:10:42 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/23 17:12:17 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/23 17:14:07 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t				add_edge_to_node(t_node *node, t_str *neighbor, long wght)
+int8_t				add_edge_to_node(t_node *from, t_node *to, int8_t weight)
 {
 	t_edge			*edge;
 
-	edge = create_edge(node->name, neighbor, wght);
+	edge = create_edge(to, weight);
 	if (edge == NULL)
 		return (FALSE);
-	if (ft_dictset(node->edge, neighbor->con, edge) == FALSE)
+	if (ft_dictset(from->edge, to->name->con, edge) == FALSE)
 	{
 		del_edge(&edge);
 		return (FALSE);

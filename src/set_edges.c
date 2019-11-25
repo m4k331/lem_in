@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:57:06 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 21:17:10 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/24 21:18:35 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,17 @@ static inline int8_t	nodes_linker(t_farm *farm, t_node *left, t_node *right)
 	left_hash = get_hash_node(farm, left->name);
 	right_hash = get_hash_node(farm, right->name);
 	if (left == farm->start)
-		state = add_edge_to_node(left, right_hash->name, 1);
+		state = add_edge_to_node(left, right_hash, 1);
 	else if (right == farm->start)
-		state = add_edge_to_node(right, left_hash->name, 1);
+		state = add_edge_to_node(right, left_hash, 1);
 	else if (left == farm->end)
-		state = add_edge_to_node(right, left->name, 1);
+		state = add_edge_to_node(right, left, 1);
 	else if (right == farm->end)
-		state = add_edge_to_node(left, right->name, 1);
+		state = add_edge_to_node(left, right, 1);
 	else
 	{
-		state = add_edge_to_node(right, left_hash->name, 1);
-		state = state && add_edge_to_node(left, right_hash->name, 1);
+		state = add_edge_to_node(right, left_hash, 1);
+		state = state && add_edge_to_node(left, right_hash, 1);
 	}
 	return ((state ? SUCCESS : ERROR));
 }

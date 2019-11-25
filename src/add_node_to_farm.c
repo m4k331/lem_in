@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_node.c                                         :+:      :+:    :+:   */
+/*   add_node_to_farm.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:22:51 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 17:31:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/11/25 20:26:43 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** inserts a node into the dictionary
 ** returns TRUE or FALSE depending on the success of the insert
 */
-static inline int8_t	add_node_to_farm(t_farm *farm, t_node *node)
+static inline int8_t	insert_node_to_farm(t_farm *farm, t_node *node)
 {
 	if (ft_dictget(farm->nodes, node->name->con) != NULL)
 		return (FALSE);
@@ -50,17 +50,17 @@ static inline int8_t	add_common(t_farm *farm, t_node *node)
 	hash_node = create_hash_node(node->name);
 	if (hash_node == NULL)
 		return (ERROR);
-	if (add_edge_to_node(hash_node, node->name, 1) == FALSE)
+	if (add_edge_to_node(hash_node, node, 1) == FALSE)
 	{
 		destroy_node(&hash_node);
 		return (ERROR);
 	}
-	if (add_node_to_farm(farm, node) == FALSE)
+	if (insert_node_to_farm(farm, node) == FALSE)
 	{
 		destroy_node(&hash_node);
 		return (ERROR);
 	}
-	if (add_node_to_farm(farm, hash_node) == FALSE)
+	if (insert_node_to_farm(farm, hash_node) == FALSE)
 	{
 		destroy_node(&hash_node);
 		ft_dictunset(farm->nodes, node->name->con, NULL);
@@ -75,7 +75,7 @@ static inline int8_t	add_common(t_farm *farm, t_node *node)
 */
 static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 {
-	if (add_node_to_farm(farm, node) == FALSE)
+	if (insert_node_to_farm(farm, node) == FALSE)
 		return (ERROR);
 	if (IS_START(type))
 	{
@@ -100,7 +100,9 @@ static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 ** FAIL in the case that the raw string does not fit the creation of the node
 ** ERROR in the case of a function error
 */
-int8_t					add_node(t_farm *farm, t_str *raw_str, uint8_t type)
+int8_t					add_node_to_farm(t_farm *farm, \
+										t_str *raw_str, \
+										uint8_t type)
 {
 	t_node				*node;
 	size_t				len;
