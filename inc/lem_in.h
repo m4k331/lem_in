@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/26 00:52:19 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/01 20:18:44 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,15 @@
 # define HIDE_SYMBOL(str)      (*(str) = NULL_TERMINATE)
 # define REVEAL_SYMBOL(str, s) (*(str) = (s))
 # define QUEUE_IS_EMPTY(q) ((q)->iter == (q)->head - 1)
-# define MARK(x)   ((x) |= 1U)
-# define MARKED(x) ((x) & 1U)
-# define UNMARKING(x) ((x) ^= 1U)
+# define HEAP_IS_EMPTY(h) ((h)->n == 0)
+
+# define VISIT(x)      ((x) |= 2U)
+# define VISITED(x)    ((x) & 2U)
+# define UNVISITING(x) ((x) ^= 2U)
+
+# define MARK(x)       ((x) |= 1U)
+# define MARKED(x)     ((x) & 1U)
+# define UNMARKING(x)  ((x) ^= 1U)
 
 typedef struct		s_farm
 {
@@ -53,6 +59,7 @@ void				destroy_farm(t_farm **farm);
 void				marks_reachable_nodes(t_farm *farm);
 void				del_unmarked_nodes(t_farm *farm);
 
+int8_t				dijkstra(t_farm *farm);
 int8_t				set_ants(t_farm *farm, t_vector *buffer);
 int8_t				set_nodes(t_farm *farm, t_vector *buffer);
 int8_t				set_edges(t_farm *farm, t_vector *buffer);
