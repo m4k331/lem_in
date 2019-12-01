@@ -14,18 +14,16 @@
 
 void				del_unmarked_nodes(t_farm *farm)
 {
-	void			*raw_node;
 	t_node			*node;
 
 	farm->nodes->items->iter = -1;
-	raw_node = ft_dictnext_item(farm->nodes);
-	while (raw_node)
+	node = ft_dictnext_item(farm->nodes);
+	while (node)
 	{
-		node = *(t_node**)raw_node;
 		if (MARKED(node->marks) == FALSE)
 			ft_dictunset(farm->nodes, node->name->con, destroy_node);
 		else
 			UNMARKING(node->marks);
-		raw_node = ft_dictnext_item(farm->nodes);
+		node = ft_dictnext_item(farm->nodes);
 	}
 }

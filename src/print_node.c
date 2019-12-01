@@ -19,7 +19,7 @@ static int			prnt(void *e)
 	int8_t			fl;
 	t_edge			*edge;
 
-	edge = *(t_edge**)e;
+	edge = (t_edge*)e;
 	t = edge->neighbor ? edge->neighbor->name->con : NULL;
 	w = edge->weight;
 	fl = edge->flow;
