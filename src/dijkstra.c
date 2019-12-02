@@ -6,23 +6,18 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 22:59:56 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/01 23:39:36 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/02 15:38:02 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int			cmp_heap(void *a, void *b)
-{
-	return (((t_node*)a)->delta < ((t_node*)b)->delta);
-}
-
 static int8_t		initial_heaps(t_fib **prior_heap, t_fib **conns_heap)
 {
-	*prior_heap = ft_fibnew(cmp_heap, NULL);
+	*prior_heap = ft_fibnew(cmp_node, NULL);
 	if (*prior_heap == NULL)
 		return (FALSE);
-	*conns_heap = ft_fibnew(cmp_heap, NULL);
+	*conns_heap = ft_fibnew(cmp_node, NULL);
 	if (*conns_heap == NULL)
 	{
 		ft_fibdel(prior_heap);
