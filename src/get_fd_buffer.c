@@ -30,11 +30,7 @@ t_vector			*get_fd_buffer(int fd)
 		if (len == -1)
 			break ;
 		if (con == NULL)
-		{
-			if (ft_vreserve(buffer, buffer->head) == FALSE)
-				break ;
 			return (buffer);
-		}
 		str = ft_tstrbuilt(con, len);
 		if (str == NULL)
 			break ;

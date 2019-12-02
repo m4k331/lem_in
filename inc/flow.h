@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   room.h                                             :+:      :+:    :+:   */
+/*   flow.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 17:29:34 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/22 17:36:13 by ahugh            ###   ########.fr       */
+/*   Created: 2019/12/02 14:23:58 by ahugh             #+#    #+#             */
+/*   Updated: 2019/12/02 15:25:48 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ROOM_H
-# define ROOM_H
+#ifndef FLOW_H
+# define FLOW_H
+
+typedef struct		s_flow
+{
+	t_vector		*paths;
+	long			steps;
+}					t_flow;
+
+typedef struct		s_path
+{
+	t_vector		*rooms;
+	long			ants;
+	int				printable;
+}					t_path;
 
 typedef struct		s_room
 {
-	t_str			name;
+	t_str			*name;
 	long			ant;
 	char			color[16];
 }					t_room;
