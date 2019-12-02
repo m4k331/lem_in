@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/01 20:18:44 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/01 23:03:05 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void				marks_reachable_nodes(t_farm *farm);
 void				del_unmarked_nodes(t_farm *farm);
 
 int8_t				dijkstra(t_farm *farm);
+int8_t				build_residual_network(t_farm *farm);
 int8_t				set_ants(t_farm *farm, t_vector *buffer);
 int8_t				set_nodes(t_farm *farm, t_vector *buffer);
 int8_t				set_edges(t_farm *farm, t_vector *buffer);

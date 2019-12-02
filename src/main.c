@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/01 22:48:25 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/02 14:16:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int					main(int ac, char **av)
 		return (1);
 	}
 	dijkstra(farm);
+	build_residual_network(farm);
 	print_buffer(buffer);
 	ft_dictiterate(farm->nodes, prnt);
 	destroy_buffer(&buffer);
