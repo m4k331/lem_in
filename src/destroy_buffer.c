@@ -23,7 +23,7 @@ void				destroy_buffer(t_vector **buffer)
 	if (buffer && *buffer)
 	{
 		(*buffer)->iter = -1;
-		ft_vmap(*buffer, del);
+		ft_vmap(*buffer, 0, del);
 		ft_vdel(buffer);
 	}
 }

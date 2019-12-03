@@ -18,13 +18,15 @@
 */
 int8_t				set_ants(t_farm *farm, t_vector *buffer)
 {
-	t_str			*raw_str;
+	t_str			**raw_str;
 	long			ants;
 
-	raw_str = *(t_str**)ft_vnext_con(buffer);
-	if (ft_isnumeric_str(raw_str->con, FALSE) == FALSE)
+	raw_str = ft_vnext_con(buffer);
+	if (raw_str == NULL)
 		return (FALSE);
-	ants = ft_atol(raw_str->con);
+	if (ft_isnumeric_str((*raw_str)->con, FALSE) == FALSE)
+		return (FALSE);
+	ants = ft_atol((*raw_str)->con);
 	if (ants < 0)
 		return (FALSE);
 	farm->ants = (ants > INT_MAX ? INT_MAX : (int)ants);

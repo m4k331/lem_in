@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:23:58 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 01:46:27 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 16:09:50 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 typedef struct		s_flows
 {
 	t_vector		*flows;
-	long			steps;
+	long			best_steps;
 }					t_flows;
 
 void				destroy_flows(t_flows **flows);
@@ -30,7 +30,7 @@ typedef struct		s_flow
 }					t_flow;
 
 t_flow				*create_flow(void);
-int					destroy_flow(void *flow);
+int					destroy_flow(void *f);
 
 typedef struct		s_path
 {
@@ -40,7 +40,7 @@ typedef struct		s_path
 }					t_path;
 
 t_path				*create_path(void);
-int					destroy_path(void *path);
+int					destroy_path(void *p);
 
 typedef struct		s_room
 {

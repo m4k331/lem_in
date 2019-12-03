@@ -55,7 +55,7 @@ static inline int8_t	nodes_linker(t_farm *farm, t_node *left, t_node *right)
 */
 int8_t					set_edges(t_farm *farm, t_vector *buffer)
 {
-	t_str				*raw_str;
+	t_str				**raw_str;
 	t_node				*node_left;
 	t_node				*node_right;
 	char				*sep;
@@ -63,17 +63,17 @@ int8_t					set_edges(t_farm *farm, t_vector *buffer)
 
 	while (TRUE)
 	{
-		raw_str = *(t_str**)ft_vnext_con(buffer);
+		raw_str = ft_vnext_con(buffer);
 		if (raw_str == NULL)
 			return (ERROR);
-		if (!STARTS_WITH_HASH(raw_str->con))
+		if (!STARTS_WITH_HASH((*raw_str)->con))
 		{
-			sep = ft_memchr(raw_str->con, SEP, raw_str->len);
+			sep = ft_memchr((*raw_str)->con, SEP, (*raw_str)->len);
 			if (sep == NULL)
 				return (FAIL);
 			HIDE_SYMBOL(sep);
 			node_right = ft_dictget(farm->nodes, sep + 1);
-			node_left = ft_dictget(farm->nodes, raw_str->con);
+			node_left = ft_dictget(farm->nodes, (*raw_str)->con);
 			REVEAL_SYMBOL(sep, SEP);
 			state = nodes_linker(farm, node_left, node_right);
 			if (state != SUCCESS)

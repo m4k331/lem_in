@@ -21,5 +21,5 @@ static int			print(void *str)
 void				print_buffer(t_vector *buffer)
 {
 	buffer->iter = -1;
-	ft_vmap(buffer, print);
+	ft_vmap(buffer, 0, print);
 }

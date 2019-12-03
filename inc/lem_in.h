@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 03:14:06 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 17:53:16 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define REVEAL_SYMBOL(str, s) (*(str) = (s))
 # define QUEUE_IS_EMPTY(q) ((q)->iter == (q)->head - 1)
 # define HEAP_IS_EMPTY(h) ((h)->n == 0)
+# define NUMBER_OF_PATHS(flow) ((flow)->paths->head)
+# define NUMBER_OF_ROOMS(path) ((path)->rooms->head)
 
 # define VISIT(x)      ((x) |= 2U)
 # define VISITED(x)    ((x) & 2U)
@@ -63,7 +65,7 @@ t_flows				*search_flows(t_farm *farm);
 int8_t				build_direct_flow(t_flows *flows, t_farm *farm);
 int8_t				build_flows(t_flows *flows, t_farm *farm);
 int8_t				augment_flow(t_flows *flows, t_farm *farm);
-int8_t				pave_new_path_in_farm(t_path **path, t_farm *farm);
+void				calculation_of_flow_parameters(t_flow *flow, long ants);
 
 int8_t				dijkstra(t_farm *farm);
 int8_t				build_residual_network(t_farm *farm);

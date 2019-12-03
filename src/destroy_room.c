@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 01:46:31 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 01:46:31 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 01:52:51 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int					destroy_room(void *room)
 {
-	ft_memdel((void**)&room);
+	ft_memdel(room);
 	return (TRUE);
 }

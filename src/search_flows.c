@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:08:09 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 16:47:07 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/02 16:49:00 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static inline int8_t	flows_structure_initialization(t_flows **flows)
 		ft_memdel((void**)flows);
 		return (FALSE);
 	}
-	(*flows)->steps = INF;
+	(*flows)->best_steps = INF;
 	return (TRUE);
 }
 

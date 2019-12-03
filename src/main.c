@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 22:17:56 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 19:47:38 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ int					main(int ac, char **av)
 		destroy_buffer(&buffer);
 		return (1);
 	}
+	printf("BEST STEPS:%ld\n", flows->best_steps);
 	print_buffer(buffer);
 	ft_dictiterate(farm->nodes, prnt);
 	destroy_buffer(&buffer);
 	destroy_farm(&farm);
+	destroy_flows(&flows);
 	return (0);
 }
