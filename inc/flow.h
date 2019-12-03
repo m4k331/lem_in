@@ -6,14 +6,14 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:23:58 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 17:13:24 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 01:46:27 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLOW_H
 # define FLOW_H
 
-# define INITIAL_FLOWS 256
+# define INITIAL_FLOWS 128
 
 typedef struct		s_flows
 {
@@ -29,12 +29,18 @@ typedef struct		s_flow
 	long			steps;
 }					t_flow;
 
+t_flow				*create_flow(void);
+int					destroy_flow(void *flow);
+
 typedef struct		s_path
 {
 	t_vector		*rooms;
 	long			ants;
 	int8_t			printable;
 }					t_path;
+
+t_path				*create_path(void);
+int					destroy_path(void *path);
 
 typedef struct		s_room
 {
@@ -44,7 +50,7 @@ typedef struct		s_room
 }					t_room;
 
 t_room				*create_room(t_str *name);
-void				destroy_room(t_room **room);
+int					destroy_room(void *room);
 void				add_ant_to_room(t_room *room, long ant);
 
 #endif

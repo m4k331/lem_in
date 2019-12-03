@@ -1,20 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_flows.c                                    :+:      :+:    :+:   */
+/*   create_flow.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 16:50:09 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 23:04:19 by ahugh            ###   ########.fr       */
+/*   Created: 2019/12/02 22:45:20 by ahugh             #+#    #+#             */
+/*   Updated: 2019/12/02 22:46:27 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				destroy_flows(t_flows **flows)
+t_flow				*create_flow(void)
 {
-	ft_vmap((*flows)->flows, 0, destroy_flow);
-	ft_vdel(&(*flows)->flows);
-	ft_memdel((void**)flows);
+	t_flow			*flow;
+
+	flow = (t_flow*)malloc(sizeof(t_flow));
+	if (flow == NULL)
+		return (NULL);
+	flow->paths = ft_vnew(INITIAL_FLOWS * sizeof(void*), sizeof(void*));
+	if (flow->paths == NULL)
+	{
+		ft_memdel((void**)&flow);
+		return (NULL);
+	}
+	flow->steps = -1;
+	return (flow);
 }

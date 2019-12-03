@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_flows.c                                    :+:      :+:    :+:   */
+/*   destroy_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 16:50:09 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 23:04:19 by ahugh            ###   ########.fr       */
+/*   Created: 2019/12/03 01:40:29 by ahugh             #+#    #+#             */
+/*   Updated: 2019/12/03 01:46:27 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				destroy_flows(t_flows **flows)
+int					destroy_path(void *path)
 {
-	ft_vmap((*flows)->flows, 0, destroy_flow);
-	ft_vdel(&(*flows)->flows);
-	ft_memdel((void**)flows);
+	if (((t_path*)path)->printable == TRUE)
+		ft_vmap(((t_path*)path)->rooms, 0, destroy_room);
+	ft_vdel(&((t_path*)path)->rooms);
+	ft_memdel((void**)&path);
+	return (TRUE);
 }

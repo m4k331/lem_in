@@ -1,20 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy_flows.c                                    :+:      :+:    :+:   */
+/*   create_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 16:50:09 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 23:04:19 by ahugh            ###   ########.fr       */
+/*   Created: 2019/12/03 00:10:35 by ahugh             #+#    #+#             */
+/*   Updated: 2019/12/03 00:12:52 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				destroy_flows(t_flows **flows)
+t_path				*create_path(void)
 {
-	ft_vmap((*flows)->flows, 0, destroy_flow);
-	ft_vdel(&(*flows)->flows);
-	ft_memdel((void**)flows);
+	t_path			*path;
+
+	path = (t_path*)malloc(sizeof(t_path));
+	if (path == NULL)
+		return (NULL);
+	path->rooms = ft_vnew(INITIAL_FLOWS * sizeof(void*), sizeof(void*));
+	if (path->rooms == NULL)
+	{
+		ft_memdel((void**)&path);
+		return (NULL);
+	}
+	path->ants = -1;
+	path->printable = FALSE;
+	return (path);
 }

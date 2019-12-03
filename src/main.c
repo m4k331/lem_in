@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 14:16:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/02 22:17:56 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,31 @@ int						prnt(void *node)
 	return (TRUE);
 }
 
+//processing_the_received_options
+//receiving_data
+//data_processing
+//solution_building
+//result_output
+//completion_of_work
+
+
 int					main(int ac, char **av)
 {
 	t_farm			*farm;
 	t_vector		*buffer;
+	t_flows			*flows;
 	const int		fd = open("/home/ahugh/lem_in/mp", O_RDONLY);
 
 	buffer = get_fd_buffer(fd);
 	if (buffer == NULL)
 	{
-		perror("ERROR reading fd");
+		perror("ERROR reading buffer");
 		return (1);
 	}
-	if (close(fd) == -1)
+	if (fd != STDIN_FILENO && close(fd) == -1)
 	{
-		destroy_buffer(&buffer);
 		perror("ERROR closing fd");
+		destroy_buffer(&buffer);
 		return (1);
 	}
 	farm = build_farm(buffer);
@@ -42,8 +51,13 @@ int					main(int ac, char **av)
 		destroy_buffer(&buffer);
 		return (1);
 	}
-	dijkstra(farm);
-	build_residual_network(farm);
+	flows = search_flows(farm);
+	if (flows == NULL)
+	{
+		destroy_farm(&farm);
+		destroy_buffer(&buffer);
+		return (1);
+	}
 	print_buffer(buffer);
 	ft_dictiterate(farm->nodes, prnt);
 	destroy_buffer(&buffer);

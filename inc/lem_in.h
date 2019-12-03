@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 17:13:24 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 03:14:06 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void				del_unmarked_nodes(t_farm *farm);
 t_flows				*search_flows(t_farm *farm);
 int8_t				build_direct_flow(t_flows *flows, t_farm *farm);
 int8_t				build_flows(t_flows *flows, t_farm *farm);
+int8_t				augment_flow(t_flows *flows, t_farm *farm);
+int8_t				pave_new_path_in_farm(t_path **path, t_farm *farm);
 
 int8_t				dijkstra(t_farm *farm);
 int8_t				build_residual_network(t_farm *farm);

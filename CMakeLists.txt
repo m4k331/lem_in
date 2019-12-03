@@ -9,7 +9,7 @@ file(GLOB SRC_LEMIN "src/*.c")
 
 add_subdirectory(libft)
 #add_definitions(${GCC_FLAGS})
-add_executable(lem_in ${SRC_LEMIN})
+add_executable(lem_in ${SRC_LEMIN} src/destroy_room.c)
 
 target_include_directories(lem_in PUBLIC inc)
 target_link_libraries(lem_in PRIVATE ft)
