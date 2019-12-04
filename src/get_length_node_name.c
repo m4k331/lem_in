@@ -25,7 +25,7 @@ size_t					get_length_node_name(t_str *raw_str)
 	first = ft_memrchr(raw_str->con, SPACE, len);
 	if (first == NULL || ft_isnumeric_str(first + 1, FALSE) == FALSE)
 		return (0);
-	len = (size_t)first - (size_t)raw_str->con;
+	len = (size_t)first - (size_t)raw_str->con - 1;
 	second = ft_memrchr(raw_str->con, SPACE, len);
 	HIDE_SYMBOL(first);
 	if (second == NULL || ft_isnumeric_str(second + 1, FALSE) == FALSE)
