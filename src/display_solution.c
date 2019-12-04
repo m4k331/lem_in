@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 21:43:54 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 00:02:28 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,22 @@ void				display_solution(uint8_t opts, \
 									t_farm *farm, \
 									t_flows *flows)
 {
+	t_vector		*colors;
 	int8_t			indent;
-	int8_t			color;
 	int				fd;
 
 	fd = 1;
 	indent = FALSE;
-	color = (IS_COLOR(opts) && (IS_MULTI(opts) == FALSE) ? TRUE : FALSE);
+	colors = IS_COLOR(opts) && IS_MULTI(opts) == FALSE ? get_colors(MC) : NULL;
 	if (IS_STEPS(opts))
 	{
 		indent_control(&indent);
-		print_steps(flows, fd, color);
+		print_steps(flows, fd, colors);
 	}
+	if (IS_PATHS(opts))
+	{
+		indent_control(&indent);
+	}
+	ft_vdel(&colors);
 	exit(fd);
 }

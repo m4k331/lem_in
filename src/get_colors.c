@@ -1,33 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_steps.c                                      :+:      :+:    :+:   */
+/*   get_colors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/04 21:43:59 by ahugh             #+#    #+#             */
+/*   Created: 2019/12/04 23:47:04 by ahugh             #+#    #+#             */
 /*   Updated: 2019/12/04 23:59:01 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				print_steps(t_flows *flows, int fd, t_vector *colors)
+static inline void		insert_fixed_len_number(char *line, long num, int len)
 {
-	char			result[COLOR_LN + NUM_MAX_LN + DISCOLOR_END_LN];
-	int				len;
+	while (len--)
+	{
+		line[len] = (char)((num % 10) + '0');
+		num /= 10;
+	}
+}
 
-	if (colors)
+t_vector				*get_colors(int count_color)
+{
+	t_vector			*colors;
+	char				*con;
+
+	colors = ft_vnew(COLOR_LN * (count_color + 1), COLOR_LN);
+	if (colors == NULL)
+		return (NULL);
+	con = colors->con;
+	while (colors->head < count_color)
 	{
-		ft_memcpy(result, ft_vat(colors, 220), COLOR_LN);
-		len = insert_number_inline(result + COLOR_LN, flows->best_steps);
-		ft_memcpy(result + COLOR_LN + len, DISCOLOR_END, DISCOLOR_END_LN);
-		write(fd, result, COLOR_LN + len + DISCOLOR_END_LN);
+		ft_memcpy(con, COLOR_CODE, COLOR_PREFIX_LN);
+		con += COLOR_PREFIX_LN;
+		insert_fixed_len_number(con, colors->head, FIXED_NUM_LN);
+		con += FIXED_NUM_LN;
+		*con = COLOR_CODE[10];
+		con++;
+		colors->head++;
 	}
-	else
-	{
-		len = insert_number_inline(result, flows->best_steps);
-		result[len] = NL;
-		write(fd, result, len + 1);
-	}
+	return (colors);
 }

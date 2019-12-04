@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 21:43:54 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 00:02:28 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,16 @@
 # define IS_MULTI(opt) ((opt) & MASK_MULTI)
 # define IS_USAGE(opt) ((opt) & MASK_USAGE)
 
-# define GOLD          "\33[38;5;220m"
-# define PREFIX_LN     11
-# define SUFFIX        "\x1b[0m"
-# define SUFFIX_LN     4
-# define SUFFIX_END    "\x1b[0m\n"
-# define SUFFIX_END_LN 5
-# define MAX_NUMBER_LN 20
+# define MC               240
+# define COLOR_CODE       "\33[38;5;000m"
+# define COLOR_LN         11
+# define COLOR_PREFIX_LN  7
+# define FIXED_NUM_LN     3
+# define DISCOLOR         "\x1b[0m"
+# define DISCOLOR_LN      4
+# define DISCOLOR_END     "\x1b[0m\n"
+# define DISCOLOR_END_LN  5
+# define NUM_MAX_LN       20
 
 
 typedef struct		s_farm
@@ -102,9 +105,10 @@ void				display_solution(uint8_t opts, \
 									t_farm *farm, \
 									t_flows *flows);
 
-void				print_steps(t_flows *flows, int fd, int8_t color);
+void				print_steps(t_flows *flows, int fd, t_vector *colors);
 
 void				process_supplied_options(uint8_t *opts, int ac, char **av);
+t_vector			*get_colors(int count_color);
 void				show_usage(uint8_t opts, char *name_of_program);
 
 t_farm				*build_farm(t_vector *buffer);
