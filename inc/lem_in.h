@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 17:53:16 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/04 17:10:06 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,14 @@
 # define MARKED(x)     ((x) & 1U)
 # define UNMARKING(x)  ((x) ^= 1U)
 
+# define OPT_STEPS     "--steps"
+# define OPT_COLOR     "--color"
+# define OPT_PATHS     "--paths"
+# define OPT_FLOWS     "--flows"
+# define OPT_SHORT     "--short"
+# define OPT_MULTI     "--multi"
+
+
 typedef struct		s_farm
 {
 	int64_t			ants;
@@ -55,6 +63,8 @@ typedef struct		s_farm
 	t_node			*end;
 	int8_t			direct;
 }					t_farm;
+
+void				process_supplied_options(uint8_t *opts, int ac, char **av);
 
 t_farm				*build_farm(t_vector *buffer);
 void				destroy_farm(t_farm **farm);
