@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 17:10:06 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/04 17:42:41 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,21 @@
 # define OPT_SHORT     "--short"
 # define OPT_MULTI     "--multi"
 
+# define MASK_STEPS    1U
+# define MASK_COLOR    2U
+# define MASK_PATHS    4U
+# define MASK_FLOWS    8U
+# define MASK_SHORT    16U
+# define MASK_MULTI    32U
+# define MASK_USAGE    128U
+
+# define IS_STEPS(opt) ((opt) & MASK_STEPS)
+# define IS_COLOR(opt) ((opt) & MASK_COLOR)
+# define IS_PATHS(opt) ((opt) & MASK_PATHS)
+# define IS_FLOWS(opt) ((opt) & MASK_FLOWS)
+# define IS_SHORT(opt) ((opt) & MASK_SHORT)
+# define IS_MULTI(opt) ((opt) & MASK_MULTI)
+# define IS_USAGE(opt) ((opt) & MASK_USAGE)
 
 typedef struct		s_farm
 {
@@ -65,6 +80,7 @@ typedef struct		s_farm
 }					t_farm;
 
 void				process_supplied_options(uint8_t *opts, int ac, char **av);
+void				show_usage(uint8_t opts, char *name_of_program);
 
 t_farm				*build_farm(t_vector *buffer);
 void				destroy_farm(t_farm **farm);

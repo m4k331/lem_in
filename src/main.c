@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 17:12:30 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/04 18:33:22 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ int					main(int ac, char **av)
 	t_farm			*farm;
 	t_vector		*buffer;
 	t_flows			*flows;
-	uint8_t			options;
+	uint8_t			opts;
 	const int		fd = open("/home/ahugh/py_lem_in/bigs", O_RDONLY);
 
-	process_supplied_options(&options, ac, av);
+	process_supplied_options(&opts, ac, av);
+//	show_usage(opts, *av);
 	buffer = get_fd_buffer(fd);
 	if (buffer == NULL)
 	{
