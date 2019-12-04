@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 17:09:03 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 17:55:13 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/04 17:56:51 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@ void				process_supplied_options(uint8_t *opts, int ac, char **av)
 	{
 		av++;
 		if (ft_strcmp(*av, OPT_STEPS) == 0)
-			*opts |= MASK_STEPS;
+			TO_STEPS(*opts);
 		else if (ft_strcmp(*av, OPT_COLOR) == 0)
-			*opts |= MASK_COLOR;
+			TO_COLOR(*opts);
 		else if (ft_strcmp(*av, OPT_PATHS) == 0)
-			*opts |= MASK_PATHS;
+			TO_PATHS(*opts);
 		else if (ft_strcmp(*av, OPT_FLOWS) == 0)
-			*opts |= MASK_FLOWS;
+			TO_FLOWS(*opts);
 		else if (ft_strcmp(*av, OPT_SHORT) == 0)
-			*opts |= MASK_SHORT;
+			TO_SHORT(*opts);
 		else if (ft_strcmp(*av, OPT_MULTI) == 0)
-			*opts |= MASK_MULTI;
+			TO_MULTI(*opts);
 		else
-			*opts |= MASK_USAGE;
+			TO_USAGE(*opts);
 	}
 }

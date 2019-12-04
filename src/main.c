@@ -6,17 +6,17 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 18:33:22 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/04 21:51:32 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int						prnt(void *node)
-{
-	print_node(node);
-	return (TRUE);
-}
+//static int						prnt(void *node)
+//{
+//	print_node(node);
+//	return (TRUE);
+//}
 
 //processing_the_received_options
 //receiving_data
@@ -60,8 +60,10 @@ int					main(int ac, char **av)
 		destroy_buffer(&buffer);
 		return (1);
 	}
-	printf("BEST STEPS:%ld\n", flows->best_steps);
-//	print_buffer(buffer);
+	TO_STEPS(opts);
+	TO_COLOR(opts);
+//	TO_MULTI(opts);
+	display_solution(opts, buffer, farm, flows);
 //	ft_dictiterate(farm->nodes, prnt);
 	destroy_buffer(&buffer);
 	destroy_farm(&farm);

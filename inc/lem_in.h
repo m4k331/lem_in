@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 17:42:41 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/04 21:43:54 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define CMD_END "##end"
 # define SPACE ' '
 # define SEP '-'
+# define NL '\n'
 # define FORBIDDEN_SYMBOLS(x) ((x) == '#' || (x) == 'L')
 # define NULL_TERMINATE '\0'
 # define MASK_COMMON 1U
@@ -62,6 +63,14 @@
 # define MASK_MULTI    32U
 # define MASK_USAGE    128U
 
+# define TO_STEPS(opt) ((opt) |= MASK_STEPS)
+# define TO_COLOR(opt) ((opt) |= MASK_COLOR)
+# define TO_PATHS(opt) ((opt) |= MASK_PATHS)
+# define TO_FLOWS(opt) ((opt) |= MASK_FLOWS)
+# define TO_SHORT(opt) ((opt) |= MASK_SHORT)
+# define TO_MULTI(opt) ((opt) |= MASK_MULTI)
+# define TO_USAGE(opt) ((opt) |= MASK_USAGE)
+
 # define IS_STEPS(opt) ((opt) & MASK_STEPS)
 # define IS_COLOR(opt) ((opt) & MASK_COLOR)
 # define IS_PATHS(opt) ((opt) & MASK_PATHS)
@@ -69,6 +78,15 @@
 # define IS_SHORT(opt) ((opt) & MASK_SHORT)
 # define IS_MULTI(opt) ((opt) & MASK_MULTI)
 # define IS_USAGE(opt) ((opt) & MASK_USAGE)
+
+# define GOLD          "\33[38;5;220m"
+# define PREFIX_LN     11
+# define SUFFIX        "\x1b[0m"
+# define SUFFIX_LN     4
+# define SUFFIX_END    "\x1b[0m\n"
+# define SUFFIX_END_LN 5
+# define MAX_NUMBER_LN 20
+
 
 typedef struct		s_farm
 {
@@ -78,6 +96,13 @@ typedef struct		s_farm
 	t_node			*end;
 	int8_t			direct;
 }					t_farm;
+
+void				display_solution(uint8_t opts, \
+									t_vector *buffer, \
+									t_farm *farm, \
+									t_flows *flows);
+
+void				print_steps(t_flows *flows, int fd, int8_t color);
 
 void				process_supplied_options(uint8_t *opts, int ac, char **av);
 void				show_usage(uint8_t opts, char *name_of_program);
@@ -108,5 +133,7 @@ t_node				*get_hash_node(t_farm *farm, t_str *name);
 t_vector			*get_fd_buffer(int fd);
 void				print_buffer(t_vector *buffer);
 void				destroy_buffer(t_vector **buffer);
+
+int					insert_number_inline(char *line, long num);
 
 #endif
