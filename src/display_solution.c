@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 00:02:28 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 00:17:09 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,12 @@ void				display_solution(uint8_t opts, \
 	if (IS_STEPS(opts))
 	{
 		indent_control(&indent);
-		print_steps(flows, fd, colors);
+		print_steps(fd, colors, flows);
 	}
 	if (IS_PATHS(opts))
 	{
 		indent_control(&indent);
+		print_paths(fd, colors, flows);
 	}
 	ft_vdel(&colors);
 	exit(fd);

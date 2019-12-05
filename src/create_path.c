@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 00:10:35 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 00:12:52 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/03 01:11:40 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_path				*create_path(void)
 		return (NULL);
 	}
 	path->ants = -1;
+	path->len_path = 0;
 	path->printable = FALSE;
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 15:43:00 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 20:34:59 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 02:05:05 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static inline int8_t	path_initialization(t_path **path, t_farm *farm)
 	*path = create_path();
 	if (*path == NULL)
 		return (FALSE);
+	(*path)->len_path += farm->start->name->len;
 	if (ft_vpush_back((*path)->rooms, &farm->start, sizeof(void*)) == FALSE)
 	{
 		destroy_path(path);
@@ -53,6 +54,7 @@ static inline int8_t	pave_new_path_in_farm(t_path **path, t_farm *farm)
 		u = get_neighbor_node_with_activated_flow(u);
 		if (u && STARTS_WITH_HASH(u->name->con) == FALSE)
 		{
+			(*path)->len_path += u->name->len;
 			if (ft_vpush_back((*path)->rooms, &u, sizeof(void*)) == FALSE)
 			{
 				destroy_path(path);
@@ -98,6 +100,8 @@ int8_t					augment_flow(t_flows *flows, t_farm *farm)
 	calculation_of_flow_parameters(flow, farm->ants);
 	if (flow->steps > 0 && flow->steps <= flows->best_steps)
 	{
+		if (flow->steps < flows->best_steps)
+			flows->max_flow = flow;
 		flows->best_steps = flow->steps;
 		if (ft_vpush_back(flows->flows, &flow, sizeof(void*)) == FALSE)
 		{

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:23:58 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 16:09:50 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 01:20:14 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 # define FLOW_H
 
 # define INITIAL_FLOWS 128
-
-typedef struct		s_flows
-{
-	t_vector		*flows;
-	long			best_steps;
-}					t_flows;
-
-void				destroy_flows(t_flows **flows);
 
 typedef struct		s_flow
 {
@@ -32,10 +24,20 @@ typedef struct		s_flow
 t_flow				*create_flow(void);
 int					destroy_flow(void *f);
 
+typedef struct		s_flows
+{
+	t_vector		*flows;
+	t_flow			*max_flow;
+	long			best_steps;
+}					t_flows;
+
+void				destroy_flows(t_flows **flows);
+
 typedef struct		s_path
 {
 	t_vector		*rooms;
 	long			ants;
+	long			len_path;
 	int8_t			printable;
 }					t_path;
 

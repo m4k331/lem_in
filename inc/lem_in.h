@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 00:02:28 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 14:34:27 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,10 @@
 # define DISCOLOR_END     "\x1b[0m\n"
 # define DISCOLOR_END_LN  5
 # define NUM_MAX_LN       20
+# define CODE_GOLD        220
+# define SEP_PATH         " - "
+# define SEP_PATH_LN      3
+# define PATH_SHIFT_COLOR 40
 
 
 typedef struct		s_farm
@@ -105,7 +109,8 @@ void				display_solution(uint8_t opts, \
 									t_farm *farm, \
 									t_flows *flows);
 
-void				print_steps(t_flows *flows, int fd, t_vector *colors);
+void				print_steps(int fd, t_vector *colors, t_flows *flows);
+int8_t				print_paths(int fd, t_vector *colors, t_flows *flows);
 
 void				process_supplied_options(uint8_t *opts, int ac, char **av);
 t_vector			*get_colors(int count_color);
