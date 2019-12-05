@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 14:55:10 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 16:32:42 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int					main(int ac, char **av)
 	t_vector		*buffer;
 	t_flows			*flows;
 	uint8_t			opts;
-	const int		fd = open("/home/ahugh/py_lem_in/bigs1", O_RDONLY);
+	const int		fd = open("/Users/ahugh/py_lem_in/mp", O_RDONLY);
 
 	process_supplied_options(&opts, ac, av);
 //	show_usage(opts, *av);

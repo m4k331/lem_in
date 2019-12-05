@@ -23,7 +23,7 @@ static int			prnt(void *e)
 	t = edge->neighbor ? edge->neighbor->name->con : NULL;
 	w = edge->weight;
 	fl = edge->flow;
-	printf(" (%s, %ld, %d) ", t, w, fl);
+	printf(" (%s, %lld, %d) ", t, w, fl);
 	return (TRUE);
 }
 

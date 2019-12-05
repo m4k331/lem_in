@@ -10,22 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "lem_in.h"
+
 int					insert_number_inline(char *line, long num)
 {
-	long			dup;
-	int				len;
+	const int		len = ft_numlen(num, 10);
+	int				iter;
 
-	dup = num;
-	len = 1;
-	while (dup > 9)
+	iter = len;
+	while (iter--)
 	{
-		dup /= 10;
-		len++;
-	}
-	dup = len;
-	while (dup--)
-	{
-		line[dup] = (char)((num % 10) + '0');
+		line[iter] = (char)((num % 10) + '0');
 		num /= 10;
 	}
 	return (len);
