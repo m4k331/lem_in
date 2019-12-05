@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 00:17:09 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 18:33:23 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@ static inline void	indent_control(int8_t *indent)
 	if (*indent == TRUE)
 		ft_putchar(NL);
 	*indent = TRUE;
+}
+
+static inline void	handle_error(char *msg, \
+								t_vector *buffer, \
+								t_farm *farm, \
+								t_flows *flows)
+{
+	perror(msg);
+	destroy_buffer(&buffer);
+	destroy_farm(&farm);
+	destroy_flows(&flows);
+	exit(1);
 }
 
 void				display_solution(uint8_t opts, \
@@ -39,7 +51,14 @@ void				display_solution(uint8_t opts, \
 	if (IS_PATHS(opts))
 	{
 		indent_control(&indent);
-		print_paths(fd, colors, flows);
+		if (print_paths(fd, colors, flows) == FALSE)
+			handle_error("ERROR printing paths", buffer, farm, flows);
+	}
+	if (IS_FLOWS(opts))
+	{
+		indent_control(&indent);
+		if (print_flows(fd, colors, flows) == FALSE)
+			handle_error("ERROR printing flows", buffer, farm, flows);
 	}
 	ft_vdel(&colors);
 	exit(fd);

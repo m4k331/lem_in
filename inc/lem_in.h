@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 18:17:18 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/05 21:30:52 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,16 @@
 # define PREFIX_PATH_LN   5
 # define SUFFIX_PATH      ") : "
 # define SUFFIX_PATH_LN   4
-
+# define HEAD_FLOW_L      "flow #"
+# define HEAD_FLOW_L_LN   6
+# define HEAD_FLOW_M      " (lines "
+# define HEAD_FLOW_M_LN   8
+# define HEAD_FLOW_R      "):\n"
+# define HEAD_FLOW_R_LN   3
+# define BODY_FLOW_L      "rooms: "
+# define BODY_FLOW_L_LN   7
+# define BODY_FLOW_R      "\t|\tants: "
+# define BODY_FLOW_R_LN   9
 
 typedef struct		s_farm
 {
@@ -115,6 +124,7 @@ void				display_solution(uint8_t opts, \
 
 void				print_steps(int fd, t_vector *colors, t_flows *flows);
 int8_t				print_paths(int fd, t_vector *colors, t_flows *flows);
+int8_t				print_flows(int fd, t_vector *colors, t_flows *flows);
 
 int8_t				display_color_path(int fd, char *color, t_path *path);
 int8_t				display_path(int fd, t_path *path);
