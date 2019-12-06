@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/06 19:20:31 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/06 20:59:52 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,44 +41,44 @@
 # define NUMBER_OF_PATHS(flow) ((flow)->paths->head)
 # define NUMBER_OF_ROOMS(path) ((path)->rooms->head)
 
-# define VISIT(x)      ((x) |= 2U)
-# define VISITED(x)    ((x) & 2U)
-# define UNVISITING(x) ((x) ^= 2U)
+# define VISIT(x)        ((x) |= 2U)
+# define VISITED(x)      ((x) & 2U)
+# define UNVISITING(x)   ((x) ^= 2U)
 
-# define MARK(x)       ((x) |= 1U)
-# define MARKED(x)     ((x) & 1U)
-# define UNMARKING(x)  ((x) ^= 1U)
+# define MARK(x)         ((x) |= 1U)
+# define MARKED(x)       ((x) & 1U)
+# define UNMARKING(x)    ((x) ^= 1U)
 
-# define OPT_STEPS     "--steps"
-# define OPT_COLOR     "--color"
-# define OPT_PATHS     "--paths"
-# define OPT_FLOWS     "--flows"
-# define OPT_SHORT     "--short"
-# define OPT_MULTI     "--multi"
+# define OPT_STEPS       "--steps"
+# define OPT_COLOR       "--color"
+# define OPT_PATHS       "--paths"
+# define OPT_FLOWS       "--flows"
+# define OPT_SHORT       "--short"
+# define OPT_MULTI       "--multi"
 
-# define MASK_STEPS    1U
-# define MASK_COLOR    2U
-# define MASK_PATHS    4U
-# define MASK_FLOWS    8U
-# define MASK_SHORT    16U
-# define MASK_MULTI    32U
-# define MASK_USAGE    128U
+# define MASK_STEPS       1U
+# define MASK_COLOR       2U
+# define MASK_PATHS       4U
+# define MASK_FLOWS       8U
+# define MASK_SHORT       16U
+# define MASK_MULTI       32U
+# define MASK_USAGE       128U
 
-# define TO_STEPS(opt) ((opt) |= MASK_STEPS)
-# define TO_COLOR(opt) ((opt) |= MASK_COLOR)
-# define TO_PATHS(opt) ((opt) |= MASK_PATHS)
-# define TO_FLOWS(opt) ((opt) |= MASK_FLOWS)
-# define TO_SHORT(opt) ((opt) |= MASK_SHORT)
-# define TO_MULTI(opt) ((opt) |= MASK_MULTI)
-# define TO_USAGE(opt) ((opt) |= MASK_USAGE)
+# define TO_STEPS(opt)    ((opt) |= MASK_STEPS)
+# define TO_COLOR(opt)    ((opt) |= MASK_COLOR)
+# define TO_PATHS(opt)    ((opt) |= MASK_PATHS)
+# define TO_FLOWS(opt)    ((opt) |= MASK_FLOWS)
+# define TO_SHORT(opt)    ((opt) |= MASK_SHORT)
+# define TO_MULTI(opt)    ((opt) |= MASK_MULTI)
+# define TO_USAGE(opt)    ((opt) |= MASK_USAGE)
 
-# define IS_STEPS(opt) ((opt) & MASK_STEPS)
-# define IS_COLOR(opt) ((opt) & MASK_COLOR)
-# define IS_PATHS(opt) ((opt) & MASK_PATHS)
-# define IS_FLOWS(opt) ((opt) & MASK_FLOWS)
-# define IS_SHORT(opt) ((opt) & MASK_SHORT)
-# define IS_MULTI(opt) ((opt) & MASK_MULTI)
-# define IS_USAGE(opt) ((opt) & MASK_USAGE)
+# define IS_STEPS(opt)    ((opt) & MASK_STEPS)
+# define IS_COLOR(opt)    ((opt) & MASK_COLOR)
+# define IS_PATHS(opt)    ((opt) & MASK_PATHS)
+# define IS_FLOWS(opt)    ((opt) & MASK_FLOWS)
+# define IS_SHORT(opt)    ((opt) & MASK_SHORT)
+# define IS_MULTI(opt)    ((opt) & MASK_MULTI)
+# define IS_USAGE(opt)    ((opt) & MASK_USAGE)
 
 # define MC               240
 # define COLOR_CODE       "\33[38;5;000m"
@@ -95,22 +95,25 @@
 # define SEP_PATH         " - "
 # define SEP_PATH_LN      3
 # define PATH_SHIFT_COLOR 40
+# define FLOW_SHIFT_COLOR 50
 # define PREFIX_PATH      "ants("
 # define PREFIX_PATH_LN   5
 # define SUFFIX_PATH      ") : "
 # define SUFFIX_PATH_LN   4
-# define HD_FLOW_L      "flow #"
-# define HD_FLOW_L_LN   6
-# define HD_FLOW_M      " (lines "
-# define HD_FLOW_M_LN   8
-# define HD_FLOW_R      "):"
-# define HD_FLOW_R_LN   2
-# define RM_FLOW_L      "rooms: "
-# define RM_FLOW_L_LN   7
-# define RM_FLOW_R      "\t|\tants: "
-# define RM_FLOW_R_LN   9
-# define MAX_FLOW_LN    (NUM_MAX_LN * 2 + HD_FLOW_L_LN + HD_FLOW_M_LN + \
+# define HD_FLOW_L        "flow #"
+# define HD_FLOW_L_LN     6
+# define HD_FLOW_M        " (lines "
+# define HD_FLOW_M_LN     8
+# define HD_FLOW_R        "):"
+# define HD_FLOW_R_LN     2
+# define RM_FLOW_L        "rooms: "
+# define RM_FLOW_L_LN     7
+# define RM_FLOW_R        "\t|\tants: "
+# define RM_FLOW_R_LN     9
+# define MAX_FLOW_LN      (NUM_MAX_LN * 2 + HD_FLOW_L_LN + HD_FLOW_M_LN + \
 									HD_FLOW_R_LN + COLOR_LN + DISCOLOR_END_LN)
+
+# define HD_FLOW_MAIN_LN  (HD_FLOW_L_LN + HD_FLOW_M_LN + HD_FLOW_R_LN)
 
 typedef struct		s_farm
 {
@@ -129,6 +132,7 @@ void				display_solution(uint8_t opts, \
 void				print_steps(int fd, t_vector *colors, t_flows *flows);
 int8_t				print_paths(int fd, t_vector *colors, t_flows *flows);
 void				print_flows(int fd, t_vector *colors, t_flows *flows);
+int8_t				print_short(int fd, t_vector *colors, t_flows *flows);
 
 int8_t				display_color_path(int fd, char *color, t_path *path);
 int8_t				display_path(int fd, t_path *path);

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:48:00 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/06 19:19:33 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/06 21:06:31 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static inline void		print_header(int fd, \
 									long steps)
 {
 	static int			num = 1;
-	const int			len = HD_FLOW_L_LN + ft_numlen(num, 10) + \
-					HD_FLOW_M_LN + ft_numlen(steps, 10) + HD_FLOW_R_LN + \
-					(color ? COLOR_LN + DISCOLOR_END_LN : 1);
+	int					len;
 
+	len = ft_numlen(num, 10) + ft_numlen(steps, 10) + HD_FLOW_MAIN_LN + \
+									(color ? COLOR_LN + DISCOLOR_END_LN : 1);
 	if (color)
 	{
 		ft_memcpy(line, color, COLOR_LN);
@@ -49,10 +49,11 @@ static inline void		print_path(int fd, \
 									char *color, \
 									t_path *path)
 {
-	const int			len = RM_FLOW_L_LN + RM_FLOW_R_LN + \
+	int					len;
+
+	len = RM_FLOW_L_LN + RM_FLOW_R_LN + \
 		ft_numlen(NUMBER_OF_ROOMS(path), 10) + ft_numlen(path->ants, 10) + \
 		(color ? COLOR_LN + DISCOLOR_END_LN : 1);
-
 	if (color)
 	{
 		ft_memcpy(line, color, COLOR_LN);
@@ -78,7 +79,7 @@ static inline void		print_flow(int fd, \
 									t_vector *colors, \
 									t_flow *flow)
 {
-	static int			shift = 50;
+	static int			shift = FLOW_SHIFT_COLOR;
 	t_path				**path;
 
 	flow->paths->iter = -1;

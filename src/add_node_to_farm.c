@@ -30,11 +30,11 @@ static inline t_node	*get_node(t_str *raw_str, size_t len)
 {
 	t_node				*node;
 
-	ft_swap64(&raw_str->len, &len);
+	ft_swap64((uint64_t*)(&raw_str->len), (uint64_t*)(&len));
 	HIDE_SYMBOL(&raw_str->con[raw_str->len]);
 	node = create_node(raw_str);
 	REVEAL_SYMBOL(&raw_str->con[raw_str->len], SPACE);
-	ft_swap64(&raw_str->len, &len);
+	ft_swap64((uint64_t*)(&raw_str->len), (uint64_t*)(&len));
 	return (node);
 }
 
