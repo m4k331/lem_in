@@ -57,8 +57,7 @@ void				display_solution(uint8_t opts, \
 	if (IS_FLOWS(opts))
 	{
 		indent_control(&indent);
-		if (print_flows(fd, colors, flows) == FALSE)
-			handle_error("ERROR printing flows", buffer, farm, flows);
+		print_flows(fd, colors, flows);
 	}
 	ft_vdel(&colors);
 	exit(fd);

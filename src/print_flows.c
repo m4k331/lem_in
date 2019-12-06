@@ -6,82 +6,121 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/05 18:48:00 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/06 03:06:10 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/06 19:19:33 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-
-static inline void		insert_header_inline(char *line, \
-											char *color, \
-											long steps, \
-											int number)
+static inline void		print_header(int fd, \
+									char *line, \
+									char *color, \
+									long steps)
 {
-	int					n_len;
-	int					s_len;
-
-	n_len = ft_numlen(number, 10);
-	s_len = ft_numlen(steps, 10);
+	static int			num = 1;
+	const int			len = HD_FLOW_L_LN + ft_numlen(num, 10) + \
+					HD_FLOW_M_LN + ft_numlen(steps, 10) + HD_FLOW_R_LN + \
+					(color ? COLOR_LN + DISCOLOR_END_LN : 1);
 
 	if (color)
 	{
 		ft_memcpy(line, color, COLOR_LN);
 		line += COLOR_LN;
 	}
-	ft_memcpy(line, HEAD_FLOW_L, HEAD_FLOW_L_LN);
-	line += HEAD_FLOW_L_LN;
-	line += insert_number_inline(line, number);
-	ft_memcpy(line, HEAD_FLOW_M, HEAD_FLOW_M_LN);
+	ft_memcpy(line, HD_FLOW_L, HD_FLOW_L_LN);
+	line += HD_FLOW_L_LN;
+	line += insert_number_inline(line, num++);
+	ft_memcpy(line, HD_FLOW_M, HD_FLOW_M_LN);
+	line += HD_FLOW_M_LN;
 	line += insert_number_inline(line, steps);
-	ft_memcpy(line, HEAD_FLOW_R, HEAD_FLOW_R_LN);
+	ft_memcpy(line, HD_FLOW_R, HD_FLOW_R_LN);
+	line += HD_FLOW_R_LN;
 	if (color)
 	{
 		ft_memcpy(line, DISCOLOR, DISCOLOR_LN);
 		line += DISCOLOR_LN;
 	}
-
+	*line = NL;
+	write(fd, line - len + 1, len);
 }
 
-int8_t					display_color_flow(int fd, \
-											t_vector *colors, \
-											t_flow *flow)
+static inline void		print_path(int fd, \
+									char *line, \
+									char *color, \
+									t_path *path)
 {
-	char				*line;
-	size_t				len = HEAD_FLOW_L_LN + n_len + HEAD_FLOW_M_LN + s_len + HEAD_FLOW_R_LN + \
-			(color ? COLOR_LN + DISCOLOR_END_LN : 0);
-	line
-	return (TRUE);
+	const int			len = RM_FLOW_L_LN + RM_FLOW_R_LN + \
+		ft_numlen(NUMBER_OF_ROOMS(path), 10) + ft_numlen(path->ants, 10) + \
+		(color ? COLOR_LN + DISCOLOR_END_LN : 1);
+
+	if (color)
+	{
+		ft_memcpy(line, color, COLOR_LN);
+		line += COLOR_LN;
+	}
+	ft_memcpy(line, RM_FLOW_L, RM_FLOW_L_LN);
+	line += RM_FLOW_L_LN;
+	line += insert_number_inline(line, NUMBER_OF_ROOMS(path));
+	ft_memcpy(line, RM_FLOW_R, RM_FLOW_R_LN);
+	line += RM_FLOW_R_LN;
+	line += insert_number_inline(line, path->ants);
+	if (color)
+	{
+		ft_memcpy(line, DISCOLOR, DISCOLOR_LN);
+		line += DISCOLOR_LN;
+	}
+	*line = NL;
+	write(fd, line - len + 1, len);
 }
 
-int8_t					display_flow(int fd, t_flow *flow)
+static inline void		print_flow(int fd, \
+									char *line, \
+									t_vector *colors, \
+									t_flow *flow)
 {
-	return (TRUE);
+	static int			shift = 50;
+	t_path				**path;
+
+	flow->paths->iter = -1;
+	path = ft_vnext_con(flow->paths);
+	if (colors)
+	{
+		print_header(fd, line, ft_vat(colors, CODE_PURPLE), flow->steps);
+		while (path)
+		{
+			print_path(fd, line, ft_vat(colors, shift++ % MC), *path);
+			path = ft_vnext_con(flow->paths);
+		}
+	}
+	else
+	{
+		print_header(fd, line, NULL, flow->steps);
+		while (path)
+		{
+			print_path(fd, line, NULL, *path);
+			path = ft_vnext_con(flow->paths);
+		}
+	}
+	ft_putchar_fd(NL, fd);
 }
 
-int8_t					print_flows(int fd, t_vector *colors, t_flows *flows)
+void					print_flows(int fd, t_vector *colors, t_flows *flows)
 {
+	char				line[MAX_FLOW_LN];
 	t_flow				**flow;
 
 	flows->flows->iter = -1;
 	flow = ft_vnext_con(flows->flows);
 	if (colors)
-	{
 		while (flow)
 		{
-			if (display_color_flow(fd, colors, *flow) == FALSE)
-				return (FALSE);
+			print_flow(fd, line, colors, *flow);
 			flow = ft_vnext_con(flows->flows);
 		}
-	}
 	else
-	{
 		while (flow)
 		{
-			if (display_flow(fd, *flow) == FALSE)
-				return (FALSE);
+			print_flow(fd, line, NULL, *flow);
 			flow = ft_vnext_con(flows->flows);
 		}
-	}
-	return (TRUE);
 }

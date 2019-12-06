@@ -101,6 +101,7 @@ int8_t					display_path(int fd, t_path *path)
 	}
 	*line = NL;
 	line++;
+	line -= len;
 	write(fd, line, len);
 	ft_memdel((void**)&line);
 	return (TRUE);

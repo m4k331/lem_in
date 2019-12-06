@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 21:30:52 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/06 19:20:31 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft.h"
 # include "node.h"
 # include "flow.h"
+# include <time.h>
 
 # define INF (INT_MAX)
 # define VBUFFER_SIZE 1024U
@@ -90,6 +91,7 @@
 # define DISCOLOR_END_LN  5
 # define NUM_MAX_LN       20
 # define CODE_GOLD        220
+# define CODE_PURPLE      56
 # define SEP_PATH         " - "
 # define SEP_PATH_LN      3
 # define PATH_SHIFT_COLOR 40
@@ -97,16 +99,18 @@
 # define PREFIX_PATH_LN   5
 # define SUFFIX_PATH      ") : "
 # define SUFFIX_PATH_LN   4
-# define HEAD_FLOW_L      "flow #"
-# define HEAD_FLOW_L_LN   6
-# define HEAD_FLOW_M      " (lines "
-# define HEAD_FLOW_M_LN   8
-# define HEAD_FLOW_R      "):\n"
-# define HEAD_FLOW_R_LN   3
-# define BODY_FLOW_L      "rooms: "
-# define BODY_FLOW_L_LN   7
-# define BODY_FLOW_R      "\t|\tants: "
-# define BODY_FLOW_R_LN   9
+# define HD_FLOW_L      "flow #"
+# define HD_FLOW_L_LN   6
+# define HD_FLOW_M      " (lines "
+# define HD_FLOW_M_LN   8
+# define HD_FLOW_R      "):"
+# define HD_FLOW_R_LN   2
+# define RM_FLOW_L      "rooms: "
+# define RM_FLOW_L_LN   7
+# define RM_FLOW_R      "\t|\tants: "
+# define RM_FLOW_R_LN   9
+# define MAX_FLOW_LN    (NUM_MAX_LN * 2 + HD_FLOW_L_LN + HD_FLOW_M_LN + \
+									HD_FLOW_R_LN + COLOR_LN + DISCOLOR_END_LN)
 
 typedef struct		s_farm
 {
@@ -124,7 +128,7 @@ void				display_solution(uint8_t opts, \
 
 void				print_steps(int fd, t_vector *colors, t_flows *flows);
 int8_t				print_paths(int fd, t_vector *colors, t_flows *flows);
-int8_t				print_flows(int fd, t_vector *colors, t_flows *flows);
+void				print_flows(int fd, t_vector *colors, t_flows *flows);
 
 int8_t				display_color_path(int fd, char *color, t_path *path);
 int8_t				display_path(int fd, t_path *path);
