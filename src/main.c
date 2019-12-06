@@ -31,7 +31,7 @@ int					main(int ac, char **av)
 	t_vector		*buffer;
 	t_flows			*flows;
 	uint8_t			opts;
-	const int		fd = open("/Users/ahugh/py_lem_in/mp", O_RDONLY);
+	const int		fd = open("/home/ahugh/py_lem_in/mp", O_RDONLY);
 
 	process_supplied_options(&opts, ac, av);
 //	show_usage(opts, *av);
