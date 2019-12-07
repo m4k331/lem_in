@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 15:14:47 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 ** initializes a new farm
 */
+
 static inline t_farm	*init_farm(void)
 {
 	t_farm				*farm;
@@ -35,6 +36,7 @@ static inline t_farm	*init_farm(void)
 ** fills the farm with valid information:
 ** set number of ants, creates nodes and links between them
 */
+
 static inline int8_t	fill_farm(t_farm *farm, t_vector *buffer)
 {
 	if (set_ants(farm, buffer) == FALSE)
@@ -64,6 +66,7 @@ static inline int8_t	fill_farm(t_farm *farm, t_vector *buffer)
 ** function checks the reachability of the start node to the end
 ** 												and removes unreachable nodes
 */
+
 static inline int8_t	farm_validation(t_farm *farm)
 {
 	if (farm->start == NULL || farm->end == NULL)
@@ -82,6 +85,7 @@ static inline int8_t	farm_validation(t_farm *farm)
 ** creates an ant farm from the buffer
 ** returns farm, otherwise returns NULL
 */
+
 t_farm					*build_farm(t_vector *buffer)
 {
 	t_farm				*farm;

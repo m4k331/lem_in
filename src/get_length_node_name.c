@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:37:10 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 17:29:31 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 ** returns the number of characters of the node name in the raw string
 */
+
 size_t					get_length_node_name(t_str *raw_str)
 {
 	size_t				len;

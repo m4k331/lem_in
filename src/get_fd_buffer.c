@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:52:22 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 21:04:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** creates a buffer and writes to it line by line data read from fd
 ** if successful returns a buffer otherwise zero
 */
+
 t_vector			*get_fd_buffer(int fd)
 {
 	t_vector		*buffer;
@@ -23,7 +24,7 @@ t_vector			*get_fd_buffer(int fd)
 	char			*con;
 	int				len;
 
-	buffer = ft_vnew(VBUFFER_SIZE * sizeof(t_str*), sizeof(t_str*));
+	buffer = ft_vnew((VBUFFER_SIZE) * sizeof(t_str*), sizeof(t_str*));
 	while (buffer)
 	{
 		len = get_next_line(fd, &con);

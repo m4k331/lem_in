@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 00:10:35 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 01:11:40 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_path				*create_path(void)
 	path = (t_path*)malloc(sizeof(t_path));
 	if (path == NULL)
 		return (NULL);
-	path->rooms = ft_vnew(INITIAL_FLOWS * sizeof(void*), sizeof(void*));
+	path->rooms = ft_vnew((INITIAL_FLOWS) * sizeof(void*), sizeof(void*));
 	if (path->rooms == NULL)
 	{
 		ft_memdel((void**)&path);

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 17:03:44 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** set_nodes - parses the buffer and creates nodes in the farm
 ** returns: 0 in case of parsing completion and -1 in case of error
 */
+
 int8_t					set_nodes(t_farm *farm, t_vector *buffer)
 {
 	t_str				**raw_str;

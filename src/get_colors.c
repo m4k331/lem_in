@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 23:47:04 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/04 23:59:01 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_vector				*get_colors(int count_color)
 	t_vector			*colors;
 	char				*con;
 
-	colors = ft_vnew(COLOR_LN * (count_color + 1), COLOR_LN);
+	colors = ft_vnew((COLOR_LN) * (count_color + 1), COLOR_LN);
 	if (colors == NULL)
 		return (NULL);
 	con = colors->con;

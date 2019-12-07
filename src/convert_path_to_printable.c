@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/07 17:48:29 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 17:48:29 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,5 @@ int8_t				convert_path_to_printable(t_path *path)
 		ft_memcpy(ft_vcurr_con(path->rooms), &room, path->rooms->type_size);
 		node = ft_vnext_con(path->rooms);
 	}
-	return(TRUE);
+	return (TRUE);
 }

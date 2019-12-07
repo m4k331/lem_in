@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 01:22:51 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/25 20:26:43 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** inserts a node into the dictionary
 ** returns TRUE or FALSE depending on the success of the insert
 */
+
 static inline int8_t	insert_node_to_farm(t_farm *farm, t_node *node)
 {
 	if (ft_dictget(farm->nodes, node->name->con) != NULL)
@@ -26,6 +27,7 @@ static inline int8_t	insert_node_to_farm(t_farm *farm, t_node *node)
 /*
 ** creates a node from the raw string and returns it, otherwise return NULL
 */
+
 static inline t_node	*get_node(t_str *raw_str, size_t len)
 {
 	t_node				*node;
@@ -43,6 +45,7 @@ static inline t_node	*get_node(t_str *raw_str, size_t len)
 ** with the connection hash_node --> node.
 ** if successful, returns SUCCESS, otherwise ERROR
 */
+
 static inline int8_t	add_common(t_farm *farm, t_node *node)
 {
 	t_node				*hash_node;
@@ -73,6 +76,7 @@ static inline int8_t	add_common(t_farm *farm, t_node *node)
 ** adds specific nodes to the farm, namely the start and the end
 ** if successful, returns SUCCESS, otherwise ERROR
 */
+
 static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 {
 	if (insert_node_to_farm(farm, node) == FALSE)
@@ -100,6 +104,7 @@ static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 ** FAIL in the case that the raw string does not fit the creation of the node
 ** ERROR in the case of a function error
 */
+
 int8_t					add_node_to_farm(t_farm *farm, \
 										t_str *raw_str, \
 										uint8_t type)

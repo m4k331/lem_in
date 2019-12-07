@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:45:39 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 19:15:01 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,6 @@ static int8_t		preparing_printing(t_flow *flow, \
 	len += count * (NUM_MAX_LN + 3 + (colors ? COLOR_LN : 0)) + DISCOLOR_END_LN;
 	*line = (char*)malloc(len * sizeof(char));
 	return ((*line == NULL ? FALSE : TRUE));
-}
-
-static inline void	push_ants_one_wave(t_flow *flow, \
-										t_vector *colors, \
-										long *number_ant, \
-										long *finished_ants)
-{
-	t_path			**path;
-
-	flow->paths->iter = -1;
-	path = ft_vnext_con(flow->paths);
-	while (path)
-	{
-		if ((*path)->ants > 0)
-		{
-			(*path)->ants--;
-			(*finished_ants) += shift_ants(*path, colors, *number_ant);
-			(*number_ant)++;
-		}
-		else
-			(*finished_ants) += shift_ants(*path, colors, 0);
-		path = ft_vnext_con(flow->paths);
-	}
 }
 
 static inline void	insert_step(char **shift, t_vector *colors, t_room *room)
@@ -125,7 +102,6 @@ static inline void	print_position_ants(int fd, \
 	while (path)
 	{
 		insert_path_inline(*path, colors, &line, &len);
-		char *f = line - len;
 		path = ft_vnext_con(flow->paths);
 	}
 	if (len > 0)

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 16:23:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define HEAP_IS_EMPTY(h) ((h)->n == 0)
 # define NUMBER_OF_PATHS(flow) ((flow)->paths->head)
 # define NUMBER_OF_ROOMS(path) ((path)->rooms->head)
+# define INSERT_HASH(str) (*(str) = '#')
 
 # define VISIT(x)        ((x) |= 2U)
 # define VISITED(x)      ((x) & 2U)
@@ -159,7 +160,9 @@ int8_t				set_nodes(t_farm *farm, t_vector *buffer);
 int8_t				set_edges(t_farm *farm, t_vector *buffer);
 
 int8_t				add_node_to_farm(t_farm *farm, \
-												t_str *raw_str, uint8_t type);
+									t_str *raw_str, \
+									uint8_t type);
+
 size_t				get_length_node_name(t_str *raw_str);
 t_str				*get_hash_name(t_str *name);
 t_node				*get_hash_node(t_farm *farm, t_str *name);
@@ -169,7 +172,10 @@ void				print_buffer(t_vector *buffer);
 void				destroy_buffer(t_vector **buffer);
 
 int					insert_number_inline(char *line, long num);
-long				shift_ants(t_path *path, t_vector *colors, long ant);
 int8_t				convert_path_to_printable(t_path *path);
+void				push_ants_one_wave(t_flow *flow, \
+										t_vector *colors, \
+										long *number_ant, \
+										long *finished_ants);
 
 #endif

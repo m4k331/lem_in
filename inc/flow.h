@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:23:58 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 15:22:36 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FLOW_H
 
 # define COLOR_LN      11
-# define INITIAL_FLOWS 128
+# define INITIAL_FLOWS 128U
 
 typedef struct		s_flow
 {

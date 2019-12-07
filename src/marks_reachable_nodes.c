@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 03:36:16 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/01 13:53:20 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 /*
 ** adds neighboring unlabeled nodes to the queue and marks them as added
 */
+
 static inline void	add_unmarked_neighbors_to_queue(t_vector *queue, t_node *u)
 {
 	t_edge			*edge;
@@ -37,6 +38,7 @@ static inline void	add_unmarked_neighbors_to_queue(t_vector *queue, t_node *u)
 /*
 ** function marks reachable nodes in a graph (farm)
 */
+
 void				marks_reachable_nodes(t_farm *farm)
 {
 	t_vector		*queue;

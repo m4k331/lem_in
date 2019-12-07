@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:08:09 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 01:36:57 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static inline int8_t	flows_structure_initialization(t_flows **flows)
 {
-	*flows = (t_flows*)malloc(sizeof(t_flows));
+	(*flows) = (t_flows*)malloc(sizeof(t_flows));
 	if (*flows == NULL)
 		return (FALSE);
-	(*flows)->flows = ft_vnew(INITIAL_FLOWS * sizeof(void*), sizeof(void*));
+	(*flows)->flows = ft_vnew((INITIAL_FLOWS) * sizeof(void*), sizeof(void*));
 	if ((*flows)->flows == NULL)
 	{
 		ft_memdel((void**)flows);
@@ -46,4 +46,3 @@ t_flows					*search_flows(t_farm *farm)
 	}
 	return (flows);
 }
-

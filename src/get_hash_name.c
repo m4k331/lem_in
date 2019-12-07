@@ -6,16 +6,16 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 19:40:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/24 21:20:09 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#define INSERT_HASH(str) (*(str) = '#')
 
 /*
 ** converts a name to a hash name, otherwise return NULL
 */
+
 t_str				*get_hash_name(t_str *name)
 {
 	t_str			*hash_name;
