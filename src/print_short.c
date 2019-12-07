@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:45:39 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 23:29:29 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ int8_t				print_short(int fd, t_vector *colors, t_flows *flows)
 		push_ants_one_wave(flows->max_flow, colors, &num_ant, &finished_ants);
 		print_position_ants(fd, line, flows->max_flow, colors);
 	}
+	if (line == NULL)
+		return (FALSE);
 	ft_memdel((void**)&line);
 	return (TRUE);
 }

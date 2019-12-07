@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 19:18:14 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 23:27:43 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int					main(int ac, char **av)
 	t_vector		*buffer;
 	t_flows			*flows;
 	uint8_t			opts;
-	const int		fd = open("/Users/ahugh/py_lem_in/mp", O_RDONLY);
+	const int		fd = open("/Users/ahugh/py_lem_in/big1", O_RDONLY);
 
 	process_supplied_options(&opts, ac, av);
 //	show_usage(opts, *av);
@@ -53,6 +53,7 @@ int					main(int ac, char **av)
 		destroy_buffer(&buffer);
 		return (1);
 	}
+//	ft_dictiterate(farm->nodes, prnt);
 	flows = search_flows(farm);
 	if (flows == NULL)
 	{
@@ -67,7 +68,6 @@ int					main(int ac, char **av)
 	TO_FLOWS(opts);
 	TO_SHORT(opts);
 	display_solution(opts, buffer, farm, flows);
-//	ft_dictiterate(farm->nodes, prnt);
 	destroy_buffer(&buffer);
 	destroy_farm(&farm);
 	destroy_flows(&flows);

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/06 19:39:30 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 22:24:51 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,15 @@ void				display_solution(uint8_t opts, \
 		indent_control(&indent);
 		print_flows(fd, colors, flows);
 	}
-	if (IS_SHORT(opts))
+	if (IS_SHORT(opts) || IS_EMPTY(opts))
 	{
+		if (IS_SHORT(opts) == FALSE)
+			print_buffer(buffer);
 		indent_control(&indent);
 		if (print_short(fd, colors, flows) == FALSE)
 			handle_error("ERROR printing short", buffer, farm, flows);
 	}
-	ft_vdel(&colors);
+	if (IS_COLOR(opts))
+		ft_vdel(&colors);
 	exit(fd);
 }

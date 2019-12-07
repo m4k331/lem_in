@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/03 15:14:45 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/03 20:53:43 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 22:48:02 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static inline void	calc_number_of_steps_in_flow(t_flow *flow, long ants)
 		sum_all_rooms += NUMBER_OF_ROOMS(*path);
 		path = ft_vnext_con(flow->paths);
 	}
-	flow->steps = (ants + sum_all_rooms) / NUMBER_OF_PATHS(flow) - 1;
+	flow->steps = (ants + sum_all_rooms - 1) / NUMBER_OF_PATHS(flow) - 1;
 }
 
 void				calculation_of_flow_parameters(t_flow *flow, long ants)

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:57:06 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 23:24:58 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static inline int8_t	nodes_linker(t_farm *farm, t_node *left, t_node *right)
 ** returns: 0 in case of analysis completion and -1 in case of error
 */
 
+
 int8_t					set_edges(t_farm *farm, t_vector *buffer)
 {
 	t_str				**raw_str;
@@ -63,11 +64,9 @@ int8_t					set_edges(t_farm *farm, t_vector *buffer)
 	char				*sep;
 	int8_t				state;
 
+	raw_str = ft_vcurr_con(buffer);
 	while (TRUE)
 	{
-		raw_str = ft_vnext_con(buffer);
-		if (raw_str == NULL)
-			return (ERROR);
 		if (!STARTS_WITH_HASH((*raw_str)->con))
 		{
 			sep = ft_memchr((*raw_str)->con, SEP, (*raw_str)->len);
@@ -81,5 +80,7 @@ int8_t					set_edges(t_farm *farm, t_vector *buffer)
 			if (state != SUCCESS)
 				return (state);
 		}
+		if ((raw_str = ft_vnext_con(buffer)) == NULL)
+			return (ERROR);
 	}
 }

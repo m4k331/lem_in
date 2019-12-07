@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 22:30:50 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@
 # define IS_SHORT(opt)    ((opt) & MASK_SHORT)
 # define IS_MULTI(opt)    ((opt) & MASK_MULTI)
 # define IS_USAGE(opt)    ((opt) & MASK_USAGE)
+# define IS_EMPTY(opt)    ((((opt) & 0xFD) & 0xDF) == 0)
 
 # define MC               240
 # define COLOR_CODE       "\33[38;5;000m"
