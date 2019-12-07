@@ -6,13 +6,14 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:23:58 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 01:20:14 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 15:22:36 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FLOW_H
 # define FLOW_H
 
+# define COLOR_LN      11
 # define INITIAL_FLOWS 128
 
 typedef struct		s_flow
@@ -48,11 +49,11 @@ typedef struct		s_room
 {
 	t_str			*name;
 	long			ant;
-	char			color[16];
+	char			color[COLOR_LN];
 }					t_room;
 
 t_room				*create_room(t_str *name);
 int					destroy_room(void *room);
-void				add_ant_to_room(t_room *room, long ant);
+void				add_ant_to_room(t_room *room, t_vector *colors, long ant);
 
 #endif

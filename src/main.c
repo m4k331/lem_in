@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:01:54 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/06 19:25:02 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 17:45:08 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int					main(int ac, char **av)
 //	TO_MULTI(opts);
 	TO_PATHS(opts);
 	TO_FLOWS(opts);
+	TO_SHORT(opts);
 	display_solution(opts, buffer, farm, flows);
 //	ft_dictiterate(farm->nodes, prnt);
 	destroy_buffer(&buffer);

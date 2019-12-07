@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/06 20:59:52 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/07 16:23:12 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SPACE ' '
 # define SEP '-'
 # define NL '\n'
+# define L  'L'
 # define FORBIDDEN_SYMBOLS(x) ((x) == '#' || (x) == 'L')
 # define NULL_TERMINATE '\0'
 # define MASK_COMMON 1U
@@ -82,7 +83,6 @@
 
 # define MC               240
 # define COLOR_CODE       "\33[38;5;000m"
-# define COLOR_LN         11
 # define COLOR_PREFIX_LN  7
 # define FIXED_NUM_LN     3
 # define DISCOLOR         "\x1b[0m"
@@ -169,5 +169,7 @@ void				print_buffer(t_vector *buffer);
 void				destroy_buffer(t_vector **buffer);
 
 int					insert_number_inline(char *line, long num);
+long				shift_ants(t_path *path, t_vector *colors, long ant);
+int8_t				convert_path_to_printable(t_path *path);
 
 #endif

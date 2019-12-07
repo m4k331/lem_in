@@ -21,6 +21,7 @@ static int			reset_node(void *n)
 	node->delta = INF;
 	node->predecessor = NULL;
 	node->marks = 0;
+	return (TRUE);
 }
 
 static inline void	update_potential(t_farm *farm)
