@@ -105,23 +105,24 @@ static inline void		print_flow(int fd, \
 	ft_putchar_fd(NL, fd);
 }
 
-void					print_flows(int fd, t_vector *colors, t_flows *flows)
+void					print_flows(t_display *d)
 {
 	char				line[MAX_FLOW_LN];
 	t_flow				**flow;
 
-	flows->flows->iter = -1;
-	flow = ft_vnext_con(flows->flows);
-	if (colors)
+	indent_control(d);
+	d->flows->flows->iter = -1;
+	flow = ft_vnext_con(d->flows->flows);
+	if (d->colors)
 		while (flow)
 		{
-			print_flow(fd, line, colors, *flow);
-			flow = ft_vnext_con(flows->flows);
+			print_flow(d->fd, line, d->colors, *flow);
+			flow = ft_vnext_con(d->flows->flows);
 		}
 	else
 		while (flow)
 		{
-			print_flow(fd, line, NULL, *flow);
-			flow = ft_vnext_con(flows->flows);
+			print_flow(d->fd, line, NULL, *flow);
+			flow = ft_vnext_con(d->flows->flows);
 		}
 }

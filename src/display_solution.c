@@ -6,29 +6,71 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 22:24:51 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 01:55:20 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static inline void	indent_control(int8_t *indent)
+static inline int	get_display_fd(t_farm *farm)
 {
-	if (*indent == TRUE)
-		ft_putchar(NL);
-	*indent = TRUE;
+	char			*name;
+	size_t			len;
+	int				fd;
+
+	if (farm->file == NULL)
+		return (-1);
+	len = ft_strlen(farm->file);
+	name = ft_strnew(len + OUT_FILE_LN);
+	if (name == NULL)
+		return (-1);
+	ft_memcpy(name, OUT_FILE, OUT_FILE_LN);
+	ft_memcpy(name + OUT_FILE_LN, farm->file, len);
+	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	ft_memdel((void**)&name);
+	return (fd);
 }
 
-static inline void	handle_error(char *msg, \
-								t_vector *buffer, \
-								t_farm *farm, \
-								t_flows *flows)
+static t_display	*create_display(uint8_t opts, \
+									t_vector *buffer, \
+									t_farm *farm, \
+									t_flows *flows)
 {
-	perror(msg);
-	destroy_buffer(&buffer);
-	destroy_farm(&farm);
-	destroy_flows(&flows);
-	exit(1);
+	t_display		*display;
+
+	display = (t_display*)malloc(sizeof(t_display));
+	if (display == NULL)
+		return (NULL);
+	display->fd = get_display_fd(farm);
+	if (display->fd == -1)
+	{
+		ft_memdel((void**)&display);
+		return (NULL);
+	}
+	display->indent = FALSE;
+	display->colors = IS_COLOR(opts) && !IS_MULTI(opts) ? get_colors(MC) : NULL;
+	display->buffer = buffer;
+	display->farm = farm;
+	display->flows = flows;
+	return (display);
+}
+
+static inline void	destroy_display(t_display **display)
+{
+	ft_vdel(&(*display)->colors);
+	ft_memdel((void**)display);
+}
+
+static inline void	shutting_display(t_display **display, char *msg)
+{
+	if (msg)
+		perror(msg);
+	if (*display)
+	{
+		if (close((*display)->fd) == -1)
+			perror("ERROR closing display file");
+		destroy_display(display);
+	}
 }
 
 void				display_solution(uint8_t opts, \
@@ -36,37 +78,29 @@ void				display_solution(uint8_t opts, \
 									t_farm *farm, \
 									t_flows *flows)
 {
-	t_vector		*colors;
-	int8_t			indent;
-	int				fd;
+	t_display		*display;
 
-	fd = 1;
-	indent = FALSE;
-	colors = IS_COLOR(opts) && IS_MULTI(opts) == FALSE ? get_colors(MC) : NULL;
-	if (IS_STEPS(opts))
+	display = create_display(opts, buffer, farm, flows);
+	if (display == NULL)
 	{
-		indent_control(&indent);
-		print_steps(fd, colors, flows);
+		shutting_display(&display, "ERROR create struct display");
+		return ;
 	}
-	if (IS_PATHS(opts))
+	if (IS_STEPS(opts))
+		print_steps(display);
+	if (IS_PATHS(opts) && print_paths(display) == FALSE)
 	{
-		indent_control(&indent);
-		if (print_paths(fd, colors, flows) == FALSE)
-			handle_error("ERROR printing paths", buffer, farm, flows);
+		shutting_display(&display, "ERROR printing paths");
+		return ;
 	}
 	if (IS_FLOWS(opts))
-	{
-		indent_control(&indent);
-		print_flows(fd, colors, flows);
-	}
+		print_flows(display);
 	if (IS_SHORT(opts) || IS_EMPTY(opts))
 	{
 		if (IS_SHORT(opts) == FALSE)
 			print_buffer(buffer);
-		indent_control(&indent);
-		if (print_short(fd, colors, flows) == FALSE)
-			handle_error("ERROR printing short", buffer, farm, flows);
+		if (print_short(display) == FALSE)
+			shutting_display(&display, "ERROR printing short");
 	}
-	ft_vdel(&colors);
-	exit(fd);
+	shutting_display(&display, NULL);
 }

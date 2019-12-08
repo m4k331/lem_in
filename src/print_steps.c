@@ -6,28 +6,29 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 21:43:59 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/05 01:20:14 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 01:25:14 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void				print_steps(int fd, t_vector *colors, t_flows *flows)
+void				print_steps(t_display *d)
 {
 	char			result[COLOR_LN + NUM_MAX_LN + DISCOLOR_END_LN];
 	int				len;
 
-	if (colors)
+	indent_control(d);
+	if (d->colors)
 	{
-		ft_memcpy(result, ft_vat(colors, CODE_GOLD), COLOR_LN);
-		len = insert_number_inline(result + COLOR_LN, flows->best_steps);
+		ft_memcpy(result, ft_vat(d->colors, CODE_GOLD), COLOR_LN);
+		len = insert_number_inline(result + COLOR_LN, d->flows->best_steps);
 		ft_memcpy(result + COLOR_LN + len, DISCOLOR_END, DISCOLOR_END_LN);
-		write(fd, result, COLOR_LN + len + DISCOLOR_END_LN);
+		write(d->fd, result, COLOR_LN + len + DISCOLOR_END_LN);
 	}
 	else
 	{
-		len = insert_number_inline(result, flows->best_steps);
+		len = insert_number_inline(result, d->flows->best_steps);
 		result[len] = NL;
-		write(fd, result, len + 1);
+		write(d->fd, result, len + 1);
 	}
 }

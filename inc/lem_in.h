@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/08 23:50:16 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 01:38:05 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@
 
 # define VISIT(x)        ((x) |= 2U)
 # define VISITED(x)      ((x) & 2U)
-# define UNVISITING(x)   ((x) ^= 2U)
 
 # define MARK(x)         ((x) |= 1U)
 # define MARKED(x)       ((x) & 1U)
@@ -114,6 +113,8 @@
 # define RM_FLOW_L_LN     7
 # define RM_FLOW_R        "\t|\tants: "
 # define RM_FLOW_R_LN     9
+# define OUT_FILE         "out_"
+# define OUT_FILE_LN      4
 # define MAX_FLOW_LN      (NUM_MAX_LN * 2 + HD_FLOW_L_LN + HD_FLOW_M_LN + \
 									HD_FLOW_R_LN + COLOR_LN + DISCOLOR_END_LN)
 
@@ -137,7 +138,6 @@ typedef struct		s_display
 	t_farm			*farm;
 	int				fd;
 	int8_t			indent;
-	uint8_t			opts;
 }					t_display;
 
 void				display_solution(uint8_t opts, \
@@ -145,10 +145,11 @@ void				display_solution(uint8_t opts, \
 									t_farm *farm, \
 									t_flows *flows);
 
-void				print_steps(int fd, t_vector *colors, t_flows *flows);
-int8_t				print_paths(int fd, t_vector *colors, t_flows *flows);
-void				print_flows(int fd, t_vector *colors, t_flows *flows);
-int8_t				print_short(int fd, t_vector *colors, t_flows *flows);
+void				indent_control(t_display *d);
+void				print_steps(t_display *d);
+int8_t				print_paths(t_display *d);
+void				print_flows(t_display *d);
+int8_t				print_short(t_display *d);
 
 int8_t				display_color_path(int fd, char *color, t_path *path);
 int8_t				display_path(int fd, t_path *path);

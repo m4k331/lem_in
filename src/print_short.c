@@ -6,13 +6,13 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:45:39 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/08 15:50:36 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/08 16:26:53 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int8_t		preparing_printing(t_flow *flow, \
+static int8_t		preparing_print(t_flow *flow, \
 										t_vector *colors, \
 										char **line, \
 										long *ants)
@@ -117,21 +117,22 @@ static inline void	print_position_ants(int fd, \
 	write(fd, line, len);
 }
 
-int8_t				print_short(int fd, t_vector *colors, t_flows *flows)
+int8_t				print_short(t_display *d)
 {
 	char			*line;
 	long			ants;
 	long			num_ant;
-	long			finished_ants;
+	long			finished;
 
-	if (preparing_printing(flows->max_flow, colors, &line, &ants) == FALSE)
+	indent_control(d);
+	if (preparing_print(d->flows->max_flow, d->colors, &line, &ants) == FALSE)
 		return (FALSE);
 	num_ant = 1;
-	finished_ants = 0;
-	while (finished_ants != ants)
+	finished = 0;
+	while (finished != ants)
 	{
-		push_ants_one_wave(flows->max_flow, colors, &num_ant, &finished_ants);
-		print_position_ants(fd, line, flows->max_flow, colors);
+		push_ants_one_wave(d->flows->max_flow, d->colors, &num_ant, &finished);
+		print_position_ants(d->fd, line, d->flows->max_flow, d->colors);
 	}
 	ft_memdel((void**)&line);
 	return (TRUE);
