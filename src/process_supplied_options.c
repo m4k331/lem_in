@@ -30,7 +30,7 @@ void				process_supplied_options(uint8_t *opts, int ac, char **av)
 			TO_SHORT(*opts);
 		else if (ft_strcmp(*av, OPT_MULTI) == 0)
 			TO_MULTI(*opts);
-		else
+		else if (!IS_MULTI(*opts))
 			TO_USAGE(*opts);
 	}
 }

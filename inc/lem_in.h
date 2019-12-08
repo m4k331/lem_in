@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 01:38:05 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 01:51:37 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@
 # define RM_FLOW_L_LN     7
 # define RM_FLOW_R        "\t|\tants: "
 # define RM_FLOW_R_LN     9
-# define OUT_FILE         "out_"
+# define OUT_FILE         "_out"
 # define OUT_FILE_LN      4
 # define MAX_FLOW_LN      (NUM_MAX_LN * 2 + HD_FLOW_L_LN + HD_FLOW_M_LN + \
 									HD_FLOW_R_LN + COLOR_LN + DISCOLOR_END_LN)

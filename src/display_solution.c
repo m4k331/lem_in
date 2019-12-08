@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 01:55:20 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 01:56:38 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static inline int	get_display_fd(t_farm *farm)
 	name = ft_strnew(len + OUT_FILE_LN);
 	if (name == NULL)
 		return (-1);
-	ft_memcpy(name, OUT_FILE, OUT_FILE_LN);
-	ft_memcpy(name + OUT_FILE_LN, farm->file, len);
+	ft_memcpy(name, farm->file, len);
+	ft_memcpy(name + len, OUT_FILE, OUT_FILE_LN);
 	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	ft_memdel((void**)&name);
 	return (fd);
