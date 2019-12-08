@@ -6,18 +6,20 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 01:56:38 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 02:26:53 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static inline int	get_display_fd(t_farm *farm)
+static inline int	get_display_fd(uint8_t opts, t_farm *farm)
 {
 	char			*name;
 	size_t			len;
 	int				fd;
 
+	if (!IS_MULTI(opts))
+		return (STDOUT_FILENO);
 	if (farm->file == NULL)
 		return (-1);
 	len = ft_strlen(farm->file);
@@ -32,7 +34,6 @@ static inline int	get_display_fd(t_farm *farm)
 }
 
 static t_display	*create_display(uint8_t opts, \
-									t_vector *buffer, \
 									t_farm *farm, \
 									t_flows *flows)
 {
@@ -41,7 +42,7 @@ static t_display	*create_display(uint8_t opts, \
 	display = (t_display*)malloc(sizeof(t_display));
 	if (display == NULL)
 		return (NULL);
-	display->fd = get_display_fd(farm);
+	display->fd = get_display_fd(opts, farm);
 	if (display->fd == -1)
 	{
 		ft_memdel((void**)&display);
@@ -49,7 +50,6 @@ static t_display	*create_display(uint8_t opts, \
 	}
 	display->indent = FALSE;
 	display->colors = IS_COLOR(opts) && !IS_MULTI(opts) ? get_colors(MC) : NULL;
-	display->buffer = buffer;
 	display->farm = farm;
 	display->flows = flows;
 	return (display);
@@ -80,7 +80,7 @@ void				display_solution(uint8_t opts, \
 {
 	t_display		*display;
 
-	display = create_display(opts, buffer, farm, flows);
+	display = create_display(opts, farm, flows);
 	if (display == NULL)
 	{
 		shutting_display(&display, "ERROR create struct display");
@@ -98,7 +98,7 @@ void				display_solution(uint8_t opts, \
 	if (IS_SHORT(opts) || IS_EMPTY(opts))
 	{
 		if (IS_SHORT(opts) == FALSE)
-			print_buffer(buffer);
+			print_buffer(display->fd, buffer);
 		if (print_short(display) == FALSE)
 			shutting_display(&display, "ERROR printing short");
 	}

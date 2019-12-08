@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 01:51:37 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 02:06:00 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,6 @@ typedef struct		s_farm
 typedef struct		s_display
 {
 	t_vector		*colors;
-	t_vector		*buffer;
 	t_flows			*flows;
 	t_farm			*farm;
 	int				fd;
@@ -150,6 +149,7 @@ void				print_steps(t_display *d);
 int8_t				print_paths(t_display *d);
 void				print_flows(t_display *d);
 int8_t				print_short(t_display *d);
+void				print_buffer(int fd, t_vector *buffer);
 
 int8_t				display_color_path(int fd, char *color, t_path *path);
 int8_t				display_path(int fd, t_path *path);
@@ -185,7 +185,6 @@ t_str				*get_hash_name(t_str *name);
 t_node				*get_hash_node(t_farm *farm, t_str *name);
 
 t_vector			*get_fd_buffer(int fd);
-void				print_buffer(t_vector *buffer);
 void				destroy_buffer(t_vector **buffer);
 
 int					insert_number_inline(char *line, long num);

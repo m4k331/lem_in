@@ -6,20 +6,21 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 21:36:23 by ahugh             #+#    #+#             */
-/*   Updated: 2019/11/21 23:21:01 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 02:11:41 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static int			print(void *str)
+void				print_buffer(int fd, t_vector *buffer)
 {
-	ft_tstrputendl(*(t_str**)str);
-	return (TRUE);
-}
+	t_str			**str;
 
-void				print_buffer(t_vector *buffer)
-{
 	buffer->iter = -1;
-	ft_vmap(buffer, 0, print);
+	str = ft_vnext_con(buffer);
+	while (str)
+	{
+		ft_tstrputendl_fd(fd, *(t_str**)str);
+		str = ft_vnext_con(buffer);
+	}
 }

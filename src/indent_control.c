@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/09 01:25:16 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 01:25:16 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 01:25:42 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void				indent_control(t_display *d)
 {
 	if (d->indent == TRUE)
-		ft_putchar(NL);
+		ft_putchar_fd(NL, d->fd);
 	d->indent = TRUE;
 }
