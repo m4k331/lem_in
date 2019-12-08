@@ -39,6 +39,5 @@ void				destroy_node(void *n);
 int8_t				add_edge_to_node(t_node *from, t_node *to, int8_t weight);
 void				reset_variables_in_node(t_node *node);
 int					cmp_node(void *a, void *b);
-void				print_node(t_node *node);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 22:30:50 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/08 23:50:16 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # define MARK(x)         ((x) |= 1U)
 # define MARKED(x)       ((x) & 1U)
 # define UNMARKING(x)    ((x) ^= 1U)
+
+# define IS_OPTION(arg) ((arg)[0] == SEP && (arg)[1] == SEP)
 
 # define OPT_STEPS       "--steps"
 # define OPT_COLOR       "--color"
@@ -123,8 +125,20 @@ typedef struct		s_farm
 	t_dict			*nodes;
 	t_node			*start;
 	t_node			*end;
+	char			*file;
 	int8_t			direct;
 }					t_farm;
+
+typedef struct		s_display
+{
+	t_vector		*colors;
+	t_vector		*buffer;
+	t_flows			*flows;
+	t_farm			*farm;
+	int				fd;
+	int8_t			indent;
+	uint8_t			opts;
+}					t_display;
 
 void				display_solution(uint8_t opts, \
 									t_vector *buffer, \
@@ -141,9 +155,10 @@ int8_t				display_path(int fd, t_path *path);
 
 void				process_supplied_options(uint8_t *opts, int ac, char **av);
 t_vector			*get_colors(int count_color);
-void				show_usage(uint8_t opts, char *name_of_program);
+void				show_usage(char *name_of_program);
+int8_t				get_count_files(int ac, char **av);
 
-t_farm				*build_farm(t_vector *buffer);
+t_farm				*build_farm(t_vector *buffer, char *file_name);
 void				destroy_farm(t_farm **farm);
 void				marks_reachable_nodes(t_farm *farm);
 void				del_unmarked_nodes(t_farm *farm);

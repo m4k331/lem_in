@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:45:39 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 23:29:29 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/08 15:50:36 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ static int8_t		preparing_printing(t_flow *flow, \
 	while (path)
 	{
 		*ants += (*path)->ants;
-		if (len < (*path)->len_path)
-			len = (*path)->len_path;
-		if (count < (*path)->rooms->head)
-			count = (*path)->rooms->head;
+		len += (*path)->len_path;
+		count += (*path)->rooms->head;
 		if (convert_path_to_printable(*path) == FALSE)
 			return (FALSE);
 		path = ft_vnext_con(flow->paths);
@@ -135,8 +133,6 @@ int8_t				print_short(int fd, t_vector *colors, t_flows *flows)
 		push_ants_one_wave(flows->max_flow, colors, &num_ant, &finished_ants);
 		print_position_ants(fd, line, flows->max_flow, colors);
 	}
-	if (line == NULL)
-		return (FALSE);
 	ft_memdel((void**)&line);
 	return (TRUE);
 }

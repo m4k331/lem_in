@@ -67,7 +67,6 @@ void				display_solution(uint8_t opts, \
 		if (print_short(fd, colors, flows) == FALSE)
 			handle_error("ERROR printing short", buffer, farm, flows);
 	}
-	if (IS_COLOR(opts))
-		ft_vdel(&colors);
+	ft_vdel(&colors);
 	exit(fd);
 }

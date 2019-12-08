@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:28:02 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/08 23:32:54 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** initializes a new farm
 */
 
-static inline t_farm	*init_farm(void)
+static inline t_farm	*init_farm(char *file_name)
 {
 	t_farm				*farm;
 
@@ -29,6 +29,7 @@ static inline t_farm	*init_farm(void)
 		ft_memdel((void**)&farm);
 		return (NULL);
 	}
+	farm->file = file_name;
 	return (farm);
 }
 
@@ -86,11 +87,11 @@ static inline int8_t	farm_validation(t_farm *farm)
 ** returns farm, otherwise returns NULL
 */
 
-t_farm					*build_farm(t_vector *buffer)
+t_farm					*build_farm(t_vector *buffer, char *file_name)
 {
 	t_farm				*farm;
 
-	farm = init_farm();
+	farm = init_farm(file_name);
 	if (farm == NULL)
 	{
 		perror("ERROR farm initialization");
