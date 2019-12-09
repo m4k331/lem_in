@@ -1,5 +1,7 @@
 .idea/*
 cmake-build-debug/*
+lem-in
+obj/*
 CMakeFiles/*
 cmake_install.cmake
 libft.cbp
