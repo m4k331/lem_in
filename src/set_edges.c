@@ -34,7 +34,9 @@ static inline int8_t	nodes_linker(t_farm *farm, t_node *left, t_node *right)
 		return (ERROR);
 	left_hash = get_hash_node(farm, left->name);
 	right_hash = get_hash_node(farm, right->name);
-	if (left == farm->start)
+	if (left_hash == right_hash)
+		state = add_edge_to_node(farm->start, farm->end, 1);
+	else if (left == farm->start)
 		state = add_edge_to_node(left, right_hash, 1);
 	else if (right == farm->start)
 		state = add_edge_to_node(right, left_hash, 1);

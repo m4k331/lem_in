@@ -6,14 +6,48 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 17:10:04 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/02 17:13:24 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 13:48:29 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int8_t				build_direct_flow(t_flows *flows, t_farm *farm)
+static inline t_path	*get_direct_path(t_farm *farm)
 {
-	printf("build dicrecct flow %p %p\n", flows, farm);
+	t_path				*direct;
+
+	direct = create_path();
+	if (direct == NULL)
+		return (NULL);
+	ft_vpush_back(direct->rooms, &farm->start, sizeof(void*));
+	ft_vpush_back(direct->rooms, &farm->end, sizeof(void*));
+	direct->ants = farm->ants;
+	direct->len_path = (long)(farm->start->name->len + farm->end->name->len);
+	return (direct);
+}
+
+int8_t					build_direct_flow(t_flows *flows, t_farm *farm)
+{
+	t_flow				*flow;
+	t_path				*direct_path;
+
+	flow = create_flow();
+	if (flow == NULL)
+	{
+		perror("ERROR creating direct flow");
+		return (FALSE);
+	}
+	direct_path = get_direct_path(farm);
+	if (direct_path == NULL)
+	{
+		perror("ERROR creating direct path");
+		ft_memdel((void**)&flow);
+		return (FALSE);
+	}
+	ft_vpush_back(flow->paths, &direct_path, sizeof(void*));
+	flow->steps = 1;
+	ft_vpush_back(flows->flows, &flow, sizeof(void*));
+	flows->max_flow = flow;
+	flows->best_steps = 1;
 	return (TRUE);
 }

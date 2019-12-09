@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 02:47:56 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 13:54:27 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,62 +18,62 @@
 # include "flow.h"
 # include <time.h>
 
-# define INF (INT_MAX)
-# define VBUFFER_SIZE 1024U
-# define LEMIN_INIT_DICT_SIZE 16U
+# define INF                   (INT_MAX)
+# define VBUFFER_SIZE          1024U
+# define LEMIN_INIT_DICT_SIZE  16U
 # define STARTS_WITH_HASH(str) (*(str) == '#')
-# define CMD_START "##start"
-# define CMD_END "##end"
-# define SPACE ' '
-# define SEP '-'
-# define NL '\n'
-# define L  'L'
-# define FORBIDDEN_SYMBOLS(x) ((x) == '#' || (x) == 'L')
-# define NULL_TERMINATE '\0'
-# define MASK_COMMON 1U
-# define MASK_START 2U
-# define MASK_END 4U
-# define IS_COMMON(x) ((x) & MASK_COMMON)
-# define IS_START(x) ((x) & MASK_START)
+# define CMD_START             "##start"
+# define CMD_END               "##end"
+# define SPACE                 ' '
+# define SEP                   '-'
+# define NL                    '\n'
+# define L                     'L'
+# define FORBIDDEN_SYMBOLS(x)  ((x) == '#' || (x) == 'L')
+# define NULL_TERMINATE        '\0'
+# define MASK_COMMON           1U
+# define MASK_START            2U
+# define MASK_END              4U
+# define IS_COMMON(x)          ((x) & MASK_COMMON)
+# define IS_START(x)           ((x) & MASK_START)
 # define HIDE_SYMBOL(str)      (*(str) = NULL_TERMINATE)
 # define REVEAL_SYMBOL(str, s) (*(str) = (s))
-# define QUEUE_IS_EMPTY(q) ((q)->iter == (q)->head - 1)
-# define HEAP_IS_EMPTY(h) ((h)->n == 0)
+# define QUEUE_IS_EMPTY(q)     ((q)->iter == (q)->head - 1)
+# define HEAP_IS_EMPTY(h)      ((h)->n == 0)
 # define NUMBER_OF_PATHS(flow) ((flow)->paths->head)
 # define NUMBER_OF_ROOMS(path) ((path)->rooms->head)
-# define INSERT_HASH(str) (*(str) = '#')
+# define INSERT_HASH(str)      (*(str) = '#')
 
-# define VISIT(x)        ((x) |= 2U)
-# define VISITED(x)      ((x) & 2U)
+# define VISIT(x)              ((x) |= 2U)
+# define VISITED(x)            ((x) & 2U)
 
-# define MARK(x)         ((x) |= 1U)
-# define MARKED(x)       ((x) & 1U)
-# define UNMARKING(x)    ((x) ^= 1U)
+# define MARK(x)               ((x) |= 1U)
+# define MARKED(x)             ((x) & 1U)
+# define UNMARKING(x)          ((x) ^= 1U)
 
-# define IS_OPTION(arg) ((arg)[0] == SEP && (arg)[1] == SEP)
+# define IS_OPTION(arg)        ((arg)[0] == SEP && (arg)[1] == SEP)
 
-# define OPT_STEPS       "--steps"
-# define OPT_COLOR       "--color"
-# define OPT_PATHS       "--paths"
-# define OPT_FLOWS       "--flows"
-# define OPT_SHORT       "--short"
-# define OPT_MULTI       "--multi"
+# define OPT_STEPS             "--steps"
+# define OPT_COLOR             "--color"
+# define OPT_PATHS             "--paths"
+# define OPT_FLOWS             "--flows"
+# define OPT_SHORT             "--short"
+# define OPT_MULTI             "--multi"
 
-# define MASK_STEPS       1U
-# define MASK_COLOR       2U
-# define MASK_PATHS       4U
-# define MASK_FLOWS       8U
-# define MASK_SHORT       16U
-# define MASK_MULTI       32U
-# define MASK_USAGE       128U
+# define MASK_STEPS            1U
+# define MASK_COLOR            2U
+# define MASK_PATHS            4U
+# define MASK_FLOWS            8U
+# define MASK_SHORT            16U
+# define MASK_MULTI            32U
+# define MASK_USAGE            128U
 
-# define TO_STEPS(opt)    ((opt) |= MASK_STEPS)
-# define TO_COLOR(opt)    ((opt) |= MASK_COLOR)
-# define TO_PATHS(opt)    ((opt) |= MASK_PATHS)
-# define TO_FLOWS(opt)    ((opt) |= MASK_FLOWS)
-# define TO_SHORT(opt)    ((opt) |= MASK_SHORT)
-# define TO_MULTI(opt)    ((opt) |= MASK_MULTI)
-# define TO_USAGE(opt)    ((opt) |= MASK_USAGE)
+# define TO_STEPS(opt)         ((opt) |= MASK_STEPS)
+# define TO_COLOR(opt)         ((opt) |= MASK_COLOR)
+# define TO_PATHS(opt)         ((opt) |= MASK_PATHS)
+# define TO_FLOWS(opt)         ((opt) |= MASK_FLOWS)
+# define TO_SHORT(opt)         ((opt) |= MASK_SHORT)
+# define TO_MULTI(opt)         ((opt) |= MASK_MULTI)
+# define TO_USAGE(opt)         ((opt) |= MASK_USAGE)
 
 # define IS_STEPS(opt)    ((opt) & MASK_STEPS)
 # define IS_COLOR(opt)    ((opt) & MASK_COLOR)
@@ -147,6 +147,8 @@ void				print_steps(t_display *d);
 int8_t				print_paths(t_display *d);
 void				print_flows(t_display *d);
 int8_t				print_short(t_display *d);
+void				print_complex_path(t_display *d, char *line);
+void				print_direct_path(t_display *d, char *line);
 void				print_buffer(int fd, t_vector *buffer);
 
 int8_t				display_color_path(int fd, char *color, t_path *path);

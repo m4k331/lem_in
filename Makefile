@@ -86,6 +86,8 @@ FILES			=	add_ant_to_room.c \
                     set_ants.c \
                     set_edges.c \
                     set_nodes.c \
+                    print_complex_path.c \
+                    print_direct_path.c \
                     show_usage.c
 
 
