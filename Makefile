@@ -6,7 +6,7 @@
 #    By: ahugh <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 18:51:35 by ahugh             #+#    #+#              #
-#    Updated: 2019/12/09 02:46:51 by ahugh            ###   ########.fr        #
+#    Updated: 2019/12/09 18:01:25 by ahugh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,13 +88,15 @@ FILES			=	add_ant_to_room.c \
                     set_nodes.c \
                     print_complex_path.c \
                     print_direct_path.c \
+                    run.c \
+                    run_multi_threads.c \
                     show_usage.c
 
 
 # flags && compile
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -c
+CFLAGS			=	-Wall -Wextra -Werror -lpthread -c
 
 # ft library
 

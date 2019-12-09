@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 13:54:27 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/09 17:09:10 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include "node.h"
 # include "flow.h"
 # include <time.h>
+# include <pthread.h>
 
 # define INF                   (INT_MAX)
 # define VBUFFER_SIZE          1024U
@@ -75,48 +76,48 @@
 # define TO_MULTI(opt)         ((opt) |= MASK_MULTI)
 # define TO_USAGE(opt)         ((opt) |= MASK_USAGE)
 
-# define IS_STEPS(opt)    ((opt) & MASK_STEPS)
-# define IS_COLOR(opt)    ((opt) & MASK_COLOR)
-# define IS_PATHS(opt)    ((opt) & MASK_PATHS)
-# define IS_FLOWS(opt)    ((opt) & MASK_FLOWS)
-# define IS_SHORT(opt)    ((opt) & MASK_SHORT)
-# define IS_MULTI(opt)    ((opt) & MASK_MULTI)
-# define IS_USAGE(opt)    ((opt) & MASK_USAGE)
-# define IS_EMPTY(opt)    ((((opt) & 0xFD) & 0xDF) == 0)
+# define IS_STEPS(opt)         ((opt) & MASK_STEPS)
+# define IS_COLOR(opt)         ((opt) & MASK_COLOR)
+# define IS_PATHS(opt)         ((opt) & MASK_PATHS)
+# define IS_FLOWS(opt)         ((opt) & MASK_FLOWS)
+# define IS_SHORT(opt)         ((opt) & MASK_SHORT)
+# define IS_MULTI(opt)         ((opt) & MASK_MULTI)
+# define IS_USAGE(opt)         ((opt) & MASK_USAGE)
+# define IS_EMPTY(opt)         ((((opt) & 0xFD) & 0xDF) == 0)
 
-# define MC               240
-# define COLOR_CODE       "\33[38;5;000m"
-# define COLOR_PREFIX_LN  7
-# define FIXED_NUM_LN     3
-# define DISCOLOR         "\x1b[0m"
-# define DISCOLOR_LN      4
-# define DISCOLOR_END     "\x1b[0m\n"
-# define DISCOLOR_END_LN  5
-# define NUM_MAX_LN       20
-# define CODE_GOLD        220
-# define CODE_PURPLE      56
-# define SEP_PATH         " - "
-# define SEP_PATH_LN      3
-# define PATH_SHIFT_COLOR 40
-# define FLOW_SHIFT_COLOR 50
-# define PREFIX_PATH      "ants("
-# define PREFIX_PATH_LN   5
-# define SUFFIX_PATH      ") : "
-# define SUFFIX_PATH_LN   4
-# define HD_FLOW_L        "flow #"
-# define HD_FLOW_L_LN     6
-# define HD_FLOW_M        " (lines "
-# define HD_FLOW_M_LN     8
-# define HD_FLOW_R        "):"
-# define HD_FLOW_R_LN     2
-# define RM_FLOW_L        "rooms: "
-# define RM_FLOW_L_LN     7
-# define RM_FLOW_R        "\t|\tants: "
-# define RM_FLOW_R_LN     9
-# define OUT_FILE         "_out"
-# define OUT_FILE_LN      4
-# define MAX_FLOW_LN      72
-# define HD_FLOW_MAIN_LN  (HD_FLOW_L_LN + HD_FLOW_M_LN + HD_FLOW_R_LN)
+# define MC                    240
+# define COLOR_CODE            "\33[38;5;000m"
+# define COLOR_PREFIX_LN       7
+# define FIXED_NUM_LN          3
+# define DISCOLOR              "\x1b[0m"
+# define DISCOLOR_LN           4
+# define DISCOLOR_END          "\x1b[0m\n"
+# define DISCOLOR_END_LN       5
+# define NUM_MAX_LN            20
+# define CODE_GOLD             220
+# define CODE_PURPLE           56
+# define SEP_PATH              " - "
+# define SEP_PATH_LN           3
+# define PATH_SHIFT_COLOR      40
+# define FLOW_SHIFT_COLOR      50
+# define PREFIX_PATH           "ants("
+# define PREFIX_PATH_LN        5
+# define SUFFIX_PATH           ") : "
+# define SUFFIX_PATH_LN        4
+# define HD_FLOW_L             "flow #"
+# define HD_FLOW_L_LN          6
+# define HD_FLOW_M             " (lines "
+# define HD_FLOW_M_LN          8
+# define HD_FLOW_R             "):"
+# define HD_FLOW_R_LN          2
+# define RM_FLOW_L             "rooms: "
+# define RM_FLOW_L_LN          7
+# define RM_FLOW_R             "\t|\tants: "
+# define RM_FLOW_R_LN          9
+# define OUT_FILE              "_out"
+# define OUT_FILE_LN           4
+# define MAX_FLOW_LN           72
+# define HD_FLOW_MAIN_LN       (HD_FLOW_L_LN + HD_FLOW_M_LN + HD_FLOW_R_LN)
 
 typedef struct		s_farm
 {
@@ -136,6 +137,12 @@ typedef struct		s_display
 	int				fd;
 	int8_t			indent;
 }					t_display;
+
+typedef struct		s_data
+{
+	uint8_t			opts;
+	char			*file;
+}					t_data;
 
 void				display_solution(uint8_t opts, \
 									t_vector *buffer, \
@@ -193,5 +200,8 @@ void				push_ants_one_wave(t_flow *flow, \
 										t_vector *colors, \
 										long *number_ant, \
 										long *finished_ants);
+
+void				run(uint8_t opts, char *file);
+void				run_multi_threads(uint8_t opts, int ac, char **av);
 
 #endif
