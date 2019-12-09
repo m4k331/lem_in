@@ -14,6 +14,6 @@
 
 int8_t				build_direct_flow(t_flows *flows, t_farm *farm)
 {
-	printf("build dicrecct flow\n");
+	printf("build dicrecct flow %p %p\n", flows, farm);
 	return (TRUE);
 }
