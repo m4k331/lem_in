@@ -6,7 +6,7 @@
 #    By: ahugh <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 18:51:35 by ahugh             #+#    #+#              #
-#    Updated: 2019/12/09 18:01:25 by ahugh            ###   ########.fr        #
+#    Updated: 2019/12/09 19:43:47 by ahugh            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,7 @@ FILES			=	add_ant_to_room.c \
 # flags && compile
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -lpthread -c
+CFLAGS			=	-Wall -Wextra -Werror -c
 
 # ft library
 

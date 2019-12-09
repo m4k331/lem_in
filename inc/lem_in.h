@@ -117,6 +117,7 @@
 # define OUT_FILE              "_out"
 # define OUT_FILE_LN           4
 # define MAX_FLOW_LN           72
+# define DIRECT_BUFF_SZ        (SHRT_MAX)
 # define HD_FLOW_MAIN_LN       (HD_FLOW_L_LN + HD_FLOW_M_LN + HD_FLOW_R_LN)
 
 typedef struct		s_farm

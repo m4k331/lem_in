@@ -31,7 +31,7 @@ static int8_t		preparing_print(t_display *d, char **line)
 		path = ft_vnext_con(d->flows->max_flow->paths);
 	}
 	if (d->farm->direct)
-		len = d->farm->ants * (len + 24 + (d->colors ? COLOR_LN : 0)) + 5;
+		len = DIRECT_BUFF_SZ;
 	else
 		len += count * (24 + (d->colors ? COLOR_LN : 0)) + DISCOLOR_END_LN;
 	*line = (char*)malloc(len * sizeof(char));
