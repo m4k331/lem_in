@@ -6,11 +6,19 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/07 21:59:12 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/10 00:59:33 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+static inline void		handle_commands(t_str *raw_str, uint8_t *type)
+{
+	if (ft_strcmp(CMD_START, raw_str->con) == 0)
+		*type = MASK_START;
+	else if (ft_strcmp(CMD_END, raw_str->con) == 0)
+		*type = MASK_END;
+}
 
 /*
 ** set_nodes - parses the buffer and creates nodes in the farm
@@ -29,12 +37,10 @@ int8_t					set_nodes(t_farm *farm, t_vector *buffer)
 		raw_str = ft_vnext_con(buffer);
 		if (raw_str == NULL)
 			return (ERROR);
-		if (IS_COMMON(type) && STARTS_WITH_HASH((*raw_str)->con))
+		if (STARTS_WITH_HASH((*raw_str)->con))
 		{
-			if (ft_strcmp(CMD_START, (*raw_str)->con) == 0)
-				type = MASK_START;
-			else if (ft_strcmp(CMD_END, (*raw_str)->con) == 0)
-				type = MASK_END;
+			if (IS_COMMON(type))
+				handle_commands(*raw_str, &type);
 		}
 		else
 		{
