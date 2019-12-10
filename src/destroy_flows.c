@@ -15,6 +15,6 @@
 void				destroy_flows(t_flows **flows)
 {
 	ft_vmap((*flows)->flows, 0, destroy_flow);
-	ft_vdel(&(*flows)->flows);
+	ft_vdel(&((*flows)->flows));
 	ft_memdel((void**)flows);
 }

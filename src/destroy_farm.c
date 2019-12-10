@@ -15,6 +15,6 @@
 void				destroy_farm(t_farm **farm)
 {
 	if ((*farm)->nodes)
-		ft_dictdel(&(*farm)->nodes, destroy_node);
+		ft_dictdel(&((*farm)->nodes), destroy_node);
 	ft_memdel((void**)farm);
 }

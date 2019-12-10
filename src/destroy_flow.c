@@ -18,7 +18,7 @@ int					destroy_flow(void *f)
 
 	flow = f;
 	ft_vmap((*flow)->paths, 0, destroy_path);
-	ft_vdel(&(*flow)->paths);
+	ft_vdel(&((*flow)->paths));
 	ft_memdel(f);
 	return (TRUE);
 }

@@ -19,7 +19,7 @@ int					destroy_path(void *p)
 	path = p;
 	if ((*path)->printable == TRUE)
 		ft_vmap((*path)->rooms, 0, destroy_room);
-	ft_vdel(&(*path)->rooms);
+	ft_vdel(&((*path)->rooms));
 	ft_memdel(p);
 	return (TRUE);
 }

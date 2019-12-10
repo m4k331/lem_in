@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:57:06 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/11 00:13:23 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/11 00:13:38 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ int8_t					set_edges(t_farm *farm, t_vector *buffer)
 			if ((sep = ft_memchr((*raw)->con, SEP, (*raw)->len)) == NULL)
 				return (FAIL);
 			HIDE_SYMBOL(sep);
-			right = ft_dictget(farm->nodes, sep + 1);
-			left = ft_dictget(farm->nodes, (*raw)->con);
+			if ((right = ft_dictget(farm->nodes, sep + 1)) == NULL || \
+				(left = ft_dictget(farm->nodes, (*raw)->con)) == NULL)
+				return (ERROR);
 			REVEAL_SYMBOL(sep, SEP);
 			if (right != left && \
 				(state = nodes_linker(farm, left, right)) != SUCCESS)
