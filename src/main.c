@@ -15,12 +15,24 @@
 int						main(int ac, char **av)
 {
 	uint8_t				opts;
+	int					count;
+	int					iter;
 
 	process_supplied_options(&opts, ac, av);
 	if (IS_USAGE(opts))
 		show_usage(*av);
 	if (IS_MULTI(opts))
-		run_multi_threads(opts, ac, av);
+	{
+		count = get_count_files(ac, av);
+		if (count == 0)
+			show_usage(*av);
+		iter = 0;
+		while (iter < count)
+		{
+			run(opts, av[ac - count + iter]);
+			iter++;
+		}
+	}
 	else
 		run(opts, NULL);
 	return (0);

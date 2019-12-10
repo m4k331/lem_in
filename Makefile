@@ -89,7 +89,6 @@ FILES			=	add_ant_to_room.c \
                     print_complex_path.c \
                     print_direct_path.c \
                     run.c \
-                    run_multi_threads.c \
                     show_usage.c
 
 

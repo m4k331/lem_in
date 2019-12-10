@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 20:55:17 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 17:09:10 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/10 22:55:43 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include "node.h"
 # include "flow.h"
 # include <time.h>
-# include <pthread.h>
 
 # define INF                   (INT_MAX)
 # define VBUFFER_SIZE          1024U
@@ -139,12 +138,6 @@ typedef struct		s_display
 	int8_t			indent;
 }					t_display;
 
-typedef struct		s_data
-{
-	uint8_t			opts;
-	char			*file;
-}					t_data;
-
 void				display_solution(uint8_t opts, \
 									t_vector *buffer, \
 									t_farm *farm, \
@@ -203,6 +196,5 @@ void				push_ants_one_wave(t_flow *flow, \
 										long *finished_ants);
 
 void				run(uint8_t opts, char *file);
-void				run_multi_threads(uint8_t opts, int ac, char **av);
 
 #endif

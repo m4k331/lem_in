@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/04 19:18:43 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/09 02:26:53 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/10 23:10:43 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static inline int	get_display_fd(uint8_t opts, t_farm *farm)
 		return (-1);
 	ft_memcpy(name, farm->file, len);
 	ft_memcpy(name + len, OUT_FILE, OUT_FILE_LN);
-	fd = open(name, O_WRONLY | O_APPEND | O_CREAT, 0644);
+	fd = open(name, O_CREAT | O_WRONLY, 0666);
 	ft_memdel((void**)&name);
 	return (fd);
 }
