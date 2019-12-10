@@ -16,6 +16,8 @@ int8_t				add_edge_to_node(t_node *from, t_node *to, int8_t weight)
 {
 	t_edge			*edge;
 
+	if (ft_dictget(from->edge, to->name->con) != NULL)
+		return (TRUE);
 	edge = create_edge(to, weight);
 	if (edge == NULL)
 		return (FALSE);
