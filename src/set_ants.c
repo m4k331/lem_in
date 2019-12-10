@@ -23,13 +23,19 @@ int8_t				set_ants(t_farm *farm, t_vector *buffer)
 	long			ants;
 
 	raw_str = ft_vnext_con(buffer);
-	if (raw_str == NULL)
-		return (FALSE);
-	if (ft_isnumeric_str((*raw_str)->con, FALSE) == FALSE)
-		return (FALSE);
-	ants = ft_atol((*raw_str)->con);
-	if (ants < 0)
-		return (FALSE);
-	farm->ants = (ants > INT_MAX ? INT_MAX : (int)ants);
-	return (TRUE);
+	while (raw_str)
+	{
+		if (STARTS_WITH_HASH((*raw_str)->con) == FALSE)
+		{
+			if (ft_isnumeric_str((*raw_str)->con, FALSE) == FALSE)
+				return (FALSE);
+			ants = ft_atol((*raw_str)->con);
+			if (ants < 0)
+				return (FALSE);
+			farm->ants = (ants > INT_MAX ? INT_MAX : (int)ants);
+			return (TRUE);
+		}
+		raw_str = ft_vnext_con(buffer);
+	}
+	return (FALSE);
 }
