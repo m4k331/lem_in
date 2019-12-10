@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/24 16:57:06 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/10 23:16:13 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/11 00:13:23 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,29 +59,28 @@ static inline int8_t	nodes_linker(t_farm *farm, t_node *left, t_node *right)
 
 int8_t					set_edges(t_farm *farm, t_vector *buffer)
 {
-	t_str				**raw_str;
-	t_node				*node_left;
-	t_node				*node_right;
+	t_str				**raw;
+	t_node				*left;
+	t_node				*right;
 	char				*sep;
 	int8_t				state;
 
-	raw_str = ft_vcurr_con(buffer);
+	raw = ft_vcurr_con(buffer);
 	while (TRUE)
 	{
-		if (!STARTS_WITH_HASH((*raw_str)->con))
+		if (!STARTS_WITH_HASH((*raw)->con))
 		{
-			sep = ft_memchr((*raw_str)->con, SEP, (*raw_str)->len);
-			if (sep == NULL)
+			if ((sep = ft_memchr((*raw)->con, SEP, (*raw)->len)) == NULL)
 				return (FAIL);
 			HIDE_SYMBOL(sep);
-			node_right = ft_dictget(farm->nodes, sep + 1);
-			node_left = ft_dictget(farm->nodes, (*raw_str)->con);
+			right = ft_dictget(farm->nodes, sep + 1);
+			left = ft_dictget(farm->nodes, (*raw)->con);
 			REVEAL_SYMBOL(sep, SEP);
-			state = nodes_linker(farm, node_left, node_right);
-			if (state != SUCCESS)
+			if (right != left && \
+				(state = nodes_linker(farm, left, right)) != SUCCESS)
 				return (state);
 		}
-		if ((raw_str = ft_vnext_con(buffer)) == NULL)
+		if ((raw = ft_vnext_con(buffer)) == NULL)
 			return (ERROR);
 	}
 }
