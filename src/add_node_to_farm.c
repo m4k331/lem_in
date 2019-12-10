@@ -79,8 +79,6 @@ static inline int8_t	add_common(t_farm *farm, t_node *node)
 
 static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 {
-	if (insert_node_to_farm(farm, node) == FALSE)
-		return (ERROR);
 	if (IS_START(type))
 	{
 		if (farm->start != NULL)
@@ -94,6 +92,8 @@ static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 			return (ERROR);
 		farm->end = node;
 	}
+	if (insert_node_to_farm(farm, node) == FALSE)
+		return (ERROR);
 	return (SUCCESS);
 }
 
