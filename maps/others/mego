@@ -1,0 +1,64 @@
+15
+##start
+start 2 21
+##end
+end 34 21
+a 4 13
+b 11 13
+c 18 13
+d 25 13
+e 32 13
+f 6 17
+g 9 17
+h 12 17
+i 15 17
+j 18 17
+k 21 17
+l 24 17
+m 27 17
+n 30 17
+o 6 21
+p 10 21
+q 14 21
+r 18 21
+s 22 21
+t 26 21
+u 30 21
+v 10 25
+w 18 25
+x 22 25
+y 26 25
+z 30 25
+d-c
+d-e
+b-a
+b-c
+e-end
+e-j
+a-start
+n-end
+n-m
+m-l
+l-k
+k-j
+j-r
+j-i
+i-h
+h-g
+g-f
+f-start
+y-z
+y-x
+x-w
+w-v
+z-end
+v-r
+v-start
+end-u
+u-t
+t-s
+s-r
+r-q
+q-p
+p-o
+o-start

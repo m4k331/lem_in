@@ -1,0 +1,18 @@
+21
+##start
+start 21 12
+##end
+end 30 10
+a 21 10
+b 19 11
+c 17 10
+start-a
+start-b
+start-c
+start-end
+a-b
+a-c
+a-end
+b-c
+b-end
+c-end
