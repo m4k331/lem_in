@@ -26,6 +26,7 @@ static inline void	insert_first_step_inline(t_display *d, char **line)
 	if (d->colors)
 		insert_color_inline(d->colors, line);
 	ft_memcpy(*line, "L", 1);
+	(*line)++;
 	(*line) += insert_number_inline(*line, 1);
 	ft_memcpy(*line, "-", 1);
 	(*line)++;
