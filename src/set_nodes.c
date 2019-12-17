@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/19 23:04:05 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/10 23:16:13 by ahugh            ###   ########.fr       */
+/*   Updated: 2019/12/18 00:01:52 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,13 @@ int8_t					set_nodes(t_farm *farm, t_vector *buffer)
 		if (raw_str == NULL)
 			return (ERROR);
 		if (STARTS_WITH_HASH((*raw_str)->con))
-		{
-			if (IS_COMMON(type))
-				handle_commands(*raw_str, &type);
-		}
+			handle_commands(*raw_str, &type);
 		else
 		{
 			state = add_node_to_farm(farm, *raw_str, type);
-			type = MASK_COMMON;
 			if (state != SUCCESS)
-				return (state);
+				return ((IS_COMMON(type) ? state : ERROR));
+			type = MASK_COMMON;
 		}
 	}
 }
