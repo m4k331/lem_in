@@ -38,44 +38,56 @@ typedef struct	s_point
 	double			z;
 }				t_point;
 
-// typedef struct	s_room
-// {
-// 	int				num;
-// 	t_point			pos;
-// }
+typedef struct	s_room
+{
+	char			*name;
+	t_point			*pos;
+	unsigned int	color;
+}				t_room;
 
-// typedef struct	s_way
-// {
-// 	t_point			*start;
-// 	t_point			*end;
-// 	unsigned int	color;
-// 	char			has_ant;
-// 	char			direction;
-// }				t_way;
+typedef	struct	s_path
+{
+	t_room			*r1;
+	t_room			*r2;
+	unsigned int	color;
+}				t_path;
 
 typedef struct	s_obj
 {
 	double		rot_m[3][3];
 	double		radius;
 
-	t_point		*rooms;
-	int			rooms_cnt;
+	t_room		*rooms;
+	size_t		rooms_cnt;
 
-	int			*lines;
-	uint16_t	*paths;
+	t_path		*paths;
+	size_t		paths_cnt;
+
+	uint16_t	**routes;
+	size_t		routes_cnt;
 }				t_obj;
 
 typedef struct	s_camera
 {
-	t_point	obs;
-	t_point	shift;
-	double	scale;
-	t_point	zoom;
+	t_point		obs;
+	t_point		shift;
+	double		scale;
+	t_point		zoom;
 }				t_camera;
+
+typedef struct		s_farm
+{
+	int64_t			ants;
+	t_dict			*nodes;
+	t_node			*start;
+	t_node			*end;
+	char			*file;
+	int8_t			direct;
+}					t_farm;
 
 typedef t_point	t_proj		(t_point point, void *state);
 typedef void	t_proj_init	(void *state);
-typedef void	t_draw_line	(void *state, t_path *path, t_step *step);
+typedef void	t_draw_line	(void *state, t_point *start, t_point *end, uint32_t color);
 
 typedef struct	s_state
 {
@@ -83,15 +95,15 @@ typedef struct	s_state
 
 	int				step;
 	int				step_percent;
-	t_obj			lem_in;
 
+	t_obj			obj;
 	t_cam			cam;
 
 	char			image_changed;
 
 	t_proj			*proj;
 	t_proj_init		*pr_init;
-	t_draw_line		*draw_cell;
+	t_draw_line		*draw_line;
 }				t_state;
 
 t_point			point_init(int x, int y, int z); // TODO: move
