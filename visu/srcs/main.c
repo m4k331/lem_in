@@ -1,6 +1,8 @@
 #include "visu.h"
 #include "libft.h"
 
+// TODO: FIXME: НЕ ЗАБЫТЬ ДОБАВИТЬ ЗАВИСИМОСТИ В MAKEFILE!!
+
 int main(int argc, char **argv)
 {
 	t_state	state;

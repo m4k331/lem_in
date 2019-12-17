@@ -1,7 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visu.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
+/*   Updated: 2019/12/17 19:58:51 by rnarbo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VISU_H
 # define VISU_H
 
 # include <stddef.h>
+# include <stdint.h>
+# include "libft.h"
 // # include "ft_dlst.h"
 
 // # define SIZE_X 100
@@ -41,7 +55,8 @@ typedef struct	s_point
 typedef struct	s_room
 {
 	char			*name;
-	t_point			*pos;
+	t_point			pos;
+	char			type; // 1 - start, 2 - end, 0 - regular
 	unsigned int	color;
 }				t_room;
 
@@ -60,10 +75,10 @@ typedef struct	s_obj
 	t_room		*rooms;
 	size_t		rooms_cnt;
 
-	t_path		*paths;
-	size_t		paths_cnt;
+	t_path		*cons;
+	size_t		cons;
 
-	uint16_t	**routes;
+	int			**routes;
 	size_t		routes_cnt;
 }				t_obj;
 
@@ -75,15 +90,25 @@ typedef struct	s_camera
 	t_point		zoom;
 }				t_camera;
 
-typedef struct		s_farm
-{
-	int64_t			ants;
-	t_dict			*nodes;
-	t_node			*start;
-	t_node			*end;
-	char			*file;
-	int8_t			direct;
-}					t_farm;
+// typedef struct		s_node
+// {
+// 	t_str			*name;
+// 	struct s_node	*predecessor;
+// 	t_dict			*edge;
+// 	int64_t			potential;
+// 	int64_t			delta;
+// 	uint8_t			marks;
+// }					t_node;
+
+// typedef struct		s_farm
+// {
+// 	int64_t			ants;
+// 	t_dict			*nodes;
+// 	t_node			*start;
+// 	t_node			*end;
+// 	char			*file;
+// 	int8_t			direct;
+// }					t_farm;
 
 typedef t_point	t_proj		(t_point point, void *state);
 typedef void	t_proj_init	(void *state);
@@ -97,7 +122,7 @@ typedef struct	s_state
 	int				step_percent;
 
 	t_obj			obj;
-	t_cam			cam;
+	t_camera		cam;
 
 	char			image_changed;
 

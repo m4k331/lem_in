@@ -17,7 +17,8 @@ FRAMEWORKS = -framework OpenGL -framework AppKit
 LDFLAGS += $(addprefix -L , $(LBDIRS)) $(FRAMEWORKS)
 LDLIBS += $(addprefix -l , $(LBNAMES:lib%.a=%))
 
-INCDIRS = $(HDIR) $(LBDIRS)
+INCDIRS = $(HDIR) $(LBDIRS) $(addsuffix /includes, $(LBDIRS))
+
 DBCFLAGS = -Wno-error -g
 CFLAGS = -Wall -Wextra -Werror $(addprefix -I , $(INCDIRS)) $(DBCFLAGS)
 
