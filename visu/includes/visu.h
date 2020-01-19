@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2019/12/17 19:58:51 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/17 07:24:32 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,18 @@ typedef struct	s_room
 	unsigned int	color;
 }				t_room;
 
-typedef	struct	s_path
+typedef	struct	s_conn
 {
 	t_room			*r1;
 	t_room			*r2;
 	unsigned int	color;
-}				t_path;
+}				t_conn;
+
+typedef struct	s_trace
+{
+	size_t			step;
+	int				route;
+}				t_trace;
 
 typedef struct	s_obj
 {
@@ -75,10 +81,13 @@ typedef struct	s_obj
 	t_room		*rooms;
 	size_t		rooms_cnt;
 
-	t_path		*cons;
-	size_t		cons;
+	t_conn		*cons;
+	size_t		cons_cnt;
 
-	int			**routes;
+	t_trace		*ants_traces;
+	size_t		ants_cnt;
+
+	t_room		***routes;
 	size_t		routes_cnt;
 }				t_obj;
 

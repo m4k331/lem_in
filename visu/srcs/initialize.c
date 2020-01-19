@@ -10,19 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "initialize.h"
+//#include "initialize.h"
 
-#include "point.h"
-#include "projections.h"
-#include "render.h"
-#include "utils.h"
-#include "parse_file.h"
-#include "matrix.h"
+//#include "point.h"
+//#include "projections.h"
+//#include "render.h"
+//#include "utils.h"
+//#include "parse_file.h"
+//#include "matrix.h"
+#include "visu.h"
 
 #include <math.h>
 #include <stdlib.h>
 #include <mlx.h>
 
+/*
 static void	camera_init(t_state *state)
 {
 	double scale;
@@ -53,7 +55,7 @@ static void	img_init(t_graphics *graph_p, int x_size, int y_size)
 	graph_p->img.y_len = y_size;
 	graph_p->img.depth = depth_alloc(graph_p->img.y_len, graph_p->img.x_len);
 }
-
+*/
 static void	obj_init(t_state *state)
 {
 	t_point	anchor;
@@ -61,7 +63,7 @@ static void	obj_init(t_state *state)
 	int		z_max;
 
 	parse_input(&state->obj); // TODO:
-
+/*
 	anchor = get_anchor(state->obj.map.points,
 			state->obj.map.x_len, state->obj.map.y_len);
 	map_centrize(&state->obj.map, anchor); // TODO: ?
@@ -71,11 +73,14 @@ static void	obj_init(t_state *state)
 	set_min_max(&z_min, &z_max, state);
 	state->obj.radius =
 		sqrt(sqr(anchor.x) + sqr(anchor.y) + sqr(z_max - z_min / 2)); // FIXME: x, y must be like z
+	*/
 }
 
 void		state_init(t_state *state, int size_x, int size_y)
 {
 	obj_init(state);
+	exit(0);
+	/*
 	if (size_x <= 0 || size_y <= 0)
 		exit(PERROR("Invalid window size!"));
 	if ((state->graph.mlx_p = mlx_init()) == 0)
@@ -89,8 +94,8 @@ void		state_init(t_state *state, int size_x, int size_y)
 	state->step = 0;
 	state->step_percent = 0;
 	state->image_changed = 1;
-
-	state->pr_init = (t_proj_init *)&par_proj_init;
-	state->proj = (t_proj *)&ip_proj;
-	state->draw_path = (t_draw_path *)&bresenham;
+*/
+	//state->pr_init = (t_proj_init *)&par_proj_init;
+	//state->proj = (t_proj *)&ip_proj;
+	//state->draw_path = (t_draw_path *)&bresenham;
 }

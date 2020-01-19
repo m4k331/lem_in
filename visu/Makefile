@@ -2,7 +2,7 @@ NAME = visu
 
 CC = gcc
 
-BIN_DIR = ../resources
+#BIN_DIR = ../resources
 BIN_DIR ?= .
 
 CDIR = srcs
@@ -23,7 +23,8 @@ DBCFLAGS = -Wno-error -g
 CFLAGS = -Wall -Wextra -Werror $(addprefix -I , $(INCDIRS)) $(DBCFLAGS)
 
 SOURCES =	main.c				\
-			get_next_line.c
+			initialize.c		\
+			parse.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
