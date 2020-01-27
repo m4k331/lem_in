@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/17 07:24:32 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/23 13:41:37 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ typedef struct	s_camera
 
 typedef t_point	t_proj		(t_point point, void *state);
 typedef void	t_proj_init	(void *state);
-typedef void	t_draw_line	(void *state, t_point *start, t_point *end, uint32_t color);
+typedef void	t_draw_line	(void *state, t_point start, t_point end, uint32_t color);
 
 typedef struct	s_state
 {
@@ -133,6 +133,10 @@ typedef struct	s_state
 	t_obj			obj;
 	t_camera		cam;
 
+	int				pause;
+	int				auto_rotate;
+	int				speed;
+
 	char			image_changed;
 
 	t_proj			*proj;
@@ -140,11 +144,13 @@ typedef struct	s_state
 	t_draw_line		*draw_line;
 }				t_state;
 
-t_point			point_init(int x, int y, int z); // TODO: move
+// t_point			point_init(int x, int y, int z); // TODO: move
 int				init_state(t_state *state); // TODO: move
 int				visu(t_state *state);
 
 int				usage(char *prog_name);
 int				print_error(const char *msg);
+
+t_point			point_init(double x, double y, double z);
 
 #endif

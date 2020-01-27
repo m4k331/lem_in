@@ -24,7 +24,15 @@ CFLAGS = -Wall -Wextra -Werror $(addprefix -I , $(INCDIRS)) $(DBCFLAGS)
 
 SOURCES =	main.c				\
 			initialize.c		\
-			parse.c
+			parse.c				\
+			point.c				\
+			matrix.c			\
+			bresenham.c			\
+			putpoint.c			\
+			projections.c		\
+			event_handling.c	\
+			xiolin_wu.c			\
+			draw_utils.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/19 03:00:18 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/23 15:39:56 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,12 +422,14 @@ char		*get_conn(t_obj *obj, char *line)
 	remove_duplicates(head);
 	if ((obj->cons_cnt = ft_lstsize(head)) == 0)
 		; // TODO: handle errors
-	if (obj->cons = (t_conn *)malloc(sizeof(t_conn) * obj->cons_cnt))
+	if ((obj->cons = (t_conn *)malloc(sizeof(t_conn) * obj->cons_cnt)) == 0)
+		exit(-1);
 	tmp = head;
 	i = 0;
 	while (tmp)
 	{
-		obj->cons[i++] = *((t_conn *)tmp->content);
+		obj->cons[i] = *((t_conn *)tmp->content);
+		obj->cons[i++].color = 0xffffff;
 		tmp = tmp->next;
 	}
 	// printf("line in get_conn: %p:\'%s\'", line, line);
@@ -489,7 +491,7 @@ int			set_heights(t_obj *obj)
 		}
 		i++;
 	}
-	height = 2;
+	height = 3;
 	flag = 1;
 	while (flag)
 	{
@@ -497,13 +499,13 @@ int			set_heights(t_obj *obj)
 		i = 0;
 		while (i < obj->cons_cnt)
 		{
-			if (obj->cons[i].r1->pos.z - height < 0.1 &&
+			if (obj->cons[i].r1->pos.z - height < 0.1 && obj->cons[i].r1->pos.z != 0 &&
 				(obj->cons[i].r2->pos.z > 0.1 + height || obj->cons[i].r2->pos.z == 0))
 			{
 				obj->cons[i].r2->pos.z = height + 1;
 				flag = 1;
 			}
-			if (obj->cons[i].r2->pos.z - height < 0.1 &&
+			if (obj->cons[i].r2->pos.z - height < 0.1 && obj->cons[i].r2->pos.z != 0 &&
 				(obj->cons[i].r1->pos.z > 0.1 + height || obj->cons[i].r1->pos.z == 0))
 			{
 				obj->cons[i].r1->pos.z = height + 1;
@@ -543,6 +545,39 @@ char		*get_buffer()
 int			check_routes_buffer(char *buffer)
 {
 	return 0;
+}
+
+int colorize_conns(t_obj *obj)
+{
+	int i;
+	int j;
+	int k;
+
+	i = 0;
+	while (i < obj->routes_cnt)
+	{
+		k = 0;
+		// printf("k: %d routes_cnt: %d\n", i, obj->routes_cnt);
+		while (obj->routes[i][k] && obj->routes[i][k + 1])
+		{
+			j = 0;
+			while (j < obj->cons_cnt)
+			{
+				if ((obj->cons[j].r1 == obj->routes[i][k] && obj->cons[j].r2 == obj->routes[i][k + 1]) ||
+					(obj->cons[j].r2 == obj->routes[i][k] && obj->cons[j].r1 == obj->routes[i][k + 1]))
+				{
+					obj->cons[j].color = 0xffff00;
+					break ;
+				}
+				j++;
+			}
+			if (j == obj->cons_cnt)
+				return (-1);
+			k++;
+		}
+		i++;
+	}
+	return (0);
 }
 
 int			get_routes_cnt(char *buff)
@@ -751,6 +786,24 @@ void print_traces(t_obj *obj)
 	}
 }
 
+int colorize_rooms(t_obj *obj)
+{
+	int i;
+
+	i = 0;
+	while (i < obj->rooms_cnt)
+	{
+		if (obj->rooms[i].type == 1)
+			obj->rooms[i].color = 0xff0000;
+		else if (obj->rooms[i].type == 2)
+			obj->rooms[i].color = 0xff;
+		else
+			obj->rooms[i].color = 0xff00;
+		 i++;
+	}
+	return 0;
+}
+
 int			parse_input(t_obj *obj)
 {
 	int			ants;
@@ -762,11 +815,15 @@ int			parse_input(t_obj *obj)
 		exit(-1);
 	if ((line = get_rooms(obj)) == 0)
 		exit(-1);
+	if (colorize_rooms(obj) < 0)
+		exit(-1);
 	if ((get_conn(obj, line)) == 0) // rework to void/int type
 		exit(-1);
 	// printf("line: %p:%s", line);
 	set_heights(obj);
 	if (get_traces(obj) < 0) // TODO:
+		exit(-1);
+	if (colorize_conns(obj) < 0)
 		exit(-1);
 	// free(line);
 	print_rooms(obj);
