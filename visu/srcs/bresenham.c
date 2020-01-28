@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/27 06:27:44 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/28 07:12:44 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	bresenham_y(t_graphics *graph_p, t_point start,
 	p.z = start.z;
 	grad = (end.x - start.x) / (end.y - start.y) * i;
 	gradz = (end.z - start.z) / (end.y - start.y) * i;
-	printf("grad: %f\n", grad);
+	// printf("grad: %f\n", grad);
 	while ((int)p.y * i < ft_round(end.y) * i)
 	{
 		// printf("start: %f now: %f end: %f i: %d\n", start->pos.y, p.y, end->pos.y, i);
@@ -124,11 +124,11 @@ static void	bresenham_x(t_graphics *graph_p, t_point start,
 	p.z = start.z;
 	grad = (end.y - start.y) / (end.x - start.x) * i;
 	gradz = (end.z - start.z) / (end.x - start.x) * i;
-	printf("grad: %f\n", grad);
-	printf("(%f, %f)\n", start.y, end.y);
+	// printf("grad: %f\n", grad);
+	// printf("(%f, %f)\n", start.y, end.y);
 	while ((int)p.x * i <= ft_round(end.x) * i)
 	{
-		printf("(%f, %f, %f)\n", p.x, p.y, p.z);
+		// printf("(%f, %f, %f)\n", p.x, p.y, p.z);
 		// printf("start: %f now: %f end: %f\n", start->pos.x, p.x, end->pos.x);
 		if (p.x > 0 && p.x < graph_p->img.x_len - 1 /* was in while cond */ &&
 			ft_round(p.y) < graph_p->img.y_len - 1 && ft_round(p.y) > 0)
