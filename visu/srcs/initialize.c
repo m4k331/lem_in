@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/27 06:31:28 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/28 09:09:25 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	state->image_changed = 1;
 	state->pause = 0;
 	state->auto_rotate = 0;
-	state->speed = 1;
+	state->speed = 0;
 
 	print_rooms1(&state->obj);
 	printf("radius: %f\n", state->obj.radius);

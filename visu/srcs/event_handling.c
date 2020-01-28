@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/27 06:31:14 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/28 09:11:01 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ int	zoom_handle(int keycode, t_state *st)
 	double sign;
 
 	if (keycode != KEY_PLUS && keycode != KEY_MINUS &&
-		keycode != KEY_LESS && keycode != KEY_GRTR)
+		keycode != KEY_LESS && keycode != KEY_GRTR && keycode != KEY_CR_BRACKET && keycode != KEY_CL_BRACKET)
 		return (0);
-	sign = (keycode == KEY_PLUS || keycode == KEY_GRTR ? 1 : -0.5);
+	sign = (keycode == KEY_PLUS || keycode == KEY_GRTR || keycode == KEY_CL_BRACKET ? 1 : -0.5);
 	if ((keycode == KEY_PLUS || keycode == KEY_MINUS) && st->cam.scale +
 			sign * (st->speed ? st->cam.scale : 1 / fabs(sign)) > 0)
 		st->cam.scale = st->cam.scale +
@@ -95,6 +95,14 @@ int	zoom_handle(int keycode, t_state *st)
 			(st->cam.zoom.x), (st->cam.zoom.y),
 			(st->cam.zoom.z + sign *
 				(st->speed ? st->cam.zoom.z : 0.1 / fabs(sign))));
+	if (keycode == KEY_CR_BRACKET || keycode == KEY_CL_BRACKET)
+		st->cam.zoom = point_init(
+			st->cam.zoom.x + sign *
+				(st->speed ? st->cam.zoom.x : 0.1 / fabs(sign)),
+			st->cam.zoom.x + sign *
+				(st->speed ? st->cam.zoom.y : 0.1 / fabs(sign)),
+			st->cam.zoom.z
+		);
 	return (1);
 }
 
