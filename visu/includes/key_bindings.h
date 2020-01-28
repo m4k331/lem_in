@@ -40,5 +40,7 @@
 # define KEY_G		5
 
 # define KEY_SPACE	49
+# define KEY_CR_BRACKET 33
+# define KEY_CL_BRACKET 30
 
 #endif
