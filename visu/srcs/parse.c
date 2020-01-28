@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/28 08:58:31 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/28 08:59:43 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,10 +309,10 @@ char		*get_conn_list(t_list **head, t_obj *obj, char *line)
 			else if (comment == -1)
 				exit(-1);
 			set_conn_rooms(obj, &conn, line);
-			free(line);
 			i++;
 			ft_lstadd(head, ft_lstnew(&conn, sizeof(t_conn)));
 		}
+		free(line);
 		if (get_next_line(0, &line) <= 0)
 		{
 			break ; // TODO: remove while check on lem_in
