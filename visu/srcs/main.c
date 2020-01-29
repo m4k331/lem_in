@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 13:36:12 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 16:46:04 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,14 +319,18 @@ int parse_options(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	t_state	state;
-	int		opt = 0;
+	// t_state	state;
+	// int		opt = 0;
 
-	opt = parse_options(argc, argv);
-	if ((opt & 2) && argc > 2)
-		state_init(&state, ft_atoi(argv[argc - 2]), ft_atoi(argv[argc - 1]), opt & 1);
-	else
-		state_init(&state, SIZE_X, SIZE_Y, opt & 1);
-	visu(&state);
+	// opt = parse_options(argc, argv);
+	// if ((opt & 2) && argc > 2)
+	// 	state_init(&state, ft_atoi(argv[argc - 2]), ft_atoi(argv[argc - 1]), opt & 1);
+	// else
+	// 	state_init(&state, SIZE_X, SIZE_Y, opt & 1);
+	// visu(&state);
+	char *line;
+	int gnl_ret;
+	gnl_ret = get_next_line(0, &line);
+	printf("%d \'%s\'\n", gnl_ret, line);
 	return (0);return (0);
 }

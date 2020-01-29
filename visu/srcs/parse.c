@@ -6,10 +6,11 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 15:35:24 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 16:45:28 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parse.h"
 #include "get_next_line.h"
 #include "libft.h"
 #include "visu.h"
@@ -73,14 +74,14 @@ int			handle_commands(char *line, char *type)
 {
 	char	tmp_type;
 
-	tmp_type = 0;
+	tmp_type = ROOM_TYPE_REGULAR;
 	if (ft_strcmp(line, "##start") == 0)
-		tmp_type = 1;
+		tmp_type = ROOM_TYPE_START;
 	else if (ft_strcmp(line, "##end") == 0)
-		tmp_type = 2;
-	if (tmp_type != 0 && *type != 0)
+		tmp_type = ROOM_TYPE_END;
+	if (tmp_type != ROOM_TYPE_REGULAR && *type != ROOM_TYPE_REGULAR)
 		return (-1);
-	if (tmp_type != 0)
+	if (tmp_type != ROOM_TYPE_REGULAR)
 		*type = tmp_type;
 	return (0);
 }
@@ -112,10 +113,14 @@ int is_room_line(char *line)
 	return (1);
 }
 
-int set_color(t_room *room)
+void set_color(t_room *room)
 {
-	room->color = 0;
-	return 0;
+	if (room->type == ROOM_TYPE_START)
+		room->color = 0xff0000;
+	else if (room->type == ROOM_TYPE_END)
+		room->color = 0xff;
+	else
+		room->color = 0xff00;
 }
 
 char		*get_rooms_list(t_list **list)
@@ -140,13 +145,13 @@ char		*get_rooms_list(t_list **list)
 			break ;
 		if (get_room(&room, line) < 0)
 			exit(print_error("Unable to get some room!"));// TODO: handle error
-		set_color(&room); // TODO:
+		set_color(&room);
 		ft_lstadd(list, ft_lstnew(&room, sizeof(t_room)));
 		room.type = 0;
 		free(line);
 	}
 	if (room.type != 0 || line_size <= 0)
-		exit(-1);
+		exit(print_error(line_size <= 0 ? "GNL error" : "Command without room!"));
 	return (line);
 }
 
@@ -194,13 +199,12 @@ char		*get_rooms(t_obj *obj)
 	size_t	i;
 
 	if ((line = get_rooms_list(&rooms)) == 0)
-		; // TODO: handle errors
+		exit(print_error("No connections found!"));
 	if (check_rooms_validity(rooms) < 0)
-		exit(print_error("Some rooms are not valid!")); // TODO: handle errors
-	if ((obj->rooms_cnt = ft_lstsize(rooms)) < 2)
-		exit(-1);
+		exit(print_error("Some rooms are not valid!"));
+	obj->rooms_cnt = ft_lstsize(rooms);
 	if ((obj->rooms = (t_room *)malloc(sizeof(t_room) * obj->rooms_cnt)) == 0)
-		exit(-1);
+		exit(print_error("Failed to allocate rooms array!"));
 	i = 0;
 	tmp = rooms;
 	while (tmp)
@@ -268,7 +272,7 @@ int			is_conn(char *line)
 	return (1);
 }
 
-char		*get_conn_list(t_list **head, t_obj *obj, char *line)
+void	get_conn_list(t_list **head, t_obj *obj, char *line)
 {
 	t_conn	conn;
 	int		comment;
@@ -281,7 +285,7 @@ char		*get_conn_list(t_list **head, t_obj *obj, char *line)
 			if (!is_conn(line))
 				break ;
 			else if (comment == -1)
-				exit(-1);
+				exit(print_error("Command found in connections block!"));
 			set_conn_rooms(obj, &conn, line);
 			i++;
 			ft_lstadd(head, ft_lstnew(&conn, sizeof(t_conn)));
@@ -289,13 +293,11 @@ char		*get_conn_list(t_list **head, t_obj *obj, char *line)
 		free(line);
 		if (get_next_line(0, &line) <= 0)
 		{
-			break ; // TODO: remove while check on lem_in
-			exit(-1);
+			// break ;
+			exit(-1); // gnl return value == 0 if str is ""
 		}
-		if (line[0] == 0)
-			break ;
 	}
-	return (line);
+	free(line);
 }
 
 void print_list(t_list *head)
@@ -361,7 +363,7 @@ void		remove_duplicates(t_list *head)
 	}
 }
 
-char		*get_conn(t_obj *obj, char *line)
+void	get_conn(t_obj *obj, char *line)
 {
 	t_list	*head;
 	t_list	*tmp;
@@ -369,8 +371,7 @@ char		*get_conn(t_obj *obj, char *line)
 	size_t	i;
 
 	head = 0;
-	if ((line = get_conn_list(&head, obj, line)) == 0)
-		; // TODO: handle errors
+	get_conn_list(&head, obj, line);
 	remove_sim_room_conn(head);
 	remove_duplicates(head);
 	if ((obj->cons_cnt = ft_lstsize(head)) == 0)
@@ -386,7 +387,6 @@ char		*get_conn(t_obj *obj, char *line)
 		tmp = tmp->next;
 	}
 	ft_lstdel(&head, &del);
-	return (line);
 }
 
 void		print_rooms(t_obj *obj)
@@ -768,10 +768,9 @@ int			parse_input(t_obj *obj)
 		exit(print_error("Invalid ants count!"));
 	if ((line = get_rooms(obj)) == 0)
 		exit(print_error(""));
-	if (colorize_rooms(obj) < 0)
-		exit(-1);
-	if ((get_conn(obj, line)) == 0) // rework to void/int type
-		exit(-1);
+	// if (colorize_rooms(obj) < 0)
+	// 	exit(-1);
+	get_conn(obj, line);
 	set_heights(obj);
 	if (get_traces(obj) < 0) // TODO:
 		exit(-1);
