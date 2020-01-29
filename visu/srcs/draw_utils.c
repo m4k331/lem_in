@@ -6,13 +6,18 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 22:24:47 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/27 06:22:02 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 13:33:14 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "utils.h"
 #include <math.h>
+
+int				ft_round(double x)
+{
+	return ((int)(x + 0.5));
+}
 
 double			fpart(double a)
 {

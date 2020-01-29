@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/28 09:09:25 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 13:38:15 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 //#include "point.h"
 #include "projections.h"
-#include "bresenham.h"
-#include "xiolin_wu.h"
 //#include "render.h"
 //#include "utils.h"
 //#include "parse_file.h"
 //#include "matrix.h"
 #include "visu.h"
+#include "draw.h"
 
 #include <math.h>
 #include <stdlib.h>

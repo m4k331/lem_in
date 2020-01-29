@@ -1,11 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
+/*   Updated: 2020/01/29 13:36:12 by rnarbo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visu.h"
 #include "libft.h"
-#include "bresenham.h"
-#include <mlx.h>
-#include <float.h>
-#include "putpoint.h"
 #include "matrix.h"
 #include "event_handling.h"
+
+#include <mlx.h>
+#include <float.h>
 
 // TODO: FIXME: НЕ ЗАБЫТЬ ДОБАВИТЬ ЗАВИСИМОСТИ В MAKEFILE!!
 

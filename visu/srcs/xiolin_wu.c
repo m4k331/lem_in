@@ -6,14 +6,14 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/27 06:29:32 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 13:38:41 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <math.h>
 #include "visu.h"
 #include "utils.h"
-#include "putpoint.h"
+#include "draw.h"
 
 #include <mlx.h>
 

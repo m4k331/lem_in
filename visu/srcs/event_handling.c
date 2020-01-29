@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/28 09:11:01 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 13:34:42 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 // #include "point.h"
 #include "event_handling.h"
 #include "key_bindings.h"
-#include "bresenham.h"
-#include "xiolin_wu.h"
-// #include "draw_line.h"
+#include "draw.h"
 #include "matrix.h"
 
 #include <math.h>
@@ -80,7 +78,8 @@ int	zoom_handle(int keycode, t_state *st)
 	double sign;
 
 	if (keycode != KEY_PLUS && keycode != KEY_MINUS &&
-		keycode != KEY_LESS && keycode != KEY_GRTR && keycode != KEY_CR_BRACKET && keycode != KEY_CL_BRACKET)
+		keycode != KEY_LESS && keycode != KEY_GRTR &&
+		keycode != KEY_CR_BRACKET && keycode != KEY_CL_BRACKET)
 		return (0);
 	sign = (keycode == KEY_PLUS || keycode == KEY_GRTR || keycode == KEY_CL_BRACKET ? 1 : -0.5);
 	if ((keycode == KEY_PLUS || keycode == KEY_MINUS) && st->cam.scale +

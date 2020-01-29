@@ -6,11 +6,11 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 10:47:29 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/21 10:08:58 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 13:38:36 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "putpoint.h"
+#include "draw.h"
 #include <mlx.h>
 
 void	putpoint(t_graphics *graph_p, int x, int y, unsigned int color)
