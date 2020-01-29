@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 16:45:28 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 18:56:12 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ void	get_conn_list(t_list **head, t_obj *obj, char *line)
 		free(line);
 		if (get_next_line(0, &line) <= 0)
 		{
-			// break ;
+			break ;
 			exit(-1); // gnl return value == 0 if str is ""
 		}
 	}

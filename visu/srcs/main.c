@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 16:46:04 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 22:30:12 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "matrix.h"
 #include "event_handling.h"
+#include "draw.h"
 
 #include <mlx.h>
 #include <float.h>
@@ -212,7 +213,63 @@ void draw_ants_movement(t_state *state)
 	}
 }
 
-void render(t_state *state, int need_recalc)
+unsigned int	menu_intense_reducing(unsigned int i1, unsigned int i2, double transparency_k)
+{
+	unsigned int	a;
+	unsigned int	res;
+	unsigned char	bias;
+
+	bias = 0;
+	res = 0;
+	while (bias <= 8 * 3)
+	{
+		a = (i1 >> bias & 0xff) * transparency_k + (i2 >> bias & 0xff);
+		res += (a > 0xff ? 0xff : a) << bias;
+		bias += 8;
+	}
+	return (res);
+}
+
+#include "utils.h"
+void	render_menu_board(t_state *state)
+{
+	int i;
+	int j;
+
+	if (!state->menu)
+		return ;
+	j = 0;
+	while (j < state->graph.img.y_len)
+	{
+		i = state->graph.img.x_len - 450;
+		while (i < state->graph.img.x_len)
+		{
+			putpoint(&state->graph, i, j, menu_intense_reducing(((unsigned int *)state->graph.img.data)[i + j * state->graph.img.k], 0x131313, 0.15));
+			i++;
+		}
+		j++;
+	}
+	// mlx_clear_window(state->graph.mlx_p, state->graph.w_p);
+	// mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p, state->graph.img.p, 0, 0);
+}
+
+void	render_menu(t_state *state)
+{
+	int h;
+
+	if (!state->menu)
+		return ;
+	h = 30;
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+}
+
+void	render(t_state *state, int need_recalc)
 {
 	if (need_recalc)
 		do_recalc(state);
@@ -220,8 +277,10 @@ void render(t_state *state, int need_recalc)
 		ft_memmove(state->graph.img.data, state->graph.img.duplicate,
 			state->graph.img.y_len * state->graph.img.line_size);
 	draw_ants_movement(state);
+	render_menu_board(state);
 	mlx_clear_window(state->graph.mlx_p, state->graph.w_p);
 	mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p, state->graph.img.p, 0, 0);
+	render_menu(state);
 }
 
 static int	slow_rotate(t_state *state);
@@ -319,18 +378,18 @@ int parse_options(int argc, char **argv)
 
 int main(int argc, char **argv)
 {
-	// t_state	state;
-	// int		opt = 0;
+	t_state	state;
+	int		opt = 0;
 
-	// opt = parse_options(argc, argv);
-	// if ((opt & 2) && argc > 2)
-	// 	state_init(&state, ft_atoi(argv[argc - 2]), ft_atoi(argv[argc - 1]), opt & 1);
-	// else
-	// 	state_init(&state, SIZE_X, SIZE_Y, opt & 1);
-	// visu(&state);
-	char *line;
-	int gnl_ret;
-	gnl_ret = get_next_line(0, &line);
-	printf("%d \'%s\'\n", gnl_ret, line);
-	return (0);return (0);
+	opt = parse_options(argc, argv);
+	if ((opt & 2) && argc > 2)
+		state_init(&state, ft_atoi(argv[argc - 2]), ft_atoi(argv[argc - 1]), opt & 1);
+	else
+		state_init(&state, SIZE_X, SIZE_Y, opt & 1);
+	visu(&state);
+	// char *line;
+	// int gnl_ret;
+	// gnl_ret = get_next_line(0, &line);
+	// printf("%d \'%s\'\n", gnl_ret, line);
+	return (0);
 }

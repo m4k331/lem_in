@@ -20,7 +20,7 @@ LDLIBS += $(addprefix -l , $(LBNAMES:lib%.a=%))
 INCDIRS = $(HDIR) $(LBDIRS) $(addsuffix /includes, $(LBDIRS))
 
 DBCFLAGS = -Wno-error -g
-CFLAGS = -Wall -Wextra -Werror $(addprefix -I , $(INCDIRS)) $(DBCFLAGS)
+CFLAGS = -Wall -Wextra -Werror -O3 $(addprefix -I , $(INCDIRS)) $(DBCFLAGS)
 
 SOURCES =	main.c				\
 			initialize.c		\
