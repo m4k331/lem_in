@@ -6,15 +6,13 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/28 08:59:43 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/29 15:35:24 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "libft.h"
 #include "visu.h"
-
-// #define while(x) dprintf(2, "%s(): %d\n", __func__, __LINE__); while(x)
 
 void del(void *content, size_t content_size)
 {
@@ -31,7 +29,6 @@ int			get_ants_cnt(t_obj *obj) // TODO:
 
 	while ((line_size = get_next_line(0, &line)) > 0 && line[0] == '#')
 	{
-		dprintf(2, "%s\n", line);
 		if (line[1] == '#')
 			return (-1);
 		free(line);
@@ -48,8 +45,6 @@ int			get_ants_cnt(t_obj *obj) // TODO:
 	return (res);
 }
 
-
-// #define if(x) dprintf(2, "%s(): %d\n", __func__, __LINE__); if(x)
 int			get_room(t_room *room, char *line)
 {
 	char	*space_p;
@@ -58,13 +53,8 @@ int			get_room(t_room *room, char *line)
 		space_p == line || line[0] == 'L')
 		return (-1);
 	*space_p = '\0';
-	// dprintf(2, "line: \'%s\'\n%p %p\n", line, line, space_p);
 	if ((room->name = strdup(line)) == 0)
-	{
-		dprintf(2, "%p\n", room->name);
 		return (-1);
-	}
-	dprintf(2, "room->name: \'%s\'\nroom->type: %d\n", room->name, room->type);
 	line = space_p + 1;
 	if ((space_p = ft_strchr(line, ' ')) == 0)
 	{
@@ -72,16 +62,12 @@ int			get_room(t_room *room, char *line)
 		return (-1);
 	}
 	*space_p = '\0';
-	dprintf(2, "Line: \'%s\' Space_p + 1: \'%s\'\n", line, space_p + 1);
-	room->pos.x = ft_atoi(line);
+	room->pos.x = ft_atoi(line); // test digits
 	line = space_p + 1;
 	room->pos.y = ft_atoi(line);
 	room->pos.z = 0;
-	dprintf(2, "room->pos: (%.0f, %.0f, %.0f)\n\n", room->pos.x, room->pos.y, room->pos.z);
 	return (0);
 }
-
-// #undef if
 
 int			handle_commands(char *line, char *type)
 {
@@ -105,7 +91,6 @@ int is_room_line(char *line)
 	int		i;
 
 	i = 0;
-	dprintf(2, "line: \'%s\'\n", line);
 	if ((space_p = ft_strchr(line, ' ')) == 0)
 		return (0);
 	line = space_p + 1;
@@ -121,10 +106,7 @@ int is_room_line(char *line)
 	while (*line)
 	{
 		if (!ft_isdigit(*line))
-		{
-			dprintf(2, "thats why: \'%c\'\n", *line);
 			return (0);
-		}
 		line++;
 	}
 	return (1);
@@ -150,17 +132,14 @@ char		*get_rooms_list(t_list **list)
 		if (line[0] == '#')
 		{
 			if (handle_commands(line, &room.type) < 0)
-				; // TODO: handle error
+				exit(print_error("Multiple commands for one room!")); // TODO: handle error
 			free(line);
 			continue ;
 		}
-		if (is_room_line(line) == 0)
-		{
-			dprintf(2, "??? \'%s\'", line);
+		if (!is_room_line(line))
 			break ;
-		}
 		if (get_room(&room, line) < 0)
-			exit(-1);// TODO: handle error
+			exit(print_error("Unable to get some room!"));// TODO: handle error
 		set_color(&room); // TODO:
 		ft_lstadd(list, ft_lstnew(&room, sizeof(t_room)));
 		room.type = 0;
@@ -197,15 +176,11 @@ int check_rooms_validity(t_list *rooms) // TODO: Check same namings
 		while (tmp)
 		{
 			if (strcmp(((t_room *)tmp->content)->name, ((t_room *)rooms->content)->name) == 0)
-			{
-				dprintf(2, "Exited on %s room \n", ((t_room *)tmp->content)->name);
 				return (-1);
-			}
 			tmp = tmp->next;
 		}
 		rooms = rooms->next;
 	}
-	dprintf(2, "start_end value: %d\n", start_end);
 	if (start_end != 3)
 		return (-1);
 	return (0);
@@ -221,8 +196,7 @@ char		*get_rooms(t_obj *obj)
 	if ((line = get_rooms_list(&rooms)) == 0)
 		; // TODO: handle errors
 	if (check_rooms_validity(rooms) < 0)
-		exit(-1); // TODO: handle errors
-	dprintf(2, "\tRooms are valid!\n");
+		exit(print_error("Some rooms are not valid!")); // TODO: handle errors
 	if ((obj->rooms_cnt = ft_lstsize(rooms)) < 2)
 		exit(-1);
 	if ((obj->rooms = (t_room *)malloc(sizeof(t_room) * obj->rooms_cnt)) == 0)
@@ -316,33 +290,13 @@ char		*get_conn_list(t_list **head, t_obj *obj, char *line)
 		if (get_next_line(0, &line) <= 0)
 		{
 			break ; // TODO: remove while check on lem_in
-			printf("Fuck up here!\n");
 			exit(-1);
 		}
 		if (line[0] == 0)
 			break ;
 	}
-	printf("cons must be: %d line: %p:\'%s\'\n", i, line, line);
 	return (line);
 }
-
-
-// int			get_path(t_path *path, char *line)
-// {
-// 	char	*delimiter_p;
-
-// 	if ((delimiter_p = ft_strchr(line, '-')) == 0)
-// 		return (-1);
-// 	*delimiter_p = '\0';
-// 	if ((path->r1 = find_room(line)) == 0)
-// 		exit(-1);
-// 	line = delimiter_p + 1;
-// 	if (ft_strchr(line, '-') != 0)
-// 		exit(-1);
-// 	if ((path->r2 = find_room(line)) == 0)
-// 		exit(-1);
-// 	return (0);
-// }
 
 void print_list(t_list *head)
 {
@@ -417,9 +371,7 @@ char		*get_conn(t_obj *obj, char *line)
 	head = 0;
 	if ((line = get_conn_list(&head, obj, line)) == 0)
 		; // TODO: handle errors
-	// printf("line in get_conn: %p:\'%s\'", line, line);
 	remove_sim_room_conn(head);
-	// printf("line in get_conn: %p:\'%s\'", line, line);
 	remove_duplicates(head);
 	if ((obj->cons_cnt = ft_lstsize(head)) == 0)
 		; // TODO: handle errors
@@ -433,9 +385,7 @@ char		*get_conn(t_obj *obj, char *line)
 		obj->cons[i++].color = 0xffffff;
 		tmp = tmp->next;
 	}
-	// printf("line in get_conn: %p:\'%s\'", line, line);
 	ft_lstdel(&head, &del);
-	// printf("line in get_conn: %p:\'%s\'", line, line);
 	return (line);
 }
 
@@ -558,7 +508,6 @@ int colorize_conns(t_obj *obj)
 	while (i < obj->routes_cnt)
 	{
 		k = 0;
-		// printf("k: %d routes_cnt: %d\n", i, obj->routes_cnt);
 		while (obj->routes[i][k] && obj->routes[i][k + 1])
 		{
 			j = 0;
@@ -592,6 +541,8 @@ int			get_routes_cnt(char *buff)
 			cnt++;
 		buff++;
 	}
+	if (!*buff || ft_strchr(buff + 1, '\n') == 0)
+		return (cnt == 0 ? 0 : 1);
 	return (cnt);
 }
 
@@ -648,9 +599,10 @@ t_room	*find_start(t_obj *obj)
 	while (i < obj->rooms_cnt)
 	{
 		if (obj->rooms[i].type == 1)
-			return obj->rooms + i;
+			return (obj->rooms + i);
 		i++;
 	}
+	return (0);
 }
 
 // start-end
@@ -813,20 +765,18 @@ int			parse_input(t_obj *obj)
 	char		*line;
 
 	if ((obj->ants_cnt = get_ants_cnt(obj)) < 0)
-		exit(-1);
+		exit(print_error("Invalid ants count!"));
 	if ((line = get_rooms(obj)) == 0)
-		exit(-1);
+		exit(print_error(""));
 	if (colorize_rooms(obj) < 0)
 		exit(-1);
 	if ((get_conn(obj, line)) == 0) // rework to void/int type
 		exit(-1);
-	// printf("line: %p:%s", line);
 	set_heights(obj);
 	if (get_traces(obj) < 0) // TODO:
 		exit(-1);
 	if (colorize_conns(obj) < 0)
 		exit(-1);
-	// free(line);
 	print_rooms(obj);
 	print_conns(obj);
 	print_routes(obj);

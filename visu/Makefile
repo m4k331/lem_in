@@ -32,7 +32,8 @@ SOURCES =	main.c				\
 			projections.c		\
 			event_handling.c	\
 			xiolin_wu.c			\
-			draw_utils.c
+			draw_utils.c		\
+			error_handling.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
