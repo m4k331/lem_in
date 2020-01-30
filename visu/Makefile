@@ -37,12 +37,9 @@ SOURCES =	main.c				\
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
-all: libs $(ODIR) $(BIN_DIR) $(BIN_DIR)/$(NAME)
+.PHONY: all libs clean clean_name fclean re
 
-libs:
-	@for i in $(LBDIRS); do \
-		$(MAKE) -C $$i; \
-	done
+all: libs $(ODIR) $(BIN_DIR) $(BIN_DIR)/$(NAME)
 
 $(BIN_DIR):
 	mkdir -p $@
@@ -71,4 +68,8 @@ fclean: clean clean_name
 
 re: fclean all
 
-.PHONY: all libs clean clean_name fclean re
+MAKEOVERRIDES =
+libs:
+	for i in $(LBDIRS); do \
+		make -C $$i; \
+	done
