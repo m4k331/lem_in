@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/30 16:56:39 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/30 19:59:53 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "draw.h"
 
 #include <mlx.h>
+#include <errno.h>
 #include <float.h>
 
 // TODO: FIXME: НЕ ЗАБЫТЬ ДОБАВИТЬ ЗАВИСИМОСТИ В MAKEFILE!!
@@ -295,9 +296,9 @@ void	render_menu(t_state *state)
 		shift = 0;
 		j = 0;
 		while (help_strs[i][j++] == '\t')
-			shift += 20;
+			shift += 40;
 		mlx_string_put(state->graph.mlx_p, state->graph.w_p,
-			state->graph.img.x_len - 420 + shift, h, 0xffffff, help_strs[i]);
+			state->graph.img.x_len - 420 + shift, h, i == 0 ? 0xff00 : 0xffffff, help_strs[i]);
 		h += 20;
 		i++;
 	}
@@ -415,15 +416,12 @@ int main(int argc, char **argv)
 	t_state	state;
 	int		opt = 0;
 
+	errno = 0;
 	opt = parse_options(argc, argv);
 	if ((opt & 2) && argc > 2)
 		state_init(&state, ft_atoi(argv[argc - 2]), ft_atoi(argv[argc - 1]), opt & 1);
 	else
 		state_init(&state, SIZE_X, SIZE_Y, opt & 1);
 	visu(&state);
-	// char *line;
-	// int gnl_ret;
-	// gnl_ret = get_next_line(0, &line);
-	// printf("%d \'%s\'\n", gnl_ret, line);
 	return (0);
 }

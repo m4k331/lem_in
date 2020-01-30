@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 18:56:12 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/30 19:54:30 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,6 +488,7 @@ char		*get_buffer()
 		free(line);
 		free(tmp);
 	}
+	free(line);
 	if (gnl_ret < 0)
 		exit(-1);
 	return (buff);
@@ -680,6 +681,8 @@ int			get_traces(t_obj *obj)
 	if (check_routes_buffer(buff) < 0)
 		exit (-1);
 	obj->routes_cnt = get_routes_cnt(buff);
+	// while (1);
+		// perror("");
 	if ((obj->routes = malloc(obj->routes_cnt * sizeof(int *))) == 0)
 		exit(-1);
 	if ((obj->ants_traces = malloc(obj->ants_cnt * sizeof(t_trace))))
@@ -696,8 +699,7 @@ int			get_traces(t_obj *obj)
 		set_trace(obj, buff, i);
 		i++;
 	}
-	// printf("routes_cnt: %zu\n", obj->routes_cnt);
-	printf("buffer: \'%s\'\n", buff);
+	free(buff);
 	return 0;
 }
 
