@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 22:30:12 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/01/30 16:56:39 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,20 @@ int key_hook(int keycode, t_state *state)
 		proj_handle(keycode, state) ||
 		render_handle(keycode, state))
 		render(state, 1);
-	// if (keycode == KEY_H)
-	// {
-	// 	// render_menu(state, 1);
-	// 	mlx_clear_window(state->graph.mlx_p, state->graph.w_p);
-	// 	mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p,
-	// 		state->graph.img.p, 0, 0);
-	// 	// render_menu(state, 0);
-	// }
+	if (keycode == KEY_H)
+	{
+		state->menu = !state->menu;
+		render(state, 0);
+	}
 	if (keycode == KEY_G)
 	{
 		state->step = 0;
 		state->step_percent = 0;
 		render(state, 0);
 	}
-	if (keycode == KEY_SPACE)
-		state->pause = !state->pause;
 	if (keycode == KEY_F)
+		state->pause = !state->pause;
+	if (keycode == KEY_SPACE)
 		state->auto_rotate = !state->auto_rotate;
 	return 0;
 }
@@ -253,20 +250,57 @@ void	render_menu_board(t_state *state)
 	// mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p, state->graph.img.p, 0, 0);
 }
 
+const char *help_strs[] = 
+{
+	"HELP:",
+	"\tShow / hide help (this): H",
+	"\tRotate: Arrows",
+	"\tFreeze ants: F",
+	"\tAuto rotate: SPACE",
+	"\tZoom: + -",
+	"\tScale Z: < >",
+	"\tScale X and Y: [ ]",
+	"\tProjections: 1-4",
+	"\t\tz(x): 1",
+	"\t\ty(x): 2",
+	"\t\tIsometric: 3",
+	"\t\tPerspective : 4",
+	"\tLine algorithm:",
+	"\t\tBresenham: B",
+	"\t\tXiolin Wu: X",
+	"\tReset:",
+	"\t\tTransformations: R",
+	"\t\tAnts: G",
+	"\tCentrize: 0",
+	"\tSpeed:",
+	"\t\tTransformations:",
+	"\t\t\tIncreese: E",
+	"\t\t\tReset: Q",
+	NULL
+};
+
 void	render_menu(t_state *state)
 {
 	int h;
+	int i;
+	int j;
+	int shift;
 
 	if (!state->menu)
 		return ;
 	h = 30;
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p, state->graph.img.x_len - 420, h += 20, 0xffffff, "HELP!");
+	i = 0;
+	while (help_strs[i])
+	{
+		shift = 0;
+		j = 0;
+		while (help_strs[i][j++] == '\t')
+			shift += 20;
+		mlx_string_put(state->graph.mlx_p, state->graph.w_p,
+			state->graph.img.x_len - 420 + shift, h, 0xffffff, help_strs[i]);
+		h += 20;
+		i++;
+	}
 }
 
 void	render(t_state *state, int need_recalc)
