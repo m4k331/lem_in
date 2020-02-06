@@ -20,10 +20,14 @@ static int			del(void *str)
 
 void				destroy_buffer(t_vector **buffer)
 {
+	char			*line;
+
+	line = NULL;
 	if (buffer && *buffer)
 	{
 		(*buffer)->iter = -1;
 		ft_vmap(*buffer, 0, del);
 		ft_vdel(buffer);
 	}
+	get_next_line(-1, &line);
 }
