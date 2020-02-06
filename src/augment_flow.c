@@ -34,7 +34,7 @@ static inline t_node	*get_neighbor_node_with_activated_flow(t_node *u)
 	e = ft_dictnext_item(u->edge);
 	while (e)
 	{
-		if (e->flow && MARKED(e->neighbor->marks) == FALSE && e->weight == 1)
+		if (e->flow && (e->neighbor->marks & 1) == FALSE && e->weight == 1)
 			return (e->neighbor);
 		e = ft_dictnext_item(u->edge);
 	}
@@ -50,9 +50,9 @@ static inline int8_t	pave_new_path_in_farm(t_path **path, t_farm *farm)
 	u = farm->start;
 	while (u)
 	{
-		MARK(u->marks);
+		u->marks |= 1;
 		u = get_neighbor_node_with_activated_flow(u);
-		if (u && STARTS_WITH_HASH(u->name->con) == FALSE)
+		if (u && (*(u->name->con) == '#') == FALSE)
 		{
 			(*path)->len_path += u->name->len;
 			if (ft_vpush_back((*path)->rooms, &u, sizeof(void*)) == FALSE)

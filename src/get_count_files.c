@@ -19,11 +19,11 @@ int8_t				get_count_files(int ac, char **av)
 
 	iter = 1;
 	count = 0;
-	while (iter < ac && IS_OPTION(av[iter]))
+	while (iter < ac && (av[iter][0] == SEP && av[iter][1] == SEP))
 		iter++;
 	while (iter < ac)
 	{
-		if (IS_OPTION(av[iter]))
+		if (av[iter][0] == SEP && av[iter][1] == SEP)
 			return (0);
 		else
 			count++;

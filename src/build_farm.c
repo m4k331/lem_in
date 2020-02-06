@@ -76,7 +76,7 @@ static inline int8_t	farm_validation(t_farm *farm)
 	if (farm->direct == TRUE)
 		return (TRUE);
 	marks_reachable_nodes(farm);
-	if (MARKED(farm->end->marks) == FALSE)
+	if ((farm->end->marks & 1) == FALSE)
 		return (FALSE);
 	del_unmarked_nodes(farm);
 	return (TRUE);

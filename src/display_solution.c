@@ -18,7 +18,7 @@ static inline int	get_display_fd(uint8_t opts, t_farm *farm)
 	size_t			len;
 	int				fd;
 
-	if (!IS_MULTI(opts))
+	if ((opts & MASK_MULTI) == FALSE)
 		return (STDOUT_FILENO);
 	if (farm->file == NULL)
 		return (-1);
@@ -49,7 +49,8 @@ static t_display	*create_display(uint8_t opts, \
 		return (NULL);
 	}
 	display->indent = FALSE;
-	display->colors = IS_COLOR(opts) && !IS_MULTI(opts) ? get_colors(MC) : NULL;
+	display->colors = (opts & MASK_COLOR) != FALSE \
+					&& (opts & MASK_MULTI) == FALSE ? get_colors(MC) : NULL;
 	display->farm = farm;
 	display->flows = flows;
 	return (display);
@@ -86,18 +87,18 @@ void				display_solution(uint8_t opts, \
 		shutting_display(&display, "ERROR create struct display");
 		return ;
 	}
-	if (IS_STEPS(opts))
+	if ((opts & MASK_STEPS) != FALSE)
 		print_steps(display);
-	if (IS_PATHS(opts) && print_paths(display) == FALSE)
+	if ((opts & MASK_PATHS) != FALSE && print_paths(display) == FALSE)
 	{
 		shutting_display(&display, "ERROR printing paths");
 		return ;
 	}
-	if (IS_FLOWS(opts))
+	if ((opts & MASK_FLOWS) != FALSE)
 		print_flows(display);
-	if (IS_SHORT(opts) || IS_EMPTY(opts))
+	if ((opts & MASK_SHORT) != FALSE || ((opts & 0xFD) & 0xDF) == 0)
 	{
-		if (IS_SHORT(opts) == FALSE)
+		if ((opts & MASK_SHORT) == FALSE)
 			print_buffer(display->fd, buffer);
 		if (print_short(display) == FALSE)
 			shutting_display(&display, "ERROR printing short");

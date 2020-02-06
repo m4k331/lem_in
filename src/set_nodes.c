@@ -37,13 +37,13 @@ int8_t					set_nodes(t_farm *farm, t_vector *buffer)
 		raw_str = ft_vnext_con(buffer);
 		if (raw_str == NULL)
 			return (ERROR);
-		if (STARTS_WITH_HASH((*raw_str)->con))
+		if (*((*raw_str)->con) == '#')
 			handle_commands(*raw_str, &type);
 		else
 		{
 			state = add_node_to_farm(farm, *raw_str, type);
 			if (state != SUCCESS)
-				return ((IS_COMMON(type) ? state : ERROR));
+				return ((type & MASK_COMMON ? state : ERROR));
 			type = MASK_COMMON;
 		}
 	}
