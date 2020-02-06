@@ -50,7 +50,7 @@ $(BIN_DIR)/$(NAME): $(OBJECTS)
 $(ODIR):
 	mkdir -p $(ODIR)
 
-$(ODIR)/%.o: $(CDIR)/%.c
+$(ODIR)/%.o: $(CDIR)/%.c includes/visu.h
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 clean:
@@ -70,6 +70,6 @@ re: fclean all
 
 MAKEOVERRIDES =
 libs:
-	for i in $(LBDIRS); do \
+	@for i in $(LBDIRS); do \
 		make -C $$i; \
 	done

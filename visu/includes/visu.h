@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 22:14:14 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/06 15:10:37 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 
 # define SIZE_X 1280
 # define SIZE_Y 800
+
+# define MIN_WIN_SIZE_X 450
+# define MIN_WIN_SIZE_Y 600
 
 typedef struct	s_img
 {
@@ -137,6 +140,7 @@ typedef struct	s_state
 	int				auto_rotate;
 	int				speed;
 	int				menu;
+	int				stat;
 
 	char			image_changed;
 
@@ -153,5 +157,7 @@ int				usage(char *prog_name);
 int				print_error(const char *msg);
 
 t_point			point_init(double x, double y, double z);
+
+# define printf(x, ...)
 
 #endif

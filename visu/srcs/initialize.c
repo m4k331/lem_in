@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/30 19:30:23 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/06 15:12:58 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,8 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 {
 	obj_init(state, map2circle);
 
-	if (size_x <= 0 || size_y <= 0)
-		exit(-2);
+	size_x = size_x < MIN_WIN_SIZE_X ? MIN_WIN_SIZE_X : size_x;
+	size_y = size_y < MIN_WIN_SIZE_Y ? MIN_WIN_SIZE_Y : size_y;	
 	if ((state->graph.mlx_p = mlx_init()) == 0)
 		exit(-3);
 	if ((state->graph.w_p = mlx_new_window(state->graph.mlx_p,
@@ -199,6 +199,7 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	state->auto_rotate = 0;
 	state->speed = 0;
 	state->menu = -1;
+	state->stat = -1;
 
 	print_rooms1(&state->obj);
 	printf("radius: %f\n", state->obj.radius);

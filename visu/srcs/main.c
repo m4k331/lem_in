@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/30 19:59:53 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/06 15:27:45 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,15 @@ int key_hook(int keycode, t_state *state)
 	{
 		state->step = 0;
 		state->step_percent = 0;
+		state->pause = 0;
 		render(state, 0);
 	}
 	if (keycode == KEY_F)
 		state->pause = !state->pause;
 	if (keycode == KEY_SPACE)
 		state->auto_rotate = !state->auto_rotate;
+	if (keycode == KEY_TILDA)
+		state->stat = !state->stat;
 	return 0;
 }
 
@@ -190,9 +193,11 @@ void draw_ants_movement(t_state *state)
 	int		j;
 	t_room	**route;
 	t_point	ant_pos;
-	t_point start, end;
+	char	flag;
+	// t_point start, end;
 
 	i = 0;
+	flag = 1;
 	while (i < state->obj.ants_cnt)
 	{
 		if (state->obj.ants_traces[i].step > state->step)
@@ -201,6 +206,7 @@ void draw_ants_movement(t_state *state)
 		j = state->step - state->obj.ants_traces[i].step;
 		if (j + 1 < route_len(route))
 		{
+			flag = 0;
 			ant_pos = transform(state, point_init(
 				route[j]->pos.x + (route[j + 1]->pos.x - route[j]->pos.x) * state->step_percent / 100,
 				route[j]->pos.y + (route[j + 1]->pos.y - route[j]->pos.y) * state->step_percent / 100,
@@ -209,6 +215,8 @@ void draw_ants_movement(t_state *state)
 		}
 		i++;
 	}
+	if (flag)
+		state->pause = 1;
 }
 
 unsigned int	menu_intense_reducing(unsigned int i1, unsigned int i2, double transparency_k)
@@ -229,18 +237,16 @@ unsigned int	menu_intense_reducing(unsigned int i1, unsigned int i2, double tran
 }
 
 #include "utils.h"
-void	render_menu_board(t_state *state)
+void	render_menu_board(t_state *state, t_point start, t_point end)
 {
 	int i;
 	int j;
 
-	if (!state->menu)
-		return ;
-	j = 0;
-	while (j < state->graph.img.y_len)
+	j = start.y;
+	while (j < (int)end.y)
 	{
-		i = state->graph.img.x_len - 450;
-		while (i < state->graph.img.x_len)
+		i = start.x;
+		while (i < (int)end.x)
 		{
 			putpoint(&state->graph, i, j, menu_intense_reducing(((unsigned int *)state->graph.img.data)[i + j * state->graph.img.k], 0x131313, 0.15));
 			i++;
@@ -277,19 +283,18 @@ const char *help_strs[] =
 	"\t\tTransformations:",
 	"\t\t\tIncreese: E",
 	"\t\t\tReset: Q",
+	"\tShow statistics: ~",
 	NULL
 };
 
-void	render_menu(t_state *state)
+void	render_menu(t_state *state, t_point start)
 {
 	int h;
 	int i;
 	int j;
 	int shift;
 
-	if (!state->menu)
-		return ;
-	h = 30;
+	h = start.y + 30;
 	i = 0;
 	while (help_strs[i])
 	{
@@ -298,10 +303,42 @@ void	render_menu(t_state *state)
 		while (help_strs[i][j++] == '\t')
 			shift += 40;
 		mlx_string_put(state->graph.mlx_p, state->graph.w_p,
-			state->graph.img.x_len - 420 + shift, h, i == 0 ? 0xff00 : 0xffffff, help_strs[i]);
+			start.x + 30 + shift, h, i == 0 ? 0xff00 : 0xffffff, help_strs[i]);
 		h += 20;
 		i++;
 	}
+}
+
+void put_stat_entry(t_state *state, t_point pos, char *ename, int eval)
+{
+	char	*str;
+	char	*tmp;
+
+	tmp = ft_itoa(state->obj.rooms_cnt);
+	str = ft_strjoin("    Rooms count: ", tmp);
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
+		pos.x, pos.y, 0xffffff, str);
+	free(tmp);
+	free(str);
+}
+
+void	render_stat(t_state *state, t_point start)
+{
+	int		h;
+	char	*str;
+	char	*tmp;
+
+	h = start.y + 30;
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
+		start.x + 30, h, 0xff00, "STATISTICS:");
+	h += 20;
+	tmp = ft_itoa(state->obj.rooms_cnt);
+	str = ft_strjoin("    Rooms count: ", tmp);
+	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
+		start.x + 30, h, 0xffffff, str);
+	free(tmp);
+	free(str);
+	// mlx_string_put
 }
 
 void	render(t_state *state, int need_recalc)
@@ -312,10 +349,21 @@ void	render(t_state *state, int need_recalc)
 		ft_memmove(state->graph.img.data, state->graph.img.duplicate,
 			state->graph.img.y_len * state->graph.img.line_size);
 	draw_ants_movement(state);
-	render_menu_board(state);
+	if (state->menu)
+		render_menu_board(state,
+			point_init(state->graph.img.x_len - MIN_WIN_SIZE_X, 0, 0),
+			point_init(state->graph.img.x_len, state->graph.img.y_len, 0));
+	if (state->stat)
+		render_menu_board(state, point_init(0, 0, 0),
+			point_init(MIN_WIN_SIZE_X, state->graph.img.y_len, 0));
 	mlx_clear_window(state->graph.mlx_p, state->graph.w_p);
-	mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p, state->graph.img.p, 0, 0);
-	render_menu(state);
+	mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p,
+		state->graph.img.p, 0, 0);
+	if (state->stat)
+		render_stat(state, point_init(0, 0, 0));
+	if (state->menu)
+		render_menu(state,
+			point_init(state->graph.img.x_len - MIN_WIN_SIZE_X, 0, 0));
 }
 
 static int	slow_rotate(t_state *state);
@@ -323,6 +371,8 @@ static int	slow_rotate(t_state *state);
 
 int ants_loop(t_state *state)
 {
+	static char i = 0;
+
 	if (!state->pause)
 	{
 		state->step_percent++;
@@ -333,7 +383,8 @@ int ants_loop(t_state *state)
 		}
 		render(state, 0);
 	}
-	if (state->auto_rotate)
+	i = (i + 1) % 4;
+	if (state->auto_rotate && i == 0)
 		mlx_loop_hook(state->graph.mlx_p, &slow_rotate, state);
 	return 0;
 }
@@ -345,7 +396,7 @@ static int	slow_rotate(t_state *state)
 
 	if (state->auto_rotate)
 	{
-		val = point_init(0, M_PI / 360, 0);
+		val = point_init(0, M_PI * (state->speed + 1) / 360, 0);
 		matrix_rotate(state->obj.rot_m, val);
 		render(state, 1);
 	}
@@ -368,22 +419,24 @@ int usage(char *prog_name)
 {
 	ft_putstr("Usage: ");
 	ft_putstr(prog_name);
-	ft_putstr(" [-hc] [size_x size_y]\n");
+	ft_putstr(" [-hc] [-s size_x size_y]\n");
 	ft_putstr("\t-h - print usage and exit.\n");
 	ft_putstr("\t-c - use circle as ant ferm map.\n");
+	ft_putstr("\t-s - use size_x size_y as window sizes.\n");
 	return (-1);
 }
 
 int parse_options(int argc, char **argv)
 {
-	int i = 1;
-	int opt = 0;
+	int	i = 1;
+	int	opt = 0;
+	int	j;
 
 	while (i < argc)
 	{
 		if (argv[i][0] == '-')
 		{
-			int j = 1;
+			j = 1;
 			while (argv[i][j])
 			{
 				if (argv[i][j] == 'h')
@@ -400,6 +453,12 @@ int parse_options(int argc, char **argv)
 					exit(usage(argv[0]));
 				}
 				j++;
+			}
+			if (j == 1)
+			{
+				ft_putstr("Invalid option: -");
+				ft_putchar('\n');
+				exit(usage(argv[0]));
 			}
 		}
 		else if (argc - i != 2)

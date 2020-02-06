@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/30 19:54:30 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:35:25 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,8 @@ char		*get_rooms(t_obj *obj)
 
 	if ((line = get_rooms_list(&rooms)) == 0)
 		exit(print_error("No connections found!"));
-	if (check_rooms_validity(rooms) < 0)
-		exit(print_error("Some rooms are not valid!"));
+	// if (check_rooms_validity(rooms) < 0)
+	// 	exit(print_error("Some rooms are not valid!"));
 	obj->rooms_cnt = ft_lstsize(rooms);
 	if ((obj->rooms = (t_room *)malloc(sizeof(t_room) * obj->rooms_cnt)) == 0)
 		exit(print_error("Failed to allocate rooms array!"));
@@ -334,34 +334,34 @@ int			remove_sim_room_conn(t_list **head)
 	}
 }
 
-void		remove_duplicates(t_list *head)
-{
-	t_list	*tmp;
-	t_list	*tmp_to_rm;
+// void		remove_duplicates(t_list *head)
+// {
+// 	t_list	*tmp;
+// 	t_list	*tmp_to_rm;
 
-	while (head && head->next)
-	{
-		tmp_to_rm = head;
-		tmp = head->next;
-		while (tmp)
-		{
-			if ((((t_conn *)tmp->content)->r1 == ((t_conn *)head->content)->r1 && 
-				((t_conn *)tmp->content)->r2 == ((t_conn *)head->content)->r2) ||
-				(((t_conn *)tmp->content)->r2 == ((t_conn *)head->content)->r1 && 
-				((t_conn *)tmp->content)->r1 == ((t_conn *)head->content)->r2))
-			{
-				free(tmp->content);
-				tmp_to_rm->next = tmp->next;
-				free(tmp);
-				tmp = tmp_to_rm->next;
-				continue ;
-			}
-			tmp_to_rm = tmp;
-			tmp = tmp->next;
-		}
-		head = head->next;
-	}
-}
+// 	while (head && head->next)
+// 	{
+// 		tmp_to_rm = head;
+// 		tmp = head->next;
+// 		while (tmp)
+// 		{
+// 			if ((((t_conn *)tmp->content)->r1 == ((t_conn *)head->content)->r1 && 
+// 				((t_conn *)tmp->content)->r2 == ((t_conn *)head->content)->r2) ||
+// 				(((t_conn *)tmp->content)->r2 == ((t_conn *)head->content)->r1 && 
+// 				((t_conn *)tmp->content)->r1 == ((t_conn *)head->content)->r2))
+// 			{
+// 				free(tmp->content);
+// 				tmp_to_rm->next = tmp->next;
+// 				free(tmp);
+// 				tmp = tmp_to_rm->next;
+// 				continue ;
+// 			}
+// 			tmp_to_rm = tmp;
+// 			tmp = tmp->next;
+// 		}
+// 		head = head->next;
+// 	}
+// }
 
 void	get_conn(t_obj *obj, char *line)
 {
@@ -373,7 +373,7 @@ void	get_conn(t_obj *obj, char *line)
 	head = 0;
 	get_conn_list(&head, obj, line);
 	remove_sim_room_conn(head);
-	remove_duplicates(head);
+	// remove_duplicates(head);
 	if ((obj->cons_cnt = ft_lstsize(head)) == 0)
 		; // TODO: handle errors
 	if ((obj->cons = (t_conn *)malloc(sizeof(t_conn) * obj->cons_cnt)) == 0)
