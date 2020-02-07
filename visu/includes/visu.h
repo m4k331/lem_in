@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 14:10:28 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 20:07:15 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ typedef struct	s_state
 	t_graphics		graph;
 
 	int				step;
-	int				step_percent;
+	double			step_percent;
 
 	t_obj			obj;
 	t_camera		cam;
@@ -139,6 +139,7 @@ typedef struct	s_state
 	int				pause;
 	int				auto_rotate;
 	int				speed;
+	double			ant_speed;
 	int				menu;
 	int				stat;
 

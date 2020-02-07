@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 14:22:51 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 20:18:08 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,35 @@ int mouse_shift_handle(int x, int y, t_state *state)
 	return 0;
 }
 
+int mouse_shift_z_handle(int x, int y, t_state *state)
+{
+	state->cam.shift = point_init(
+		state->cam.shift.x,
+		state->cam.shift.y,
+		state->cam.shift.z + (y - state->prev_mouse_pos.z));
+	state->prev_mouse_pos = point_init(0, 0, y);
+	state->image_changed = 1;
+	render(state);
+	return 0;
+}
+
 int mouse_press(int button, int x, int y, t_state *state)
 {
-	if (button != 1)
-		return 0;
-	state->prev_mouse_pos = point_init(x, y, 0);
-	mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_handle, state);
+	if (button == 1)
+	{
+		state->prev_mouse_pos = point_init(x, y, 0);
+		mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_handle, state);
+	}
+	if (button == 2)
+	{
+		state->prev_mouse_pos = point_init(0, 0, y);
+		mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_z_handle, state);
+	}
 }
 
 int mouse_release(int button, int x, int y, t_state *state)
 {
-	if (button != 1)
+	if (button != 1 && button != 2)
 		return 0;
 	mlx_hook(state->graph.w_p, 6, 0, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 14:16:35 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 20:26:25 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // TODO: FIXME: НЕ ЗАБЫТЬ ДОБАВИТЬ ЗАВИСИМОСТИ В MAKEFILE!!
 
 int ft_round(double);
-void render(t_state *state, int need_recalc);
+void render(t_state *state);
 void do_recalc(t_state *state);
 
 void put_room(t_state *state, t_room *room)
@@ -56,10 +56,15 @@ void put_room(t_state *state, t_room *room)
 	}
 }
 
+void draw_nothing(void *state, t_point start, t_point end, uint32_t color)
+{
+	return ;
+}
+
 #include "key_bindings.h"
 int key_hook(int keycode, t_state *state)
 {
-	printf("key pressed (%d)\n", keycode);
+	dprintf(1, "key pressed (%d)\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
 		// exit(free_state(state));
@@ -67,27 +72,19 @@ int key_hook(int keycode, t_state *state)
 		state->speed = 0;
 	if (keycode == KEY_E)
 		state->speed += 1;
-	// if (keycode == KEY_F)
-	// 	mlx_loop_hook(state->graph.mlx_p, &slow_rotate, state);
-	// if (keycode == KEY_G)
-	// 	mlx_loop_hook(state->graph.mlx_p, 0, 0);
 	if (rotate_handle(keycode, state) ||
 		shift_handle(keycode, state) ||
 		zoom_handle(keycode, state) ||
 		proj_handle(keycode, state) ||
 		render_handle(keycode, state))
-		render(state, 1);
+		state->image_changed = 1;
 	if (keycode == KEY_H)
-	{
 		state->menu = !state->menu;
-		render(state, 0);
-	}
 	if (keycode == KEY_G)
 	{
 		state->step = 0;
 		state->step_percent = 0;
 		state->pause = 0;
-		render(state, 0);
 	}
 	if (keycode == KEY_F)
 		state->pause = !state->pause;
@@ -95,6 +92,13 @@ int key_hook(int keycode, t_state *state)
 		state->auto_rotate = !state->auto_rotate;
 	if (keycode == KEY_TILDA)
 		state->stat = !state->stat;
+	if (keycode == KEY_PAGE_UP)
+		state->ant_speed = state->ant_speed > 10 ? 10 : state->ant_speed + 0.1;
+	if (keycode == KEY_PAGE_DOWN)
+		state->ant_speed = state->ant_speed < 0.2 ? 0.2 : state->ant_speed - 0.1;
+	if (keycode == KEY_A)
+		state->draw_line = &draw_nothing;
+	render(state);
 	return 0;
 }
 
@@ -185,6 +189,23 @@ int route_len(t_room **route)
 	while (route[i])
 		i++;
 	return i;
+}
+
+size_t	count_ants_left(t_state *state)
+{
+	int i;
+	int j;
+	t_room **route;
+
+	i = 0;
+	while (i < state->obj.ants_cnt)
+	{
+		if (state->obj.ants_traces[i].step > state->step)
+			break ;
+		route = state->obj.routes[state->obj.ants_traces[i].route];
+		i++;
+	}
+	return (state->obj.ants_cnt - i);
 }
 
 void draw_ants_movement(t_state *state)
@@ -314,8 +335,8 @@ void put_stat_entry(t_state *state, t_point pos, char *ename, int eval)
 	char	*str;
 	char	*tmp;
 
-	tmp = ft_itoa(state->obj.rooms_cnt);
-	str = ft_strjoin("    Rooms count: ", tmp);
+	tmp = ft_itoa(eval);
+	str = ft_strjoin(ename, tmp);
 	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
 		pos.x, pos.y, 0xffffff, str);
 	free(tmp);
@@ -327,23 +348,26 @@ void	render_stat(t_state *state, t_point start)
 	int		h;
 	char	*str;
 	char	*tmp;
+	int		i;
+	t_room	**route;
+	int		j;
 
 	h = start.y + 30;
 	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
 		start.x + 30, h, 0xff00, "STATISTICS:");
 	h += 20;
-	tmp = ft_itoa(state->obj.rooms_cnt);
-	str = ft_strjoin("    Rooms count: ", tmp);
-	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
-		start.x + 30, h, 0xffffff, str);
-	free(tmp);
-	free(str);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Ants number: ", state->obj.ants_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Ants in start room: ", count_ants_left(state));
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Rooms number: ", state->obj.rooms_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Connections number: ", state->obj.cons_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Routes number: ", state->obj.routes_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->step + 1);
 	// mlx_string_put
 }
 
-void	render(t_state *state, int need_recalc)
+void	render(t_state *state)
 {
-	if (need_recalc)
+	if (state->image_changed)
 		do_recalc(state);
 	else
 		ft_memmove(state->graph.img.data, state->graph.img.duplicate,
@@ -364,6 +388,7 @@ void	render(t_state *state, int need_recalc)
 	if (state->menu)
 		render_menu(state,
 			point_init(state->graph.img.x_len - MIN_WIN_SIZE_X, 0, 0));
+	state->image_changed = 0;
 }
 
 static int	slow_rotate(t_state *state);
@@ -375,13 +400,13 @@ int ants_loop(t_state *state)
 
 	if (!state->pause)
 	{
-		state->step_percent++;
+		state->step_percent += state->ant_speed;
 		if (state->step_percent > 100)
 		{
 			state->step_percent = 0;
 			state->step++;
 		}
-		render(state, 0);
+		render(state);
 	}
 	i = (i + 1) % 4;
 	if (state->auto_rotate && i == 0)
@@ -398,7 +423,8 @@ static int	slow_rotate(t_state *state)
 	{
 		val = point_init(0, M_PI * (state->speed + 1) / 360, 0);
 		matrix_rotate(state->obj.rot_m, val);
-		render(state, 1);
+		state->image_changed = 1;
+		render(state);
 	}
 	if (!state->pause)
 		mlx_loop_hook(state->graph.mlx_p, &ants_loop, state);
@@ -411,7 +437,8 @@ int mouse_release(int keycode, int x, int y, t_state *state);
 int visu(t_state *state)
 {
 	state->pr_init(state);
-	render(state, 1);
+	state->image_changed = 1;
+	render(state);
 	mlx_hook(state->graph.w_p, 2, 0, &key_hook, state);
 	mlx_loop_hook(state->graph.mlx_p, &ants_loop, state);
 	mlx_hook(state->graph.w_p, 4, 0, &mouse_press, state);

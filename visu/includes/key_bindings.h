@@ -44,5 +44,7 @@
 # define KEY_CL_BRACKET	30
 
 # define KEY_TILDA		50
+# define KEY_PAGE_UP    116
+# define KEY_PAGE_DOWN  121
 
 #endif

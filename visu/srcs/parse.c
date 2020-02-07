@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 08:46:33 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 16:31:22 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -524,9 +524,7 @@ void	get_conn(t_obj *obj, t_dict *rooms, char *line)
 		obj->cons[i++].color = 0xffffff;
 		// tmp = tmp->next;
 	}
-	free(conns->const_con);
-	free(conns);
-	// ft_vdel(conns); // WTF??
+	ft_vdel(&conns);
 	// print_conns(obj);
 	// ft_lstdel(&head, &del);
 }
