@@ -33,9 +33,9 @@ static inline t_node	*get_node(t_str *raw_str, size_t len)
 	t_node				*node;
 
 	ft_swap64((uint64_t*)(&raw_str->len), (uint64_t*)(&len));
-	HIDE_SYMBOL(&raw_str->con[raw_str->len]);
+	*(&raw_str->con[raw_str->len]) = NULL_TERMINATE;
 	node = create_node(raw_str);
-	REVEAL_SYMBOL(&raw_str->con[raw_str->len], SPACE);
+	*(&raw_str->con[raw_str->len]) = SPACE;
 	ft_swap64((uint64_t*)(&raw_str->len), (uint64_t*)(&len));
 	return (node);
 }
@@ -79,7 +79,7 @@ static inline int8_t	add_common(t_farm *farm, t_node *node)
 
 static inline int8_t	add_special(t_farm *farm, t_node *node, uint8_t type)
 {
-	if (IS_START(type))
+	if ((type & MASK_START) != FALSE)
 	{
 		if (farm->start != NULL)
 			return (ERROR);
@@ -119,7 +119,7 @@ int8_t					add_node_to_farm(t_farm *farm, \
 	node = get_node(raw_str, len);
 	if (node == NULL)
 		return (ERROR);
-	if (IS_COMMON(type))
+	if ((type & MASK_COMMON) != FALSE)
 		state = add_common(farm, node);
 	else
 		state = add_special(farm, node, type);

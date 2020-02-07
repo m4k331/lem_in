@@ -18,39 +18,19 @@
 # include "flow.h"
 # include <time.h>
 
-# define INF                   (INT_MAX)
+# define INF                   INT_MAX
 # define VBUFFER_SIZE          1024U
 # define LEMIN_INIT_DICT_SIZE  16U
-# define STARTS_WITH_HASH(str) (*(str) == '#')
 # define CMD_START             "##start"
 # define CMD_END               "##end"
 # define SPACE                 ' '
 # define SEP                   '-'
 # define NL                    '\n'
 # define L                     'L'
-# define FORBIDDEN_SYMBOLS(x)  ((x) == '#' || (x) == 'L')
 # define NULL_TERMINATE        '\0'
 # define MASK_COMMON           1U
 # define MASK_START            2U
 # define MASK_END              4U
-# define IS_COMMON(x)          ((x) & MASK_COMMON)
-# define IS_START(x)           ((x) & MASK_START)
-# define HIDE_SYMBOL(str)      (*(str) = NULL_TERMINATE)
-# define REVEAL_SYMBOL(str, s) (*(str) = (s))
-# define QUEUE_IS_EMPTY(q)     ((q)->iter == (q)->head - 1)
-# define HEAP_IS_EMPTY(h)      ((h)->n == 0)
-# define NUMBER_OF_PATHS(flow) ((flow)->paths->head)
-# define NUMBER_OF_ROOMS(path) ((path)->rooms->head)
-# define INSERT_HASH(str)      (*(str) = '#')
-
-# define VISIT(x)              ((x) |= 2U)
-# define VISITED(x)            ((x) & 2U)
-
-# define MARK(x)               ((x) |= 1U)
-# define MARKED(x)             ((x) & 1U)
-# define UNMARKING(x)          ((x) ^= 1U)
-
-# define IS_OPTION(arg)        ((arg)[0] == SEP && (arg)[1] == SEP)
 
 # define OPT_STEPS             "--steps"
 # define OPT_COLOR             "--color"
@@ -66,23 +46,6 @@
 # define MASK_SHORT            16U
 # define MASK_MULTI            32U
 # define MASK_USAGE            128U
-
-# define TO_STEPS(opt)         ((opt) |= MASK_STEPS)
-# define TO_COLOR(opt)         ((opt) |= MASK_COLOR)
-# define TO_PATHS(opt)         ((opt) |= MASK_PATHS)
-# define TO_FLOWS(opt)         ((opt) |= MASK_FLOWS)
-# define TO_SHORT(opt)         ((opt) |= MASK_SHORT)
-# define TO_MULTI(opt)         ((opt) |= MASK_MULTI)
-# define TO_USAGE(opt)         ((opt) |= MASK_USAGE)
-
-# define IS_STEPS(opt)         ((opt) & MASK_STEPS)
-# define IS_COLOR(opt)         ((opt) & MASK_COLOR)
-# define IS_PATHS(opt)         ((opt) & MASK_PATHS)
-# define IS_FLOWS(opt)         ((opt) & MASK_FLOWS)
-# define IS_SHORT(opt)         ((opt) & MASK_SHORT)
-# define IS_MULTI(opt)         ((opt) & MASK_MULTI)
-# define IS_USAGE(opt)         ((opt) & MASK_USAGE)
-# define IS_EMPTY(opt)         ((((opt) & 0xFD) & 0xDF) == 0)
 
 # define MC                    240
 # define COLOR_CODE            "\33[38;5;000m"
@@ -116,8 +79,7 @@
 # define OUT_FILE              "_out"
 # define OUT_FILE_LN           4
 # define MAX_FLOW_LN           72
-# define DIRECT_BUFF_SZ        (SHRT_MAX)
-# define HD_FLOW_MAIN_LN       (HD_FLOW_L_LN + HD_FLOW_M_LN + HD_FLOW_R_LN)
+# define DIRECT_BUFF_SZ        SHRT_MAX
 
 typedef struct		s_farm
 {

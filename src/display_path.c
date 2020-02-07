@@ -20,7 +20,7 @@ static size_t			print_line_initialization(char **line, \
 	size_t				size;
 
 	size = (PREFIX_PATH_LN + ants_len + SUFFIX_PATH_LN + \
-				path->len_path + (NUMBER_OF_ROOMS(path) - 1) * SEP_PATH_LN + \
+				path->len_path + (path->rooms->head - 1) * SEP_PATH_LN + \
 				(color ? COLOR_LN + DISCOLOR_END_LN : 1)) * sizeof(char);
 	*line = (char*)malloc(size);
 	if (*line == NULL)

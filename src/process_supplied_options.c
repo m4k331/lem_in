@@ -19,18 +19,18 @@ void				process_supplied_options(uint8_t *opts, int ac, char **av)
 	{
 		av++;
 		if (ft_strcmp(*av, OPT_STEPS) == 0)
-			TO_STEPS(*opts);
+			*opts |= MASK_STEPS;
 		else if (ft_strcmp(*av, OPT_COLOR) == 0)
-			TO_COLOR(*opts);
+			*opts |= MASK_COLOR;
 		else if (ft_strcmp(*av, OPT_PATHS) == 0)
-			TO_PATHS(*opts);
+			*opts |= MASK_PATHS;
 		else if (ft_strcmp(*av, OPT_FLOWS) == 0)
-			TO_FLOWS(*opts);
+			*opts |= MASK_FLOWS;
 		else if (ft_strcmp(*av, OPT_SHORT) == 0)
-			TO_SHORT(*opts);
+			*opts |= MASK_SHORT;
 		else if (ft_strcmp(*av, OPT_MULTI) == 0)
-			TO_MULTI(*opts);
-		else if (!IS_MULTI(*opts))
-			TO_USAGE(*opts);
+			*opts |= MASK_MULTI;
+		else if ((*opts & MASK_MULTI) == FALSE)
+			*opts |= MASK_USAGE;
 	}
 }

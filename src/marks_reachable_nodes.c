@@ -26,9 +26,9 @@ static inline void	add_unmarked_neighbors_to_queue(t_vector *queue, t_node *u)
 	while (edge)
 	{
 		v = edge->neighbor;
-		if (MARKED(v->marks) == FALSE)
+		if ((v->marks & 1) == FALSE)
 		{
-			MARK(v->marks);
+			v->marks |= 1;
 			ft_vpush_back(queue, &v, sizeof(void*));
 		}
 		edge = ft_dictnext_item(u->edge);
@@ -48,10 +48,10 @@ void				marks_reachable_nodes(t_farm *farm)
 	if (queue == NULL)
 		return ;
 	ft_vpush_back(queue, &farm->start, sizeof(void*));
-	while (QUEUE_IS_EMPTY(queue) == FALSE)
+	while ((queue->iter == (queue->head - 1)) == FALSE)
 	{
 		u = *(t_node**)ft_vnext_con(queue);
-		MARK(u->marks);
+		u->marks |= 1;
 		add_unmarked_neighbors_to_queue(queue, u);
 	}
 	ft_vdel(&queue);

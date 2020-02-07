@@ -68,15 +68,15 @@ int8_t					set_edges(t_farm *farm, t_vector *buffer)
 	raw = ft_vcurr_con(buffer);
 	while (TRUE)
 	{
-		if (!STARTS_WITH_HASH((*raw)->con))
+		if (*((*raw)->con) != '#')
 		{
 			if ((sep = ft_memchr((*raw)->con, SEP, (*raw)->len)) == NULL)
 				return (FAIL);
-			HIDE_SYMBOL(sep);
+			*sep = NULL_TERMINATE;
 			if ((right = ft_dictget(farm->nodes, sep + 1)) == NULL || \
 				(left = ft_dictget(farm->nodes, (*raw)->con)) == NULL)
 				return (ERROR);
-			REVEAL_SYMBOL(sep, SEP);
+			*sep = SEP;
 			if (right != left && \
 				(state = nodes_linker(farm, left, right)) != SUCCESS)
 				return (state);

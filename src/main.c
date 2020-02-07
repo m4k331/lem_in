@@ -19,9 +19,9 @@ int						main(int ac, char **av)
 	int					iter;
 
 	process_supplied_options(&opts, ac, av);
-	if (IS_USAGE(opts))
+	if ((opts & MASK_USAGE) != FALSE)
 		show_usage(*av);
-	if (IS_MULTI(opts))
+	if ((opts & MASK_MULTI) != FALSE)
 	{
 		count = get_count_files(ac, av);
 		if (count == 0)

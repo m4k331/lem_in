@@ -6,7 +6,7 @@
 /*   By: ahugh <ahugh@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/01 22:59:56 by ahugh             #+#    #+#             */
-/*   Updated: 2019/12/10 23:16:13 by ahugh            ###   ########.fr       */
+/*   Updated: 2020/02/06 21:30:07 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ int8_t				dijkstra(t_farm *farm)
 		return (FALSE);
 	if (ft_fibpush(prior_heap, farm->start) == FALSE)
 		return (destroy_heaps(&prior_heap, &conns_heap, FALSE));
-	while (HEAP_IS_EMPTY(prior_heap) == FALSE)
+	while ((prior_heap->n == 0) == FALSE)
 	{
 		u = ft_fibpop(prior_heap);
-		VISIT(u->marks);
+		u->marks |= 2;
 		if (fill_conns_heap(&conns_heap, u) == FALSE)
 			return (destroy_heaps(&prior_heap, &conns_heap, FALSE));
-		while (HEAP_IS_EMPTY(conns_heap) == FALSE)
+		while ((conns_heap->n == 0) == FALSE)
 		{
 			v = ft_fibpop(conns_heap);
 			relax(u, v);
-			if (VISITED(v->marks) == FALSE)
+			if ((v->marks & 2) == FALSE)
 				if (ft_fibpush(prior_heap, v) == FALSE)
 					return (destroy_heaps(&prior_heap, &conns_heap, FALSE));
 		}

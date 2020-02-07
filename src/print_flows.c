@@ -20,7 +20,7 @@ static inline void		print_header(int fd, \
 	static int			num = 1;
 	int					len;
 
-	len = ft_numlen(num, 10) + ft_numlen(steps, 10) + HD_FLOW_MAIN_LN + \
+	len = ft_numlen(num, 10) + ft_numlen(steps, 10) + 16 + \
 									(color ? COLOR_LN + DISCOLOR_END_LN : 1);
 	if (color)
 	{
@@ -52,7 +52,7 @@ static inline void		print_path(int fd, \
 	int					len;
 
 	len = RM_FLOW_L_LN + RM_FLOW_R_LN + \
-		ft_numlen(NUMBER_OF_ROOMS(path), 10) + ft_numlen(path->ants, 10) + \
+		ft_numlen(path->rooms->head, 10) + ft_numlen(path->ants, 10) + \
 		(color ? COLOR_LN + DISCOLOR_END_LN : 1);
 	if (color)
 	{
@@ -61,7 +61,7 @@ static inline void		print_path(int fd, \
 	}
 	ft_memcpy(line, RM_FLOW_L, RM_FLOW_L_LN);
 	line += RM_FLOW_L_LN;
-	line += insert_number_inline(line, NUMBER_OF_ROOMS(path));
+	line += insert_number_inline(line, path->rooms->head);
 	ft_memcpy(line, RM_FLOW_R, RM_FLOW_R_LN);
 	line += RM_FLOW_R_LN;
 	line += insert_number_inline(line, path->ants);

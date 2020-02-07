@@ -25,7 +25,7 @@ int8_t				set_ants(t_farm *farm, t_vector *buffer)
 	raw_str = ft_vnext_con(buffer);
 	while (raw_str)
 	{
-		if (STARTS_WITH_HASH((*raw_str)->con) == FALSE)
+		if ((*((*raw_str)->con) == '#') == FALSE)
 		{
 			if (ft_isnumeric_str((*raw_str)->con, FALSE) == FALSE)
 				return (FALSE);

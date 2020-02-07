@@ -28,15 +28,16 @@ size_t					get_length_node_name(t_str *raw_str)
 		return (0);
 	len = (size_t)first - (size_t)raw_str->con - 1;
 	second = ft_memrchr(raw_str->con, SPACE, len);
-	HIDE_SYMBOL(first);
+	*first = NULL_TERMINATE;
 	if (second == NULL || ft_isnumeric_str(second + 1, FALSE) == FALSE)
 	{
-		REVEAL_SYMBOL(first, SPACE);
+		*first = SPACE;
 		return (0);
 	}
-	REVEAL_SYMBOL(first, SPACE);
+	*first = SPACE;
 	len = (size_t)second - (size_t)raw_str->con;
-	if (FORBIDDEN_SYMBOLS(*raw_str->con) || ft_memchr(raw_str->con, SEP, len))
+	if ((*raw_str->con == '#' || *raw_str->con == 'L') || \
+											ft_memchr(raw_str->con, SEP, len))
 		return (0);
 	return (len);
 }

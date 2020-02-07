@@ -20,10 +20,10 @@ void				del_unmarked_nodes(t_farm *farm)
 	node = ft_dictnext_item(farm->nodes);
 	while (node)
 	{
-		if (MARKED(node->marks) == FALSE)
+		if ((node->marks & 1) == FALSE)
 			ft_dictunset(farm->nodes, node->name->con, destroy_node);
 		else
-			UNMARKING(node->marks);
+			node->marks ^= 1;
 		node = ft_dictnext_item(farm->nodes);
 	}
 }

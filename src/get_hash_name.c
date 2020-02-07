@@ -24,7 +24,7 @@ t_str				*get_hash_name(t_str *name)
 	hash_con = (char*)malloc(name->len + 2);
 	if (hash_con == NULL)
 		return (NULL);
-	INSERT_HASH(hash_con);
+	*hash_con = '#';
 	ft_memcpy(hash_con + 1, name->con, name->len + 1);
 	hash_name = ft_tstrbuilt(hash_con, name->len + 1);
 	if (hash_name == NULL)
