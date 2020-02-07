@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/06 13:35:25 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 08:46:33 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,86 @@ void set_color(t_room *room)
 		room->color = 0xff00;
 }
 
-char		*get_rooms_list(t_list **list)
+// char		*get_rooms_list(t_list **list)
+// {
+// 	char	*line;
+// 	int		line_size;
+// 	t_room	room;
+// 	int		color;
+
+// 	*list = 0;
+// 	room.type = 0;
+// 	while ((line_size = get_next_line(0, &line)) > 0)
+// 	{
+// 		if (line[0] == '#')
+// 		{
+// 			if (handle_commands(line, &room.type) < 0)
+// 				exit(print_error("Multiple commands for one room!")); // TODO: handle error
+// 			free(line);
+// 			continue ;
+// 		}
+// 		if (!is_room_line(line))
+// 			break ;
+// 		if (get_room(&room, line) < 0)
+// 			exit(print_error("Unable to get some room!"));// TODO: handle error
+// 		set_color(&room);
+// 		ft_lstadd(list, ft_lstnew(&room, sizeof(t_room)));
+// 		room.type = 0;
+// 		free(line);
+// 	}
+// 	if (room.type != 0 || line_size <= 0)
+// 		exit(print_error(line_size <= 0 ? "GNL error" : "Command without room!"));
+// 	return (line);
+// }
+
+// char		*get_rooms_dict(t_dict *dict)
+// {
+// 	char	*line;
+// 	int		line_size;
+// 	t_room	room;
+// 	t_room	*to_dict;
+// 	int		color;
+
+// 	dict = ft_dictnew(4096);
+// 	room.type = 0;
+// 	while ((line_size = get_next_line(0, &line)) > 0)
+// 	{
+// 		if (line[0] == '#')
+// 			if (handle_commands(line, &room.type) < 0)
+// 				exit(print_error("Multiple commands for one room!")); // TODO: handle error
+// 		else
+// 		{
+// 			if (!is_room_line(line))
+// 				break ;
+// 			if (get_room(&room, line) < 0)
+// 				exit(print_error("Unable to get some room!"));// TODO: handle error
+// 			if (ft_dictget(dict, room.name) != 0)
+// 				exit(print_error("Some rooms are not valid!"));
+// 			set_color(&room);
+// 			if ((to_dict = (t_room *)malloc(sizeof(t_room))) == 0)
+// 				exit(-1);
+// 			*to_dict = room;
+// 			ft_dictset(dict, room.name, to_dict);
+// 			room.type = 0;
+// 		}
+// 		free(line);
+// 	}
+// 	if (room.type != 0 || line_size <= 0)
+// 		exit(print_error(line_size <= 0 ? "GNL error" : "Command without room!"));
+// 	return (line);
+// }
+
+char		*get_rooms_dict(t_dict **dict)
 {
 	char	*line;
 	int		line_size;
 	t_room	room;
-	int		color;
+	t_room	*to_dict;
+	int		has_start_end;
 
-	*list = 0;
+	*dict = ft_dictnew(32);
 	room.type = 0;
+	has_start_end = 0;
 	while ((line_size = get_next_line(0, &line)) > 0)
 	{
 		if (line[0] == '#')
@@ -145,75 +216,99 @@ char		*get_rooms_list(t_list **list)
 			break ;
 		if (get_room(&room, line) < 0)
 			exit(print_error("Unable to get some room!"));// TODO: handle error
+		if (ft_dictget(*dict, room.name) != 0)
+			exit(print_error("Some rooms are not valid!"));
 		set_color(&room);
-		ft_lstadd(list, ft_lstnew(&room, sizeof(t_room)));
+		if ((to_dict = (t_room *)malloc(sizeof(t_room))) == 0)
+			exit(-1);
+		*to_dict = room;
+		ft_dictset(*dict, room.name, to_dict);
+		if (has_start_end & room.type)
+			exit(print_error("Rooms must have only one start / end!"));
+		else
+			has_start_end |= room.type;
 		room.type = 0;
 		free(line);
 	}
+	if (!((has_start_end & ROOM_TYPE_END) && (has_start_end & ROOM_TYPE_START)))
+		exit(print_error("No start / end command found!"));
 	if (room.type != 0 || line_size <= 0)
 		exit(print_error(line_size <= 0 ? "GNL error" : "Command without room!"));
 	return (line);
 }
 
-int check_rooms_validity(t_list *rooms) // TODO: Check same namings
-{
-	t_list	*tmp;
-	char	start_end;
+// int check_rooms_validity(t_dict *dict) // TODO: Check same namings
+// {
+// 	t_list	*tmp;
+// 	char	start_end;
 
-	start_end = 0;
-	while (rooms)
-	{
-		if (((t_room *)rooms->content)->type == 1)
-		{
-			if (start_end & 1)
-				return (-1);
-			else 
-				start_end |= 1;
-		}
-		if (((t_room *)rooms->content)->type == 2)
-		{
-			if (start_end & 2)
-				return (-1);
-			else 
-				start_end |= 2;
-		}
-		tmp = rooms->next;
-		while (tmp)
-		{
-			if (strcmp(((t_room *)tmp->content)->name, ((t_room *)rooms->content)->name) == 0)
-				return (-1);
-			tmp = tmp->next;
-		}
-		rooms = rooms->next;
-	}
-	if (start_end != 3)
-		return (-1);
-	return (0);
+// 	start_end = 0;
+// 	while (rooms)
+// 	{
+// 		if (((t_room *)rooms->content)->type == 1)
+// 		{
+// 			if (start_end & 1)
+// 				return (-1);
+// 			else 
+// 				start_end |= 1;
+// 		}
+// 		if (((t_room *)rooms->content)->type == 2)
+// 		{
+// 			if (start_end & 2)
+// 				return (-1);
+// 			else 
+// 				start_end |= 2;
+// 		}
+// 		// tmp = rooms->next;
+// 		// while (tmp)
+// 		// {
+// 		// 	if (strcmp(((t_room *)tmp->content)->name, ((t_room *)rooms->content)->name) == 0)
+// 		// 		return (-1);
+// 		// 	tmp = tmp->next;
+// 		// }
+// 		rooms = rooms->next;
+// 	}
+// 	if (start_end != 3)
+// 		return (-1);
+// 	return (0);
+// }
+
+int map(t_room *room)
+{
+	static int i = 0;
+
+	printf("%d\n", ++i);
+	return 1;
 }
 
-char		*get_rooms(t_obj *obj)
+void del4dict(t_room **room)
 {
-	char	*line;
-	t_list	*rooms;
-	t_list	*tmp;
+	printf("%p\n", *room);
+	printf("%s\n", (*room)->name);
+	printf("(%f %f %f)\n", (*room)->pos.x, (*room)->pos.y, (*room)->pos.z);
+	free(*room);
+}
+
+t_dict	*rooms_dict2array(t_obj *obj, t_dict *rooms)
+{
 	size_t	i;
 
-	if ((line = get_rooms_list(&rooms)) == 0)
-		exit(print_error("No connections found!"));
-	// if (check_rooms_validity(rooms) < 0)
-	// 	exit(print_error("Some rooms are not valid!"));
-	obj->rooms_cnt = ft_lstsize(rooms);
+	rooms->items->iter = -1;
+	while (ft_dictnext_item(rooms))
+		obj->rooms_cnt++;
 	if ((obj->rooms = (t_room *)malloc(sizeof(t_room) * obj->rooms_cnt)) == 0)
 		exit(print_error("Failed to allocate rooms array!"));
 	i = 0;
-	tmp = rooms;
-	while (tmp)
-	{
-		obj->rooms[i++] = *((t_room *)tmp->content);
-		tmp = tmp->next;
-	}
-	ft_lstdel(&rooms, &del);
-	return (line);
+	rooms->items->iter = -1;
+	while (i < obj->rooms_cnt)
+		obj->rooms[i++] = *(t_room *)ft_dictnext_item(rooms);
+	ft_dictdel(&rooms, del4dict);
+	rooms = ft_dictnew(32);
+	i = 0;
+	while (i < obj->rooms_cnt)
+		ft_dictset(rooms, obj->rooms[i].name, obj->rooms + i++);
+	return (rooms);
+
 }
 
 int			is_comment(char *line)
@@ -229,7 +324,7 @@ int			is_comment(char *line)
 		return (0);
 }
 
-int			set_conn_rooms(t_obj *obj, t_conn *conn, char *line)
+int			set_conn_rooms(t_conn *conn, t_dict *rooms, char *line)
 {
 	char	*dash_p;
 	int		i;
@@ -237,32 +332,35 @@ int			set_conn_rooms(t_obj *obj, t_conn *conn, char *line)
 	if ((dash_p = ft_strchr(line, '-')) == 0)
 		return (-1);
 	*dash_p = '\0';
-	i = 0;
-	while (i < obj->rooms_cnt) // TODO: remove duplicates
-	{
-		if (ft_strcmp(obj->rooms[i].name, line) == 0)
-		{
-			conn->r1 = obj->rooms + i;
-			break ;
-		}
-		i++;
-	}
-	if (i == obj->rooms_cnt)
+	if ((conn->r1 = ft_dictget(rooms, line)) == 0)
 		return (-1);
 	line = dash_p + 1;
-	i = 0;
-	while (i < obj->rooms_cnt)
-	{
-		if (ft_strcmp(obj->rooms[i].name, line) == 0)
-		{
-			conn->r2 = obj->rooms + i;
-			break ;
-		}
-		i++;
-	}
-	if (i == obj->rooms_cnt)
+	if ((conn->r2 = ft_dictget(rooms, line)) == 0)
 		return (-1);
-	return (0);
+	return 0;
+	// while (i < obj->rooms_cnt) // TODO: remove duplicates
+	// {
+	// 	if (ft_strcmp(obj->rooms[i].name, line) == 0)
+	// 	{
+	// 		conn->r1 = obj->rooms + i;
+	// 		break ;
+	// 	}
+	// 	i++;
+	// }
+	// if (i == obj->rooms_cnt)
+	// 	return (-1);
+	// while (i < obj->rooms_cnt)
+	// {
+	// 	if (ft_strcmp(obj->rooms[i].name, line) == 0)
+	// 	{
+	// 		conn->r2 = obj->rooms + i;
+	// 		break ;
+	// 	}
+	// 	i++;
+	// }
+	// if (i == obj->rooms_cnt)
+	// 	return (-1);
+	// return (0);
 }
 
 int			is_conn(char *line)
@@ -272,12 +370,13 @@ int			is_conn(char *line)
 	return (1);
 }
 
-void	get_conn_list(t_list **head, t_obj *obj, char *line)
+void	get_conn_vector(t_vector **conns, t_dict *rooms, char *line)
 {
 	t_conn	conn;
 	int		comment;
-	int		i = 0;
+	int		i = 1;
 
+	*conns = ft_vnew(1024 * sizeof(t_conn), sizeof(t_conn));
 	while (1)
 	{
 		if ((comment = is_comment(line)) != 1)
@@ -286,9 +385,11 @@ void	get_conn_list(t_list **head, t_obj *obj, char *line)
 				break ;
 			else if (comment == -1)
 				exit(print_error("Command found in connections block!"));
-			set_conn_rooms(obj, &conn, line);
-			i++;
-			ft_lstadd(head, ft_lstnew(&conn, sizeof(t_conn)));
+			set_conn_rooms(&conn, rooms, line);
+			// printf("line: %i\n", i++);
+			ft_vpush_back(*conns, &conn, sizeof(t_conn));
+			// i++;
+			// ft_lstadd(head, ft_lstnew(&conn, sizeof(t_conn)));
 		}
 		free(line);
 		if (get_next_line(0, &line) <= 0)
@@ -297,8 +398,37 @@ void	get_conn_list(t_list **head, t_obj *obj, char *line)
 			exit(-1); // gnl return value == 0 if str is ""
 		}
 	}
+	printf("OK\n");
 	free(line);
 }
+
+// void	get_conn_list(t_list **head, t_obj *obj, char *line)
+// {
+// 	t_conn	conn;
+// 	int		comment;
+// 	int		i = 0;
+
+// 	while (1)
+// 	{
+// 		if ((comment = is_comment(line)) != 1)
+// 		{
+// 			if (!is_conn(line))
+// 				break ;
+// 			else if (comment == -1)
+// 				exit(print_error("Command found in connections block!"));
+// 			set_conn_rooms(obj, &conn, line);
+// 			i++;
+// 			ft_lstadd(head, ft_lstnew(&conn, sizeof(t_conn)));
+// 		}
+// 		free(line);
+// 		if (get_next_line(0, &line) <= 0)
+// 		{
+// 			break ;
+// 			exit(-1); // gnl return value == 0 if str is ""
+// 		}
+// 	}
+// 	free(line);
+// }
 
 void print_list(t_list *head)
 {
@@ -362,31 +492,43 @@ int			remove_sim_room_conn(t_list **head)
 // 		head = head->next;
 // 	}
 // }
+void		print_conns(t_obj *obj);
 
-void	get_conn(t_obj *obj, char *line)
+void	get_conn(t_obj *obj, t_dict *rooms, char *line)
 {
-	t_list	*head;
+	t_vector	*conns;
 	t_list	*tmp;
 	t_conn	path;
 	size_t	i;
 
-	head = 0;
-	get_conn_list(&head, obj, line);
-	remove_sim_room_conn(head);
+	// head = 0;
+	get_conn_vector(&conns, rooms, line);
+	// printf("OKx2\n");
+	// printf("cUsize: %d\n", ft_vunused_size(conns));
+	// ft_v
+	// remove_sim_room_conn(head);
 	// remove_duplicates(head);
-	if ((obj->cons_cnt = ft_lstsize(head)) == 0)
+	if ((obj->cons_cnt = conns->head) == 0)
+		exit(print_error("Zero conns found!"));
+	printf("obj->cons_cnt: %d\n", obj->cons_cnt);
+	// if ((obj->cons_cnt = ft_lstsize(head)) == 0)
 		; // TODO: handle errors
 	if ((obj->cons = (t_conn *)malloc(sizeof(t_conn) * obj->cons_cnt)) == 0)
 		exit(-1);
-	tmp = head;
 	i = 0;
-	while (tmp)
+	while (i < obj->cons_cnt)
 	{
-		obj->cons[i] = *((t_conn *)tmp->content);
+		obj->cons[i] = *(t_conn *)ft_vpop_back(conns);
+		printf("%d (%s-%s)\n", i, obj->cons[i].r1->name, obj->cons[i].r2->name);
+		// obj->cons[i] = *((t_conn *)tmp->content);
 		obj->cons[i++].color = 0xffffff;
-		tmp = tmp->next;
+		// tmp = tmp->next;
 	}
-	ft_lstdel(&head, &del);
+	free(conns->const_con);
+	free(conns);
+	// ft_vdel(conns); // WTF??
+	// print_conns(obj);
+	// ft_lstdel(&head, &del);
 }
 
 void		print_rooms(t_obj *obj)
@@ -762,17 +904,19 @@ int colorize_rooms(t_obj *obj)
 int			parse_input(t_obj *obj)
 {
 	int			ants;
-	t_list		*rooms; // TODO: rework on vector
+	t_dict		*rooms;
 	t_list		*con;
 	char		*line;
 
 	if ((obj->ants_cnt = get_ants_cnt(obj)) < 0)
 		exit(print_error("Invalid ants count!"));
-	if ((line = get_rooms(obj)) == 0)
+	if ((line = get_rooms_dict(&rooms)) == 0)
 		exit(print_error(""));
 	// if (colorize_rooms(obj) < 0)
 	// 	exit(-1);
-	get_conn(obj, line);
+	rooms = rooms_dict2array(obj, rooms);
+	get_conn(obj, rooms, line);
+	ft_dictdel(&rooms, 0);
 	set_heights(obj);
 	if (get_traces(obj) < 0) // TODO:
 		exit(-1);
@@ -780,7 +924,8 @@ int			parse_input(t_obj *obj)
 		exit(-1);
 	print_rooms(obj);
 	print_conns(obj);
-	print_routes(obj);
-	print_traces(obj);
+	// exit(0);
+	// print_routes(obj);
+	// print_traces(obj);
 	return (0);
 }
