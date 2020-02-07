@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/06 15:27:45 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:16:35 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ t_point	transform(t_state *state, t_point point)
 		point.x * state->obj.rot_m[2][0] + point.y *
 			state->obj.rot_m[2][1] + point.z * state->obj.rot_m[2][2]);
 	point = point_init(
-		point.x + state->cam.shift.x * state->cam.scale * state->cam.zoom.x,
-		point.y + state->cam.shift.y * state->cam.scale * state->cam.zoom.y,
-		point.z + state->cam.shift.z * state->cam.scale * state->cam.zoom.z);
+		point.x + state->cam.shift.x,
+		point.y + state->cam.shift.y,
+		point.z + state->cam.shift.z);
 	point = state->proj(point, state);
 	point = point_init(
 		point.x + state->cam.obs.x,
@@ -405,12 +405,17 @@ static int	slow_rotate(t_state *state)
 	return (0);
 }
 
+int mouse_shift_handle(int keycode, int x, int y, t_state *state);
+int mouse_press(int keycode, int x, int y, t_state *state);
+int mouse_release(int keycode, int x, int y, t_state *state);
 int visu(t_state *state)
 {
 	state->pr_init(state);
 	render(state, 1);
 	mlx_hook(state->graph.w_p, 2, 0, &key_hook, state);
 	mlx_loop_hook(state->graph.mlx_p, &ants_loop, state);
+	mlx_hook(state->graph.w_p, 4, 0, &mouse_press, state);
+	mlx_hook(state->graph.w_p, 5, 0, &mouse_release, state);
 	mlx_loop(state->graph.mlx_p);
 	return 0;
 }

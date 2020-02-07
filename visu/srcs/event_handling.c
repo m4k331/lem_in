@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 13:34:42 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:22:51 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,54 @@ int	rotate_handle(int keycode, t_state *state)
 int	shift_handle(int keycode, t_state *state)
 {
 	int sign;
+	int min_side;
 
 	if (keycode == KEY_0 || keycode == KEY_A || keycode == KEY_S ||
 		keycode == KEY_D || keycode == KEY_W)
 	{
-		sign = (keycode == KEY_A || keycode == KEY_W ? 1 : -1);
+		// min_side = (state->graph.img.x_len > state->graph.img.y_len ? state->graph.img.y_len : state->graph.img.x_len);
+		// sign = (keycode == KEY_A || keycode == KEY_W ? 1 : -1);
 		if (keycode == KEY_0)
 			state->cam.shift = point_init(0, 0, 0);
-		if (keycode == KEY_A || keycode == KEY_D)
-			state->cam.shift = point_init(
-				state->cam.shift.x + sign * (1 + state->speed),
-				state->cam.shift.y, state->cam.shift.z);
-		if (keycode == KEY_W || keycode == KEY_S)
-			state->cam.shift = point_init(
-				state->cam.shift.x,
-				state->cam.shift.y + sign * (1 + state->speed),
-				state->cam.shift.z);
+		// if (keycode == KEY_A || keycode == KEY_D)
+		// 	state->cam.shift = point_init(
+		// 		state->cam.shift.x + (double)sign * (1 + state->speed) * min_side * 0.001,
+		// 		state->cam.shift.y, state->cam.shift.z);
+		// if (keycode == KEY_W || keycode == KEY_S)
+		// 	state->cam.shift = point_init(
+		// 		state->cam.shift.x,
+		// 		state->cam.shift.y + (double)sign * (1 + state->speed) * min_side * 0.001,
+		// 		state->cam.shift.z);
 		return (1);
 	}
 	return (0);
+}
+
+int mouse_shift_handle(int x, int y, t_state *state)
+{
+	state->cam.shift = point_init(
+		state->cam.shift.x + (x - state->prev_mouse_pos.x),
+		state->cam.shift.y + (y - state->prev_mouse_pos.y),
+		state->cam.shift.z);
+	state->prev_mouse_pos = point_init(x, y, 0);
+	state->image_changed = 1;
+	render(state);
+	return 0;
+}
+
+int mouse_press(int button, int x, int y, t_state *state)
+{
+	if (button != 1)
+		return 0;
+	state->prev_mouse_pos = point_init(x, y, 0);
+	mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_handle, state);
+}
+
+int mouse_release(int button, int x, int y, t_state *state)
+{
+	if (button != 1)
+		return 0;
+	mlx_hook(state->graph.w_p, 6, 0, 0, 0);
 }
 
 int	zoom_handle(int keycode, t_state *st)

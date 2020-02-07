@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/06 15:12:58 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:11:07 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,8 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	state->speed = 0;
 	state->menu = -1;
 	state->stat = -1;
+
+	state->prev_mouse_pos = point_init(0, 0, 0);
 
 	print_rooms1(&state->obj);
 	printf("radius: %f\n", state->obj.radius);

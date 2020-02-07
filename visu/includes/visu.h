@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/06 15:10:37 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:10:28 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ typedef struct	s_state
 	int				stat;
 
 	char			image_changed;
+	t_point			prev_mouse_pos;
 
 	t_proj			*proj;
 	t_proj_init		*pr_init;
