@@ -44,7 +44,12 @@
 # define KEY_CL_BRACKET	30
 
 # define KEY_TILDA		50
-# define KEY_PAGE_UP    116
+# define KEY_PAGE_UP	116
 # define KEY_PAGE_DOWN  121
+
+# define MOUSE_BR		1
+# define MOUSE_BL		2
+# define MOUSE_WHL_UP	4
+# define MOUSE_WHL_DOWN	5
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 20:26:25 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 19:17:06 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int key_hook(int keycode, t_state *state)
 		state->step = 0;
 		state->step_percent = 0;
 		state->pause = 0;
+		state->time = 0;
 	}
 	if (keycode == KEY_F)
 		state->pause = !state->pause;
@@ -96,7 +97,9 @@ int key_hook(int keycode, t_state *state)
 		state->ant_speed = state->ant_speed > 10 ? 10 : state->ant_speed + 0.1;
 	if (keycode == KEY_PAGE_DOWN)
 		state->ant_speed = state->ant_speed < 0.2 ? 0.2 : state->ant_speed - 0.1;
-	if (keycode == KEY_A)
+	if (keycode == KEY_PAGE_DOWN || keycode == KEY_PAGE_UP)
+		state->time = 0;
+	if (keycode == KEY_P)
 		state->draw_line = &draw_nothing;
 	render(state);
 	return 0;
@@ -296,11 +299,13 @@ const char *help_strs[] =
 	"\tLine algorithm:",
 	"\t\tBresenham: B",
 	"\t\tXiolin Wu: X",
+	"\t\tPoints: P",
 	"\tReset:",
 	"\t\tTransformations: R",
 	"\t\tAnts: G",
 	"\tCentrize: 0",
 	"\tSpeed:",
+	"\t\tAnts: Page up / Page Down",
 	"\t\tTransformations:",
 	"\t\t\tIncreese: E",
 	"\t\t\tReset: Q",
@@ -362,7 +367,6 @@ void	render_stat(t_state *state, t_point start)
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Connections number: ", state->obj.cons_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Routes number: ", state->obj.routes_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->step + 1);
-	// mlx_string_put
 }
 
 void	render(t_state *state)
@@ -393,6 +397,11 @@ void	render(t_state *state)
 
 static int	slow_rotate(t_state *state);
 
+#include <math.h>
+
+
+// ds = 50 * (sin(pi / 100 * v * (t + 1) - pi / 2) - sin(pi / 100 * v * t - pi / 2))
+// 2 * sin(pi / 100 * v / 2) * cos((pi / 100 * v * (2t + 1) - pi) / 2)
 
 int ants_loop(t_state *state)
 {
@@ -400,10 +409,14 @@ int ants_loop(t_state *state)
 
 	if (!state->pause)
 	{
-		state->step_percent += state->ant_speed;
-		if (state->step_percent > 100)
+		// state->step_percent += state->ant_speed;
+		state->step_percent = 50 + 50 * sin(M_PI / 100 * state->time * state->ant_speed - M_PI_2);
+		// state->step_percent += 100 * (sin(M_PI / 200 / state->ant_speed) * cos((M_PI / state->ant_speed / 100 * (2 * t * state->ant_speed + 1) - M_PI) / 2));
+		state->time++;
+		if (state->ant_speed * state->time > 100)
 		{
 			state->step_percent = 0;
+			state->time = 0;
 			state->step++;
 		}
 		render(state);
@@ -431,9 +444,6 @@ static int	slow_rotate(t_state *state)
 	return (0);
 }
 
-int mouse_shift_handle(int keycode, int x, int y, t_state *state);
-int mouse_press(int keycode, int x, int y, t_state *state);
-int mouse_release(int keycode, int x, int y, t_state *state);
 int visu(t_state *state)
 {
 	state->pr_init(state);

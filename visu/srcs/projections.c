@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projections.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:43 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/23 10:46:05 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 18:46:25 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,16 @@ void	iso_proj_init(t_state *state)
 	state->obj.rot_m[2][2] = sqrt(2.) / sqrt(6);
 }
 
-void	my_proj_init(t_state *state)
+void	z_x_proj_init(t_state *state)
 {
 	t_point angle;
 
 	matrix_identity_set(state->obj.rot_m);
-	angle = point_init(M_PI_4, -M_PI_4, 0);
+	angle = point_init(M_PI_2, 0, 0);
 	matrix_rotate(state->obj.rot_m, angle);
 }
 
-void	par_proj_init(t_state *state)
+void	y_x_proj_init(t_state *state)
 {
 	matrix_identity_set(state->obj.rot_m);
 }
@@ -59,6 +59,6 @@ t_point	persp_proj(t_point point, t_state *state)
 
 	k = -FOCUS_SHIFT_K * state->obj.radius * state->cam.scale /
 		(point.z - FOCUS_SHIFT_K * state->obj.radius * state->cam.scale);
-	point = point_init(point.x * k, point.y * k, point.z * k);
+		point = point_init(point.x * k, point.y * k, point.z * k);
 	return (point);
 }

@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 20:18:08 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 18:54:26 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,67 +57,11 @@ int	shift_handle(int keycode, t_state *state)
 	if (keycode == KEY_0 || keycode == KEY_A || keycode == KEY_S ||
 		keycode == KEY_D || keycode == KEY_W)
 	{
-		// min_side = (state->graph.img.x_len > state->graph.img.y_len ? state->graph.img.y_len : state->graph.img.x_len);
-		// sign = (keycode == KEY_A || keycode == KEY_W ? 1 : -1);
 		if (keycode == KEY_0)
 			state->cam.shift = point_init(0, 0, 0);
-		// if (keycode == KEY_A || keycode == KEY_D)
-		// 	state->cam.shift = point_init(
-		// 		state->cam.shift.x + (double)sign * (1 + state->speed) * min_side * 0.001,
-		// 		state->cam.shift.y, state->cam.shift.z);
-		// if (keycode == KEY_W || keycode == KEY_S)
-		// 	state->cam.shift = point_init(
-		// 		state->cam.shift.x,
-		// 		state->cam.shift.y + (double)sign * (1 + state->speed) * min_side * 0.001,
-		// 		state->cam.shift.z);
 		return (1);
 	}
 	return (0);
-}
-
-int mouse_shift_handle(int x, int y, t_state *state)
-{
-	state->cam.shift = point_init(
-		state->cam.shift.x + (x - state->prev_mouse_pos.x),
-		state->cam.shift.y + (y - state->prev_mouse_pos.y),
-		state->cam.shift.z);
-	state->prev_mouse_pos = point_init(x, y, 0);
-	state->image_changed = 1;
-	render(state);
-	return 0;
-}
-
-int mouse_shift_z_handle(int x, int y, t_state *state)
-{
-	state->cam.shift = point_init(
-		state->cam.shift.x,
-		state->cam.shift.y,
-		state->cam.shift.z + (y - state->prev_mouse_pos.z));
-	state->prev_mouse_pos = point_init(0, 0, y);
-	state->image_changed = 1;
-	render(state);
-	return 0;
-}
-
-int mouse_press(int button, int x, int y, t_state *state)
-{
-	if (button == 1)
-	{
-		state->prev_mouse_pos = point_init(x, y, 0);
-		mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_handle, state);
-	}
-	if (button == 2)
-	{
-		state->prev_mouse_pos = point_init(0, 0, y);
-		mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_z_handle, state);
-	}
-}
-
-int mouse_release(int button, int x, int y, t_state *state)
-{
-	if (button != 1 && button != 2)
-		return 0;
-	mlx_hook(state->graph.w_p, 6, 0, 0, 0);
 }
 
 int	zoom_handle(int keycode, t_state *st)
@@ -158,10 +102,10 @@ int	proj_handle(int keycode, t_state *st)
 		keycode == KEY_3 || keycode == KEY_4)
 	{
 		st->proj = (t_proj *)&ip_proj;
-		st->pr_init = (t_proj_init *)&par_proj_init;
+		st->pr_init = (t_proj_init *)&y_x_proj_init;
 		if (keycode == KEY_1)
-			st->pr_init = (t_proj_init *)&my_proj_init;
-		if (keycode == KEY_2)
+			st->pr_init = (t_proj_init *)&z_x_proj_init;
+		if (keycode == KEY_3)
 			st->pr_init = (t_proj_init *)&iso_proj_init;
 		if (keycode == KEY_4)
 			st->proj = (t_proj *)&persp_proj;

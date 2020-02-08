@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 19:30:19 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 18:48:15 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	state->menu = -1;
 	state->stat = -1;
 	state->ant_speed = 1;
+	state->time = 0;
 
 	state->prev_mouse_pos = point_init(0, 0, 0);
 
@@ -208,7 +209,7 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	printf("radius: %f\n", state->obj.radius);
 	printf("scale: %f\n", state->cam.scale);
 	// exit(0);
-	state->pr_init = (t_proj_init *)&par_proj_init;
+	state->pr_init = (t_proj_init *)&y_x_proj_init;
 	state->proj = (t_proj *)&ip_proj;
 	state->draw_line = (t_draw_line *)&bresenham;
 }

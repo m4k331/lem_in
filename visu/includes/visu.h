@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 20:07:15 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 15:50:41 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ typedef struct	s_state
 	int				auto_rotate;
 	int				speed;
 	double			ant_speed;
+	int				time;
 	int				menu;
 	int				stat;
 
