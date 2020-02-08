@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 18:54:26 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 19:42:51 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,19 +64,11 @@ int	shift_handle(int keycode, t_state *state)
 	return (0);
 }
 
-int	zoom_handle(int keycode, t_state *st)
+static int	axis_zoom_handle(int keycode, t_state *st)
 {
-	double sign;
+	double	sign;
 
-	if (keycode != KEY_PLUS && keycode != KEY_MINUS &&
-		keycode != KEY_LESS && keycode != KEY_GRTR &&
-		keycode != KEY_CR_BRACKET && keycode != KEY_CL_BRACKET)
-		return (0);
-	sign = (keycode == KEY_PLUS || keycode == KEY_GRTR || keycode == KEY_CL_BRACKET ? 1 : -0.5);
-	if ((keycode == KEY_PLUS || keycode == KEY_MINUS) && st->cam.scale +
-			sign * (st->speed ? st->cam.scale : 1 / fabs(sign)) > 0)
-		st->cam.scale = st->cam.scale +
-			sign * (st->speed ? st->cam.scale : 1 / fabs(sign));
+	sign = (keycode == KEY_GRTR || keycode == KEY_CL_BRACKET) ? 1 : -0.5;
 	if ((keycode == KEY_LESS && st->cam.zoom.z + sign *
 		(st->speed ? st->cam.zoom.z : 0.1 / fabs(sign)) >= -FOCUS_SHIFT_K) ||
 		(keycode == KEY_GRTR && st->cam.zoom.z + sign *
@@ -91,8 +83,24 @@ int	zoom_handle(int keycode, t_state *st)
 				(st->speed ? st->cam.zoom.x : 0.1 / fabs(sign)),
 			st->cam.zoom.x + sign *
 				(st->speed ? st->cam.zoom.y : 0.1 / fabs(sign)),
-			st->cam.zoom.z
-		);
+			st->cam.zoom.z);
+}
+
+int	zoom_handle(int keycode, t_state *st)
+{
+	double sign;
+
+	if (keycode != KEY_PLUS && keycode != KEY_MINUS &&
+		keycode != KEY_LESS && keycode != KEY_GRTR &&
+		keycode != KEY_CR_BRACKET && keycode != KEY_CL_BRACKET)
+		return (0);
+	sign = (keycode == KEY_PLUS ? 1 : -0.5);
+	if ((keycode == KEY_PLUS || keycode == KEY_MINUS) && st->cam.scale +
+		sign * (st->speed ? st->cam.scale : 1 / fabs(sign)) > 0)
+		st->cam.scale = st->cam.scale +
+			sign * (st->speed ? st->cam.scale : 1 / fabs(sign));
+	else
+		axis_zoom_handle(keycode, st);
 	return (1);
 }
 
@@ -115,6 +123,7 @@ int	proj_handle(int keycode, t_state *st)
 	return (0);
 }
 
+void draw_nothing(void *state, t_point start, t_point end, uint32_t color); // TODO: Убрать к хрунам
 int	render_handle(int keycode, t_state *st)
 {
 	if (keycode == KEY_R || keycode == KEY_X || keycode == KEY_B ||
@@ -134,10 +143,8 @@ int	render_handle(int keycode, t_state *st)
 			st->draw_line = &xiolin_wu;
 		if (keycode == KEY_B)
 			st->draw_line = &bresenham;
-		// if (keycode == KEY_P)
-		// 	st->draw_cell = (t_draw_cell *)&point_cell;
-		// if (keycode == KEY_C)
-		// 	st->color = st->color ? 0 : 1;
+	if (keycode == KEY_P)
+		st->draw_line = &draw_nothing;
 		return (1);
 	}
 	return (0);

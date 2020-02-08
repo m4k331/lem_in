@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 19:28:15 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 19:29:06 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/08 19:33:23 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "visu.h"
 
-int	slow_rotate(t_state *state);
-int ants_loop(t_state *state);
+int		slow_rotate(t_state *state);
+int		ants_loop(t_state *state);
 
 #endif
