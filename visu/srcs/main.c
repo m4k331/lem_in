@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 19:29:43 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/10 08:20:55 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ t_point	transform(t_state *state, t_point point)
 	return (point);
 }
 
+#include "projections.h"
 void do_recalc(t_state *state)
 {
 	int		i;
@@ -143,10 +144,17 @@ void do_recalc(t_state *state)
 			state->graph.img.depth[j][i] = -DBL_MAX;
 	j = -1;
 	while (++j < state->obj.cons_cnt)
+	{
+		t_point start, end;
+		start = transform(state, state->obj.cons[j].r1->pos);
+		end = transform(state, state->obj.cons[j].r2->pos);
+		if (state->proj != persp_proj || (state->proj == persp_proj &&
+			(start.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale || end.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)))
 		state->draw_line(&state->graph,
 			transform(state, state->obj.cons[j].r1->pos),
 			transform(state, state->obj.cons[j].r2->pos),
 			state->obj.cons[j].color);
+	}
 	j = -1;
 	while (++j < state->obj.rooms_cnt)
 	{
