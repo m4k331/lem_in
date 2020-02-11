@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/11 16:40:30 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 21:54:07 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ void del(void *content, size_t content_size)
 int			get_ants_cnt(t_obj *obj) // TODO:
 {
 	char	*line;
-	size_t	line_size;
+	ssize_t	line_size;
 	int		i;
 	int		res;
 
 	while ((line_size = get_next_line(0, &line)) > 0 && line[0] == '#')
 		free(line);
 	if (line_size <= 0)
-		return (-1);
+		exit(-1);
 	i = 0;
 	while (ft_isdigit(line[i]))
 		i++;

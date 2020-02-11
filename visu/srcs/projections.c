@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projections.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:43 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/10 09:26:02 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 19:52:34 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_point	persp_proj(t_point point, t_state *state)
 
 	if (point.z >= FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)
 	{
-		if (point.x > point.y)
+		if (fabs(point.x) > fabs(point.y))
 			k = state->graph.img.x_len / fabs(point.x);
 		else
 			k = state->graph.img.y_len / fabs(point.y);
