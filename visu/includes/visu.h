@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 15:50:41 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 12:31:50 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ typedef struct	s_state
 	t_draw_line		*draw_line;
 }				t_state;
 
-// t_point			point_init(int x, int y, int z); // TODO: move
 int				init_state(t_state *state); // TODO: move
 int				visu(t_state *state);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xiolin_wu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/30 19:58:06 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 11:41:14 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,33 +105,6 @@ static void	xiolin_wu_x(t_graphics *graph_p, t_point start,
 	}
 }
 
-// void		xiolin_wu(t_graphics *fdf_p, t_line line,
-// 	unsigned int color_s, unsigned int color_e)
-// {
-// 	if (fabs(line.end.y - line.start.y) < fabs(line.end.x - line.start.x))
-// 	{
-// 		if (line.end.x < line.start.x)
-// 		{
-// 			swap(&(line.end.x), &(line.start.x));
-// 			swap(&(line.end.y), &(line.start.y));
-// 			swap(&(line.end.z), &(line.start.z));
-// 			swap_ul(&(color_s), &(color_e));
-// 		}
-// 		xiolin_wu_x(fdf_p, line, color_s, color_e);
-// 	}
-// 	else
-// 	{
-// 		if (line.end.y < line.start.y)
-// 		{
-// 			swap(&(line.end.x), &(line.start.x));
-// 			swap(&(line.end.y), &(line.start.y));
-// 			swap(&(line.end.z), &(line.start.z));
-// 			swap_ul(&(color_s), &(color_e));
-// 		}
-// 		xiolin_wu_y(fdf_p, line, color_s, color_e);
-// 	}
-// }
-
 void		xiolin_wu(t_graphics *graph_p, t_point start,
 	t_point end, unsigned int line_color)
 {
@@ -142,9 +115,5 @@ void		xiolin_wu(t_graphics *graph_p, t_point start,
 		xiolin_wu_x(graph_p, start, end, line_color);
 	else
 		xiolin_wu_y(graph_p, start, end, line_color);
-	// if (fabs(r1->pos.z - graph_p->img.depth[(int)r1->pos.x][(int)r1->pos.y]) <= __DBL_EPSILON__ * 2)
-	// 	putpoint(graph_p, r1->pos.x, r1->pos.y, r1->color);
-	// if (fabs(r2->pos.z - graph_p->img.depth[(int)r2->pos.x][(int)r2->pos.y]) <= __DBL_EPSILON__ * 2)
-	// 	putpoint(graph_p, r2->pos.x, r2->pos.y, r2->color);
 }
 

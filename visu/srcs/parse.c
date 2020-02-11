@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/07 16:31:22 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 16:40:30 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,7 @@ int			get_ants_cnt(t_obj *obj) // TODO:
 	int		res;
 
 	while ((line_size = get_next_line(0, &line)) > 0 && line[0] == '#')
-	{
-		if (line[1] == '#')
-			return (-1);
 		free(line);
-	}
 	if (line_size <= 0)
 		return (-1);
 	i = 0;
@@ -79,8 +75,8 @@ int			handle_commands(char *line, char *type)
 		tmp_type = ROOM_TYPE_START;
 	else if (ft_strcmp(line, "##end") == 0)
 		tmp_type = ROOM_TYPE_END;
-	if (tmp_type != ROOM_TYPE_REGULAR && *type != ROOM_TYPE_REGULAR)
-		return (-1);
+	// if (tmp_type != ROOM_TYPE_REGULAR && *type != ROOM_TYPE_REGULAR)
+	// 	return (-1);
 	if (tmp_type != ROOM_TYPE_REGULAR)
 		*type = tmp_type;
 	return (0);
@@ -618,6 +614,11 @@ char		*get_buffer()
 	buff = ft_strnew(1);
 	while ((gnl_ret = get_next_line(0, &line)) > 0)
 	{
+		// if (line[0] == '#')
+		// {
+		// 	free(line);
+		// 	continue ;
+		// }
 		if ((tmp = ft_strjoin(line, "\n")) == 0)
 			exit(-1);
 		free(line);
@@ -821,8 +822,6 @@ int			get_traces(t_obj *obj)
 	if (check_routes_buffer(buff) < 0)
 		exit (-1);
 	obj->routes_cnt = get_routes_cnt(buff);
-	// while (1);
-		// perror("");
 	if ((obj->routes = malloc(obj->routes_cnt * sizeof(int *))) == 0)
 		exit(-1);
 	if ((obj->ants_traces = malloc(obj->ants_cnt * sizeof(t_trace))))

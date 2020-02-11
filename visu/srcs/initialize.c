@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 18:48:15 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 12:02:02 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,31 +151,10 @@ static void	obj_init(t_state *state, int map2circle)
 		(p_max.z + p_min.z) / 2);
 	rooms_centrize(&state->obj, anchor); // TODO: ?
 	matrix_identity_set(state->obj.rot_m);
-	// set_min_max(&x_min, &x_max, state);
-	// set_min_max(&y_min, &y_max, state);
-	// set_min_max(&z_min, &z_max, state);
 	state->obj.radius = 
 		sqrt(sqr((p_max.x - p_min.x) / 2) +
 			sqr((p_max.y - p_min.y) / 2) +
 			sqr((p_max.z - p_min.z) / 2));
-}
-
-void		print_rooms1(t_obj *obj)
-{
-	// TODO: delete
-
-	t_room	*room = obj->rooms;
-	int i = 0;
-
-	while (i < obj->rooms_cnt)
-	{
-		printf("room #%d\n", i);
-		printf("\tname: \'%s\'\n", room[i].name);
-		printf("\tpos (%.1f, %.1f, %.1f)\n", room[i].pos.x, room[i].pos.y, room[i].pos.z);
-		printf("\ttype: %s\n", (room[i].type == 0) ? "regular" : (room[i].type == 1) ? "start" : (room[i].type == 2) ? "end" : "I'm fucked up.");
-		printf("\tcolor %#x\n\n", room[i].color);
-		i++;
-	}
 }
 
 void		state_init(t_state *state, int size_x, int size_y, int map2circle)
@@ -187,7 +166,7 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	if ((state->graph.mlx_p = mlx_init()) == 0)
 		exit(-3);
 	if ((state->graph.w_p = mlx_new_window(state->graph.mlx_p,
-					size_x, size_y, "lem_in visu")) == 0)
+		size_x, size_y, "lem_in visu")) == 0)
 		exit(-4);
 	img_init(&state->graph, size_x, size_y);
 	camera_init(state);
@@ -204,11 +183,7 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	state->time = 0;
 
 	state->prev_mouse_pos = point_init(0, 0, 0);
-
-	print_rooms1(&state->obj);
-	printf("radius: %f\n", state->obj.radius);
-	printf("scale: %f\n", state->cam.scale);
-	// exit(0);
+	
 	state->pr_init = (t_proj_init *)&y_x_proj_init;
 	state->proj = (t_proj *)&ip_proj;
 	state->draw_line = (t_draw_line *)&bresenham;

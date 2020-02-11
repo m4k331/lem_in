@@ -35,7 +35,8 @@ SOURCES =	main.c				\
 			draw_utils.c		\
 			error_handling.c	\
 			mouse_handling.c	\
-			loops.c
+			loops.c				\
+			draw_no_line.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 

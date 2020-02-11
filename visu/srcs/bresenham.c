@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bresenham.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/30 19:58:07 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 11:44:40 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	bresenham_x(t_graphics *graph_p, t_point start,
 	gradz = (end.z - start.z) / (end.x - start.x) * i;
 	while ((int)p.x * i <= ft_round(end.x) * i)
 	{
-		if (p.x > 0 && p.x < graph_p->img.x_len - 1 /* was in while cond */ &&
+		if (p.x > 0 && p.x < graph_p->img.x_len - 1 &&
 			ft_round(p.y) < graph_p->img.y_len - 1 && ft_round(p.y) > 0)
 			if (graph_p->img.depth[ft_round(p.y)][(int)p.x] < p.z)
 			{

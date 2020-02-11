@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 22:24:47 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/29 13:33:14 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 11:40:34 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,6 @@ unsigned int	intense(unsigned int color, double k)
 	(((unsigned int)(((color & 0x00ff00) >> 8) * k)) << 8) +
 	(((unsigned int)(((color & 0xff0000) >> 16) * k)) << 16));
 }
-
-// unsigned int	color_grad(t_point cur, t_line line,
-// 	unsigned int color_s, unsigned int color_e)
-// {
-// 	double			k;
-// 	unsigned int	res;
-// 	unsigned char	bias;
-
-// 	k = sqrt(sqr(cur.x - line.start.x) + sqr(cur.y - line.start.y)) /
-// 		sqrt(sqr(line.end.x - line.start.x) + sqr(line.end.y - line.start.y));
-// 	res = 0;
-// 	bias = 0;
-// 	if (k > 1)
-// 		k = 1;
-// 	while (bias <= 24)
-// 	{
-// 		res += (((unsigned int)(((color_s >> bias) & 0xff) *
-// 						(1 - k)) + (unsigned int)(((color_e >> bias) & 0xff) *
-// 							k)) & 0xff) << bias;
-// 		bias += 8;
-// 	}
-// 	return (res);
-// }
 
 unsigned int	physical_intense_l1(unsigned int i1, unsigned int i2)
 {

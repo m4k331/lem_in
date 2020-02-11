@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/10 08:20:55 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 15:48:51 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,16 @@ void put_room(t_state *state, t_room *room)
 	}
 }
 
-void draw_nothing(void *state, t_point start, t_point end, uint32_t color)
-{
-	return ;
-}
-
 #include "key_bindings.h"
 int key_hook(int keycode, t_state *state)
 {
-	dprintf(1, "key pressed (%d)\n", keycode);
 	if (keycode == KEY_ESC)
 		exit(0);
-		// exit(free_state(state));
 	if (keycode == KEY_Q)
 		state->speed = 0;
 	if (keycode == KEY_E)
 		state->speed += 1;
 	if (rotate_handle(keycode, state) ||
-		shift_handle(keycode, state) ||
 		zoom_handle(keycode, state) ||
 		proj_handle(keycode, state) ||
 		render_handle(keycode, state))
@@ -101,7 +93,7 @@ int key_hook(int keycode, t_state *state)
 	if (keycode == KEY_PAGE_DOWN || keycode == KEY_PAGE_UP)
 		state->time = 0;
 	if (keycode == KEY_P)
-		state->draw_line = &draw_nothing;
+		state->draw_line = &draw_no_line;
 	render(state);
 	return 0;
 }
@@ -130,6 +122,76 @@ t_point	transform(t_state *state, t_point point)
 	return (point);
 }
 
+// i f n ot ( x1<xmin and x2<xmin ) and n ot ( x1>xmax and x2>xmax ) t h e n
+// i f n ot ( y1<ymin and y2<ymin ) and n ot ( y1>ymax and y2>ymax ) t h e n
+// x [ 1 ] = x1
+// y [ 1 ] = y1
+// x [ 2 ] = x2
+// y [ 2 ] = y2
+// i =1
+// r e p e a t
+// i f x [ i ] < xmin t h e n
+// x [ i ] = xmin
+// y [ i ] = ( ( y2−y1 ) / ( x2−x1 ) )∗( xmin−x1 )+ y1
+// e l s e i f x [ i ] > xmax t h e n
+// x [ i ] = xmax
+// y [ i ] = ( ( y2−y1 ) / ( x2−x1 ) )∗( xmax−x1 )+ y1
+// end i f
+// i f y [ i ] < ymin t h e n
+// y [ i ] = ymin
+// x [ i ] = ( ( x2−x1 ) / ( y2−y1 ) )∗( ymin−y1 )+ x1
+// e l s e i f y [ i ] > ymax t h e n
+// y [ i ] = ymax
+// x [ i ] = ( ( x2−x1 ) / ( y2−y1 ) )∗( ymax−y1 )+ x1
+// end i f
+// i = i + 1
+// u n t i l i>2
+// i f n ot ( x[1]<xmin and x[2]<xmin ) t h e n
+// i f n ot ( x[1]>xmax and x[2]>xmax ) t h e n
+// d rawLi ne ( x [ 1 ] , y [ 1 ] , x [ 2 ] , y [ 2 ] )
+// end i f
+// end i f
+// end i f
+// end i f
+
+void fast_clipping(t_point *start, t_point *end, t_state *state)
+{
+	t_point	p[2];
+	int		i;
+
+	if (!(start->x < 0 && end->x < 0) && !(start->x > state->graph.img.x_len && end->x > state->graph.img.x_len))
+		if (!(start->y < 0 && end->y < 0) && !(start->y > state->graph.img.y_len && end->y > state->graph.img.y_len))
+		{
+			p[0] = *start;
+			p[1] = *end;
+			i = 0;
+			while (i < 2)
+			{
+				if (p[i].x < 0)
+				{
+					p[i].x = 0;
+					p[i].y = ((end->y - start->y) / (end->x - start->x)) * (start->x) + start->y;
+				} else if (p[i].x > state->graph.img.x_len)
+				{
+					p[i].x = state->graph.img.x_len;
+					p[i].y = ((end->y - start->y) / (end->x - start->x)) * (state->graph.img.x_len - start->x) + start->y;
+				}
+				if (p[i].y < 0)
+				{
+					p[i].x = ((end->x - start->x) / (end->y - start->y)) * (start->y) + start->x;
+					p[i].y = 0;
+				} else if (p[i].y > state->graph.img.y_len)
+				{
+					p[i].x = ((end->x - start->x) / (end->y - start->y)) * (state->graph.img.y_len - start->y) + start->x;
+					p[i].y = state->graph.img.y_len;
+				}
+				i++;
+			}
+			*start = p[0];
+			*end = p[1];
+		}
+}
+
 #include "projections.h"
 void do_recalc(t_state *state)
 {
@@ -148,12 +210,13 @@ void do_recalc(t_state *state)
 		t_point start, end;
 		start = transform(state, state->obj.cons[j].r1->pos);
 		end = transform(state, state->obj.cons[j].r2->pos);
+		fast_clipping(&start, &end, state); // TODO: doesn't work
 		if (state->proj != persp_proj || (state->proj == persp_proj &&
 			(start.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale || end.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)))
-		state->draw_line(&state->graph,
-			transform(state, state->obj.cons[j].r1->pos),
-			transform(state, state->obj.cons[j].r2->pos),
-			state->obj.cons[j].color);
+			state->draw_line(&state->graph,
+				transform(state, state->obj.cons[j].r1->pos),
+				transform(state, state->obj.cons[j].r2->pos),
+				state->obj.cons[j].color);
 	}
 	j = -1;
 	while (++j < state->obj.rooms_cnt)
@@ -162,6 +225,7 @@ void do_recalc(t_state *state)
 		room.pos = transform(state, state->obj.rooms[j].pos);
 		put_room(state, &room);
 	}
+	// dprintf(1, "\n");
 	ft_memmove(state->graph.img.duplicate, state->graph.img.data,
 		state->graph.img.y_len * state->graph.img.line_size);
 }
@@ -220,6 +284,17 @@ size_t	count_ants_left(t_state *state)
 	return (state->obj.ants_cnt - i);
 }
 
+int get_ant_color(int j)
+{
+	int col;
+
+	col = 0xff00ff;
+	col =	((int)((col & 0xff) * (double)(j % 20 + 10) / 30)) +
+			((int)(((col >> 4) & 0xff) * (double)(j % 20 + 10) / 30) << 8) +
+			((int)(((col >> 8) & 0xff) * (double)(j % 20 + 10) / 30) << 16);
+	return (col);
+}
+
 void draw_ants_movement(t_state *state)
 {
 	int		i;
@@ -237,6 +312,7 @@ void draw_ants_movement(t_state *state)
 			break ;
 		route = state->obj.routes[state->obj.ants_traces[i].route];
 		j = state->step - state->obj.ants_traces[i].step;
+		// int col = get_ant_color(j);
 		if (j + 1 < route_len(route))
 		{
 			flag = 0;
@@ -375,7 +451,7 @@ void	render_stat(t_state *state, t_point start)
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Rooms number: ", state->obj.rooms_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Connections number: ", state->obj.cons_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Routes number: ", state->obj.routes_cnt);
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->step + 1);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->step + 1); // TODO:
 }
 
 void	render(t_state *state)

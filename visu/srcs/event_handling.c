@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   event_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 19:42:51 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/11 12:07:14 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "projections.h"
-// #include "render.h"
-// #include "point.h"
 #include "event_handling.h"
 #include "key_bindings.h"
 #include "draw.h"
@@ -44,21 +42,6 @@ int	rotate_handle(int keycode, t_state *state)
 				(state->speed * 2 + 4) / 360, 0);
 			matrix_rotate(state->obj.rot_m, angle);
 		}
-		return (1);
-	}
-	return (0);
-}
-
-int	shift_handle(int keycode, t_state *state)
-{
-	int sign;
-	int min_side;
-
-	if (keycode == KEY_0 || keycode == KEY_A || keycode == KEY_S ||
-		keycode == KEY_D || keycode == KEY_W)
-	{
-		if (keycode == KEY_0)
-			state->cam.shift = point_init(0, 0, 0);
 		return (1);
 	}
 	return (0);
@@ -123,12 +106,13 @@ int	proj_handle(int keycode, t_state *st)
 	return (0);
 }
 
-void draw_nothing(void *state, t_point start, t_point end, uint32_t color); // TODO: Убрать к хрунам
 int	render_handle(int keycode, t_state *st)
 {
 	if (keycode == KEY_R || keycode == KEY_X || keycode == KEY_B ||
-		keycode == KEY_P || keycode == KEY_C)
+		keycode == KEY_P || keycode == KEY_C || keycode == KEY_0)
 	{
+		if (keycode == KEY_0)
+			st->cam.shift = point_init(0, 0, 0);
 		if (keycode == KEY_R)
 		{
 			st->speed = 0;
@@ -144,7 +128,7 @@ int	render_handle(int keycode, t_state *st)
 		if (keycode == KEY_B)
 			st->draw_line = &bresenham;
 	if (keycode == KEY_P)
-		st->draw_line = &draw_nothing;
+		st->draw_line = &draw_no_line;
 		return (1);
 	}
 	return (0);
