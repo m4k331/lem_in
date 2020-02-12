@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 19:08:07 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 19:12:50 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:20:19 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include <math.h>
 
-int mouse_shift_handle(int x, int y, t_state *state)
+int		mouse_shift_handle(int x, int y, t_state *state)
 {
 	state->cam.shift = point_init(
 		state->cam.shift.x + (x - state->prev_mouse_pos.x),
@@ -26,12 +26,12 @@ int mouse_shift_handle(int x, int y, t_state *state)
 	state->prev_mouse_pos = point_init(x, y, 0);
 	state->image_changed = 1;
 	render(state);
-    return (0);
+	return (0);
 }
 
-int mouse_shift_z_handle(int x, int y, t_state *state)
+int		mouse_shift_z_handle(int x, int y, t_state *state)
 {
-    (void)x;
+	(void)x;
 	state->cam.shift = point_init(
 		state->cam.shift.x,
 		state->cam.shift.y,
@@ -39,30 +39,29 @@ int mouse_shift_z_handle(int x, int y, t_state *state)
 	state->prev_mouse_pos = point_init(0, 0, y);
 	state->image_changed = 1;
 	render(state);
-    return (0);
+	return (0);
 }
 
-int mouse_wheel_handle(int button, int x, int y, t_state *state)
+int		mouse_wheel_handle(int button, int x, int y, t_state *st)
 {
-    double sign;
+	double	sign;
 
-    (void)x;
-    (void)y;
-    sign = (button == MOUSE_WHL_UP ? 1 : -0.5);
-    if ((button == MOUSE_WHL_UP || button == MOUSE_WHL_DOWN) &&
-        state->cam.scale + sign *
-            (state->speed ? state->cam.scale : 1 / fabs(sign)) > 0)
-	state->cam.scale = state->cam.scale +
-		sign * (state->speed ? state->cam.scale : 1 / fabs(sign));
-    state->image_changed = 1;
-    render(state);
-    return (0);
+	(void)x;
+	(void)y;
+	sign = (button == MOUSE_WHL_UP ? 1 : -0.5);
+	if ((button == MOUSE_WHL_UP || button == MOUSE_WHL_DOWN) &&
+		st->cam.scale + sign * (st->speed ? st->cam.scale : 1 / fabs(sign)) > 0)
+		st->cam.scale = st->cam.scale +
+			sign * (st->speed ? st->cam.scale : 1 / fabs(sign));
+	st->image_changed = 1;
+	render(st);
+	return (0);
 }
 
-int mouse_press(int button, int x, int y, t_state *state)
+int		mouse_press(int button, int x, int y, t_state *state)
 {
-    if (button == 4 || button == 5)
-	mouse_wheel_handle(button, x, y, state);
+	if (button == 4 || button == 5)
+		mouse_wheel_handle(button, x, y, state);
 	if (button == MOUSE_BR)
 	{
 		state->prev_mouse_pos = point_init(x, y, 0);
@@ -73,15 +72,15 @@ int mouse_press(int button, int x, int y, t_state *state)
 		state->prev_mouse_pos = point_init(0, 0, y);
 		mlx_hook(state->graph.w_p, 6, 0, &mouse_shift_z_handle, state);
 	}
-    return (0);
+	return (0);
 }
 
-int mouse_release(int button, int x, int y, t_state *state)
+int		mouse_release(int button, int x, int y, t_state *state)
 {
-    (void)x;
-    (void)y;
+	(void)x;
+	(void)y;
 	if (button != MOUSE_BR && button != MOUSE_BL)
 		return (0);
 	mlx_hook(state->graph.w_p, 6, 0, 0, 0);
-    return (0);
+	return (0);
 }

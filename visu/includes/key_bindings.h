@@ -17,7 +17,7 @@
 # define KEY_2			19
 # define KEY_3			20
 # define KEY_4			21
-# define KEY_5			22
+# define KEY_5			23
 # define KEY_R			15
 
 # define KEY_ARR_L		123

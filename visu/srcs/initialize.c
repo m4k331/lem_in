@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/11 12:02:02 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:28:35 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//#include "initialize.h"
 
 //#include "point.h"
 #include "projections.h"
@@ -185,6 +183,6 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	state->prev_mouse_pos = point_init(0, 0, 0);
 	
 	state->pr_init = (t_proj_init *)&y_x_proj_init;
-	state->proj = (t_proj *)&ip_proj;
+	state->proj = (t_proj *)&parallel_proj;
 	state->draw_line = (t_draw_line *)&bresenham;
 }

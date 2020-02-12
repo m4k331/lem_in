@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 12:02:36 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/11 12:02:59 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:24:11 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #include <errno.h>
 
-int print_error(const char *msg)
+int		print_error(const char *msg)
 {
 	ft_putstr_fd("ERROR: ", 2);
 	ft_putstr_fd(msg, 2);

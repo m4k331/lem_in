@@ -6,13 +6,13 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 17:23:12 by rnarbo            #+#    #+#             */
-/*   Updated: 2019/09/19 21:26:15 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:24:47 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include "visu.h"
-#include "point.h" // TODO:
+#include "point.h"
 
 #include <stdlib.h>
 

@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 19:27:18 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/08 19:33:31 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:25:28 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,14 @@ int		slow_rotate(t_state *state)
 	return (0);
 }
 
-/*
-** state->step_percent += state->ant_speed;
-** state->step_percent += 100 * (sin(M_PI / 200 / state->ant_speed) *
-**     cos((M_PI / state->ant_speed / 100 *
-**     (2 * t * state->ant_speed + 1) - M_PI) / 2));
-*/
-
 int		ants_loop(t_state *state)
 {
 	static char i = 0;
 
 	if (!state->pause)
 	{
-		state->step_percent = 50 + 50 * sin(M_PI / 100 * state->time * state->ant_speed - M_PI_2);
+		state->step_percent = 50 +
+			50 * sin(M_PI / 100 * state->time * state->ant_speed - M_PI_2);
 		state->time++;
 		if (state->ant_speed * state->time > 100)
 		{
@@ -58,5 +52,5 @@ int		ants_loop(t_state *state)
 	i = (i + 1) % 4;
 	if (state->auto_rotate && i == 0)
 		mlx_loop_hook(state->graph.mlx_p, &slow_rotate, state);
-	return 0;
+	return (0);
 }

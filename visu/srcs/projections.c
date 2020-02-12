@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:43 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/11 19:52:34 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:26:30 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	y_x_proj_init(t_state *state)
 	matrix_identity_set(state->obj.rot_m);
 }
 
-t_point	ip_proj(t_point point, t_state *state)
+t_point	parallel_proj(t_point point, t_state *state)
 {
 	(void)state;
 	return (point);
 }
 
-t_point	persp_proj(t_point point, t_state *state)
+t_point	perspective_proj(t_point point, t_state *state)
 {
 	double k;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 19:50:48 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:27:17 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <mlx.h>
 
-int	rotate_handle(int keycode, t_state *state)
+int			rotate_handle(int keycode, t_state *state)
 {
 	t_point	angle;
 	int		sign;
@@ -69,7 +69,7 @@ static int	axis_zoom_handle(int keycode, t_state *st)
 			st->cam.zoom.z);
 }
 
-int	zoom_handle(int keycode, t_state *st)
+int			zoom_handle(int keycode, t_state *st)
 {
 	double sign;
 
@@ -87,28 +87,32 @@ int	zoom_handle(int keycode, t_state *st)
 	return (1);
 }
 
-int	proj_handle(int keycode, t_state *st)
+int			proj_handle(int keycode, t_state *st)
 {
 	if (keycode == KEY_1 || keycode == KEY_2 ||
-		keycode == KEY_3 || keycode == KEY_4 || keycode == KEY_5)
+		keycode == KEY_3)
 	{
-		// st->proj = (t_proj *)&ip_proj;
-		st->pr_init = (t_proj_init *)&y_x_proj_init;
 		if (keycode == KEY_1)
 			st->pr_init = (t_proj_init *)&z_x_proj_init;
+		if (keycode == KEY_2)
+			st->pr_init = (t_proj_init *)&y_x_proj_init;
 		if (keycode == KEY_3)
 			st->pr_init = (t_proj_init *)&iso_proj_init;
-		if (keycode == KEY_4)
-			st->proj = (t_proj *)&persp_proj;
-		if (keycode == KEY_5)
-			st->proj = (t_proj *)&ip_proj;
 		st->pr_init(st);
+		return (1);
+	}
+	if (keycode == KEY_4 || keycode == KEY_5)
+	{
+		if (keycode == KEY_4)
+			st->proj = (t_proj *)&perspective_proj;
+		if (keycode == KEY_5)
+			st->proj = (t_proj *)&parallel_proj;
 		return (1);
 	}
 	return (0);
 }
 
-int	render_handle(int keycode, t_state *st)
+int			render_handle(int keycode, t_state *st)
 {
 	if (keycode == KEY_R || keycode == KEY_X || keycode == KEY_B ||
 		keycode == KEY_P || keycode == KEY_C || keycode == KEY_0)
@@ -121,7 +125,8 @@ int	render_handle(int keycode, t_state *st)
 			st->cam.shift = point_init(0, 0, 0);
 			st->cam.scale = 0.82 *
 				(double)(st->graph.img.x_len < st->graph.img.y_len ?
-				st->graph.img.x_len : st->graph.img.y_len) / (2 * st->obj.radius);
+					st->graph.img.x_len :
+					st->graph.img.y_len) / (2 * st->obj.radius);
 			st->cam.zoom = point_init(1, 1, 1);
 			st->pr_init(st);
 		}
@@ -129,8 +134,8 @@ int	render_handle(int keycode, t_state *st)
 			st->draw_line = &xiolin_wu;
 		if (keycode == KEY_B)
 			st->draw_line = &bresenham;
-	if (keycode == KEY_P)
-		st->draw_line = &draw_no_line;
+		if (keycode == KEY_P)
+			st->draw_line = &draw_no_line;
 		return (1);
 	}
 	return (0);

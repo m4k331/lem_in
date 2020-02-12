@@ -38,7 +38,7 @@ SOURCES =	main.c				\
 			loops.c				\
 			draw_no_line.c		\
 			render.c			\
-			render_stats_utils.c\
+			render_info_utils.c	\
 			render_info.c		\
 			transform.c			\
 			clipping.c			\

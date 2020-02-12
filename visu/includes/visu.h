@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 19:33:30 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 22:33:27 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 
 # define MIN_WIN_SIZE_X 450
 # define MIN_WIN_SIZE_Y 600
+
+# define ANT_COLOR 0xff00ff
+# define REGULAR_ROOM_COLOR 0xff00
+# define START_ROOM_COLOR 0xff
+# define END_ROOM_COLOR 0xff0000
+# define TRACE_COLOR 0xffff
+# define LINE_COLOR 0xffffff
 
 typedef struct	s_img
 {

@@ -21,7 +21,6 @@ void draw_ants_movement(t_state *state)
 			break ;
 		route = state->obj.routes[state->obj.ants_traces[i].route];
 		j = state->step - state->obj.ants_traces[i].step;
-		// int col = get_ant_color(j);
 		if (j + 1 < route_len(route))
 		{
 			flag = 0;
@@ -55,7 +54,7 @@ void do_recalc(t_state *state)
 		start = transform(state, state->obj.cons[j].r1->pos);
 		end = transform(state, state->obj.cons[j].r2->pos);
 		clipping(&start, &end, state); // TODO: doesn't work
-		if (state->proj != persp_proj || (state->proj == persp_proj &&
+		if (state->proj != perspective_proj || (state->proj == perspective_proj &&
 			(start.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale || end.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)))
 		{
 			if (!(start.x < 0 && end.x < 0))
