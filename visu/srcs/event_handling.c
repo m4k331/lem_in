@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/11 12:07:14 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/12 19:50:48 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,9 @@ int	zoom_handle(int keycode, t_state *st)
 int	proj_handle(int keycode, t_state *st)
 {
 	if (keycode == KEY_1 || keycode == KEY_2 ||
-		keycode == KEY_3 || keycode == KEY_4)
+		keycode == KEY_3 || keycode == KEY_4 || keycode == KEY_5)
 	{
-		st->proj = (t_proj *)&ip_proj;
+		// st->proj = (t_proj *)&ip_proj;
 		st->pr_init = (t_proj_init *)&y_x_proj_init;
 		if (keycode == KEY_1)
 			st->pr_init = (t_proj_init *)&z_x_proj_init;
@@ -100,6 +100,8 @@ int	proj_handle(int keycode, t_state *st)
 			st->pr_init = (t_proj_init *)&iso_proj_init;
 		if (keycode == KEY_4)
 			st->proj = (t_proj *)&persp_proj;
+		if (keycode == KEY_5)
+			st->proj = (t_proj *)&ip_proj;
 		st->pr_init(st);
 		return (1);
 	}

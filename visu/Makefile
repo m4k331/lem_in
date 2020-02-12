@@ -22,28 +22,13 @@ INCDIRS = $(HDIR) $(LBDIRS) $(addsuffix /includes, $(LBDIRS))
 DBCFLAGS = -Wno-error -g
 CFLAGS = -Wall -Wextra -Werror -O3 $(addprefix -I , $(INCDIRS)) $(DBCFLAGS)
 
-CLIPDIR = clipping
-
-CLIPPING = 	bottom.c\
-			center_p1.c\
-			center_p2.c\
-			clip_bgn.c\
-			clip_end.c\
-			left_bottom.c\
-			left_p1.c\
-			left_p2.c\
-			left_top.c\
-			top.c\
-			utils_draw_line.c
-
-SOURCES =	$(addprefix $(CLIPDIR)/, $(CLIPPING))			\
-			main.c				\
+SOURCES =	main.c				\
 			initialize.c		\
 			parse.c				\
 			point.c				\
 			matrix.c			\
 			bresenham.c			\
-			putpoint.c			\
+			put.c				\
 			projections.c		\
 			event_handling.c	\
 			xiolin_wu.c			\
@@ -51,7 +36,13 @@ SOURCES =	$(addprefix $(CLIPDIR)/, $(CLIPPING))			\
 			error_handling.c	\
 			mouse_handling.c	\
 			loops.c				\
-			draw_no_line.c
+			draw_no_line.c		\
+			render.c			\
+			render_stats_utils.c\
+			render_info.c		\
+			transform.c			\
+			clipping.c			\
+			visu.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
@@ -67,7 +58,6 @@ $(BIN_DIR)/$(NAME): $(OBJECTS)
 
 $(ODIR):
 	mkdir -p $(ODIR)
-	mkdir -p $@/$(CLIPDIR)
 
 $(ODIR)/%.o: $(CDIR)/%.c includes/visu.h
 	$(COMPILE.c) $(OUTPUT_OPTION) $<
