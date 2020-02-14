@@ -17,23 +17,23 @@ void draw_ants_movement(t_state *state)
 	flag = 1;
 	while (i < state->obj.ants_cnt)
 	{
-		if (state->obj.ants_traces[i].step > state->step)
+		if (state->obj.ants_traces[i].step > state->dyn.step)
 			break ;
 		route = state->obj.routes[state->obj.ants_traces[i].route];
-		j = state->step - state->obj.ants_traces[i].step;
+		j = state->dyn.step - state->obj.ants_traces[i].step;
 		if (j + 1 < route_len(route))
 		{
 			flag = 0;
 			ant_pos = transform(state, point_init(
-				route[j]->pos.x + (route[j + 1]->pos.x - route[j]->pos.x) * state->step_percent / 100,
-				route[j]->pos.y + (route[j + 1]->pos.y - route[j]->pos.y) * state->step_percent / 100,
-				route[j]->pos.z + (route[j + 1]->pos.z - route[j]->pos.z) * state->step_percent / 100));
+				route[j]->pos.x + (route[j + 1]->pos.x - route[j]->pos.x) * state->dyn.step_percent / 100,
+				route[j]->pos.y + (route[j + 1]->pos.y - route[j]->pos.y) * state->dyn.step_percent / 100,
+				route[j]->pos.z + (route[j + 1]->pos.z - route[j]->pos.z) * state->dyn.step_percent / 100));
 			put_ant(state, ant_pos, 0xff00ff);
 		}
 		i++;
 	}
 	if (flag)
-		state->pause = 1;
+		state->dyn.pause = 1;
 }
 
 void do_recalc(t_state *state)
@@ -82,26 +82,26 @@ void do_recalc(t_state *state)
 
 void	render(t_state *state)
 {
-	if (state->image_changed)
+	if (state->dyn.image_changed)
 		do_recalc(state);
 	else
 		ft_memmove(state->graph.img.data, state->graph.img.duplicate,
 			state->graph.img.y_len * state->graph.img.line_size);
 	draw_ants_movement(state);
-	if (state->menu)
+	if (state->dyn.menu)
 		render_menu_board(state,
 			point_init(state->graph.img.x_len - MIN_WIN_SIZE_X, 0, 0),
 			point_init(state->graph.img.x_len, state->graph.img.y_len, 0));
-	if (state->stat)
+	if (state->dyn.stat)
 		render_menu_board(state, point_init(0, 0, 0),
 			point_init(MIN_WIN_SIZE_X, state->graph.img.y_len, 0));
 	mlx_clear_window(state->graph.mlx_p, state->graph.w_p);
 	mlx_put_image_to_window(state->graph.mlx_p, state->graph.w_p,
 		state->graph.img.p, 0, 0);
-	if (state->stat)
+	if (state->dyn.stat)
 		render_stat(state, point_init(0, 0, 0));
-	if (state->menu)
+	if (state->dyn.menu)
 		render_menu(state,
 			point_init(state->graph.img.x_len - MIN_WIN_SIZE_X, 0, 0));
-	state->image_changed = 0;
+	state->dyn.image_changed = 0;
 }

@@ -12,35 +12,35 @@ int key_hook(int keycode, t_state *state)
 	if (keycode == KEY_ESC)
 		exit(0);
 	if (keycode == KEY_Q)
-		state->speed = 0;
+		state->cam.speed = 0;
 	if (keycode == KEY_E)
-		state->speed += 1;
+		state->cam.speed += 1;
 	if (rotate_handle(keycode, state) ||
 		zoom_handle(keycode, state) ||
 		proj_handle(keycode, state) ||
 		render_handle(keycode, state))
-		state->image_changed = 1;
+		state->dyn.image_changed = 1;
 	if (keycode == KEY_H)
-		state->menu = !state->menu;
+		state->dyn.menu = !state->dyn.menu;
 	if (keycode == KEY_G)
 	{
-		state->step = 0;
-		state->step_percent = 0;
-		state->pause = 0;
-		state->time = 0;
+		state->dyn.step = 0;
+		state->dyn.step_percent = 0;
+		state->dyn.pause = 0;
+		state->dyn.time = 0;
 	}
 	if (keycode == KEY_F)
-		state->pause = !state->pause;
+		state->dyn.pause = !state->dyn.pause;
 	if (keycode == KEY_SPACE)
-		state->auto_rotate = !state->auto_rotate;
+		state->dyn.auto_rotate = !state->dyn.auto_rotate;
 	if (keycode == KEY_TILDA)
-		state->stat = !state->stat;
+		state->dyn.stat = !state->dyn.stat;
 	if (keycode == KEY_PAGE_UP)
-		state->ant_speed = state->ant_speed > 10 ? 10 : state->ant_speed + 0.1;
+		state->dyn.ant_speed = state->dyn.ant_speed > 10 ? 10 : state->dyn.ant_speed + 0.1;
 	if (keycode == KEY_PAGE_DOWN)
-		state->ant_speed = state->ant_speed < 0.2 ? 0.2 : state->ant_speed - 0.1;
+		state->dyn.ant_speed = state->dyn.ant_speed < 0.2 ? 0.2 : state->dyn.ant_speed - 0.1;
 	if (keycode == KEY_PAGE_DOWN || keycode == KEY_PAGE_UP)
-		state->time = 0;
+		state->dyn.time = 0;
 	if (keycode == KEY_P)
 		state->draw_line = &draw_no_line;
 	render(state);
@@ -59,7 +59,7 @@ int close_on_red(void *par)
 int visu(t_state *state)
 {
 	state->pr_init(state);
-	state->image_changed = 1;
+	state->dyn.image_changed = 1;
 	render(state);
 	mlx_hook(state->graph.w_p, 2, 0, &key_hook, state);
 	mlx_loop_hook(state->graph.mlx_p, &ants_loop, state);

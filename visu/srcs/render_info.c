@@ -53,7 +53,7 @@ void	render_stat(t_state *state, t_point start)
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Rooms number: ", state->obj.rooms_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Connections number: ", state->obj.cons_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Routes number: ", state->obj.routes_cnt);
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->step + 1); // TODO:
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->dyn.step + 1); // TODO:
 }
 
 void	render_menu(t_state *state, t_point start)

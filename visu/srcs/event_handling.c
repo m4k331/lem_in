@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 22:27:17 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/14 19:16:26 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ int			rotate_handle(int keycode, t_state *state)
 		if (keycode == KEY_ARR_U || keycode == KEY_ARR_D)
 		{
 			angle = point_init(M_PI * sign *
-				(state->speed * 2 + 4) / 360, 0, 0);
+				(state->cam.speed * 2 + 4) / 360, 0, 0);
 			matrix_rotate(state->obj.rot_m, angle);
 		}
 		if (keycode == KEY_ARR_R || keycode == KEY_ARR_L)
 		{
 			angle = point_init(0, M_PI * sign *
-				(state->speed * 2 + 4) / 360, 0);
+				(state->cam.speed * 2 + 4) / 360, 0);
 			matrix_rotate(state->obj.rot_m, angle);
 		}
 		return (1);
@@ -53,19 +53,19 @@ static int	axis_zoom_handle(int keycode, t_state *st)
 
 	sign = (keycode == KEY_GRTR || keycode == KEY_CL_BRACKET) ? 1 : -0.5;
 	if ((keycode == KEY_LESS && st->cam.zoom.z + sign *
-		(st->speed ? st->cam.zoom.z : 0.1 / fabs(sign)) >= -FOCUS_SHIFT_K) ||
+		(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign)) >= -FOCUS_SHIFT_K) ||
 		(keycode == KEY_GRTR && st->cam.zoom.z + sign *
-		(st->speed ? st->cam.zoom.z : 0.1 / fabs(sign)) <= FOCUS_SHIFT_K))
+		(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign)) <= FOCUS_SHIFT_K))
 		st->cam.zoom = point_init(
 			(st->cam.zoom.x), (st->cam.zoom.y),
 			(st->cam.zoom.z + sign *
-				(st->speed ? st->cam.zoom.z : 0.1 / fabs(sign))));
+				(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign))));
 	if (keycode == KEY_CR_BRACKET || keycode == KEY_CL_BRACKET)
 		st->cam.zoom = point_init(
 			st->cam.zoom.x + sign *
-				(st->speed ? st->cam.zoom.x : 0.1 / fabs(sign)),
+				(st->cam.speed ? st->cam.zoom.x : 0.1 / fabs(sign)),
 			st->cam.zoom.x + sign *
-				(st->speed ? st->cam.zoom.y : 0.1 / fabs(sign)),
+				(st->cam.speed ? st->cam.zoom.y : 0.1 / fabs(sign)),
 			st->cam.zoom.z);
 }
 
@@ -79,9 +79,9 @@ int			zoom_handle(int keycode, t_state *st)
 		return (0);
 	sign = (keycode == KEY_PLUS ? 1 : -0.5);
 	if ((keycode == KEY_PLUS || keycode == KEY_MINUS) && st->cam.scale +
-		sign * (st->speed ? st->cam.scale : 1 / fabs(sign)) > 0)
+		sign * (st->cam.speed ? st->cam.scale : 1 / fabs(sign)) > 0)
 		st->cam.scale = st->cam.scale +
-			sign * (st->speed ? st->cam.scale : 1 / fabs(sign));
+			sign * (st->cam.speed ? st->cam.scale : 1 / fabs(sign));
 	else
 		axis_zoom_handle(keycode, st);
 	return (1);
@@ -121,7 +121,7 @@ int			render_handle(int keycode, t_state *st)
 			st->cam.shift = point_init(0, 0, 0);
 		if (keycode == KEY_R)
 		{
-			st->speed = 0;
+			st->cam.speed = 0;
 			st->cam.shift = point_init(0, 0, 0);
 			st->cam.scale = 0.82 *
 				(double)(st->graph.img.x_len < st->graph.img.y_len ?

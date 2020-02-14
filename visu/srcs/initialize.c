@@ -6,18 +6,14 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 22:28:35 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/14 19:17:45 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "point.h"
 #include "projections.h"
-//#include "render.h"
-//#include "utils.h"
-//#include "parse_file.h"
-//#include "matrix.h"
 #include "visu.h"
 #include "draw.h"
+#include "utils.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -37,42 +33,38 @@ static void	camera_init(t_state *state)
 		state->graph.img.x_len / 2,
 		state->graph.img.y_len / 2, 0);
 	state->cam.shift = point_init(0, 0, 0);
+	state->cam.speed = 0;
 }
 
-double sqr(double x)
-{
-	return (x * x);
-}
+// void	depth_free(double **matrix, size_t b)
+// {
+// 	size_t i;
 
-void	depth_free(double **matrix, size_t b)
-{
-	size_t i;
+// 	i = 0;
+// 	while (i < b)
+// 		free(matrix[i++]);
+// 	free(matrix);
+// }
 
-	i = 0;
-	while (i < b)
-		free(matrix[i++]);
-	free(matrix);
-}
+// double	**depth_alloc(size_t a, size_t b)
+// {
+// 	double	**matrix;
+// 	size_t	i;
 
-double	**depth_alloc(size_t a, size_t b)
-{
-	double	**matrix;
-	size_t	i;
-
-	if ((matrix = (double **)malloc(a * sizeof(double *))) == 0)
-		return (0);
-	i = 0;
-	while (i < a)
-	{
-		if ((matrix[i] = (double *)malloc(b * sizeof(double))) == 0)
-		{
-			depth_free(matrix, i);
-			return (0);
-		}
-		i++;
-	}
-	return (matrix);
-}
+// 	if ((matrix = (double **)malloc(a * sizeof(double *))) == 0)
+// 		return (0);
+// 	i = 0;
+// 	while (i < a)
+// 	{
+// 		if ((matrix[i] = (double *)malloc(b * sizeof(double))) == 0)
+// 		{
+// 			depth_free(matrix, i);
+// 			return (0);
+// 		}
+// 		i++;
+// 	}
+// 	return (matrix);
+// }
 
 static void	img_init(t_graphics *graph_p, int x_size, int y_size)
 {
@@ -87,20 +79,6 @@ static void	img_init(t_graphics *graph_p, int x_size, int y_size)
 	graph_p->img.x_len = x_size;
 	graph_p->img.y_len = y_size;
 	graph_p->img.depth = depth_alloc(graph_p->img.y_len, graph_p->img.x_len);
-}
-
-void rooms_centrize(t_obj *obj, t_point anchor)
-{
-	int i;
-
-	i = 0;
-	while (i < obj->rooms_cnt)
-	{
-		obj->rooms[i].pos.x -= anchor.x;
-		obj->rooms[i].pos.y -= anchor.y;
-		obj->rooms[i].pos.z -= anchor.z;
-		i++;
-	}
 }
 
 static void	obj_init(t_state *state, int map2circle)
@@ -169,18 +147,17 @@ void		state_init(t_state *state, int size_x, int size_y, int map2circle)
 	img_init(&state->graph, size_x, size_y);
 	camera_init(state);
 
-	state->step = 0;
-	state->step_percent = 0;
-	state->image_changed = 1;
-	state->pause = 0;
-	state->auto_rotate = 0;
-	state->speed = 0;
-	state->menu = -1;
-	state->stat = -1;
-	state->ant_speed = 1;
-	state->time = 0;
+	state->dyn.step = 0;
+	state->dyn.step_percent = 0;
+	state->dyn.image_changed = 1;
+	state->dyn.pause = 0;
+	state->dyn.auto_rotate = 0;
+	state->dyn.menu = -1;
+	state->dyn.stat = -1;
+	state->dyn.ant_speed = 1;
+	state->dyn.time = 0;
 
-	state->prev_mouse_pos = point_init(0, 0, 0);
+	state->dyn.prev_mouse_pos = point_init(0, 0, 0);
 	
 	state->pr_init = (t_proj_init *)&y_x_proj_init;
 	state->proj = (t_proj *)&parallel_proj;

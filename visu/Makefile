@@ -42,7 +42,8 @@ SOURCES =	main.c				\
 			render_info.c		\
 			transform.c			\
 			clipping.c			\
-			visu.c
+			visu.c				\
+			init_utils.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 

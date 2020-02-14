@@ -57,7 +57,7 @@ size_t	count_ants_left(t_state *state)
 	i = 0;
 	while (i < state->obj.ants_cnt)
 	{
-		if (state->obj.ants_traces[i].step > state->step)
+		if (state->obj.ants_traces[i].step > state->dyn.step)
 			break ;
 		route = state->obj.routes[state->obj.ants_traces[i].route];
 		i++;
