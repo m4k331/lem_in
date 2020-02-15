@@ -9,7 +9,7 @@ CDIR = srcs
 HDIR = includes
 ODIR = objects
 
-LBDIRS = minilibx_macos libft
+LBDIRS = minilibx_macos ../libft
 LBNAMES = libft.a libmlx.a
 
 FRAMEWORKS = -framework OpenGL -framework AppKit
