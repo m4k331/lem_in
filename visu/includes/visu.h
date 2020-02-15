@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/14 19:15:49 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 14:27:45 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ typedef struct	s_dynamic
 	char		menu;
 	char		stat;
 	char		auto_rotate;
-	int			time;
 	double		ant_speed;
+	int			time;
 	int			step;
 	double		step_percent;
 	char		image_changed;
@@ -129,22 +129,9 @@ typedef struct	s_state
 {
 	t_graphics		graph;
 
-	// int				step;
-	// double			step_percent;
-
 	t_obj			obj;
 	t_camera		cam;
 	t_dynamic		dyn;
-	// int				pause;
-	// int				auto_rotate;
-	// int				speed;
-	// double			ant_speed;
-	// int				time;
-	// int				menu;
-	// int				stat;
-
-	// char			image_changed;
-	// t_point			prev_mouse_pos;
 
 	t_proj			*proj;
 	t_proj_init		*pr_init;

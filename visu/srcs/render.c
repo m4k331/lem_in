@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 14:28:50 by rnarbo            #+#    #+#             */
+/*   Updated: 2020/02/15 15:10:14 by rnarbo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visu.h"
 #include "projections.h"
 #include "render.h"
@@ -5,7 +17,17 @@
 #include <float.h>
 #include <mlx.h>
 
-void draw_ants_movement(t_state *state)
+static t_point	get_ant_position(t_point start, t_point end, double percent)
+{
+	t_point result;
+
+	result.x = start.x + (end.x - start.x) * percent / 100;
+	result.y = start.y + (end.y - start.y) * percent / 100;
+	result.z = start.z + (end.z - start.z) * percent / 100;
+	return (result);
+}
+
+static void		draw_ants_movement(t_state *state)
 {
 	int		i;
 	int		j;
@@ -13,62 +35,66 @@ void draw_ants_movement(t_state *state)
 	t_point	ant_pos;
 	char	flag;
 
-	i = 0;
+	i = -1;
 	flag = 1;
-	while (i < state->obj.ants_cnt)
+	while (++i < state->obj.ants_cnt &&
+		state->obj.ants_traces[i].step <= state->dyn.step)
 	{
-		if (state->obj.ants_traces[i].step > state->dyn.step)
-			break ;
 		route = state->obj.routes[state->obj.ants_traces[i].route];
 		j = state->dyn.step - state->obj.ants_traces[i].step;
 		if (j + 1 < route_len(route))
 		{
 			flag = 0;
-			ant_pos = transform(state, point_init(
-				route[j]->pos.x + (route[j + 1]->pos.x - route[j]->pos.x) * state->dyn.step_percent / 100,
-				route[j]->pos.y + (route[j + 1]->pos.y - route[j]->pos.y) * state->dyn.step_percent / 100,
-				route[j]->pos.z + (route[j + 1]->pos.z - route[j]->pos.z) * state->dyn.step_percent / 100));
-			put_ant(state, ant_pos, 0xff00ff);
+			ant_pos = transform(state,
+				get_ant_position(
+					route[j]->pos, route[j + 1]->pos,
+					state->dyn.step_percent));
+			put_ant(state, ant_pos, ANT_COLOR);
 		}
-		i++;
 	}
 	if (flag)
 		state->dyn.pause = 1;
 }
 
-void do_recalc(t_state *state)
+static void		draw_connections(t_state *state)
+{
+	int		i;
+	int		j;
+	t_point	start;
+	t_point	end;
+
+	j = -1;
+	while (++j < state->obj.cons_cnt)
+	{
+		start = transform(state, state->obj.cons[j].r1->pos);
+		end = transform(state, state->obj.cons[j].r2->pos);
+		clipping(&start, &end, state);
+		if (state->proj != perspective_proj ||
+			((start.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale ||
+				end.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)))
+			if (!(start.x < 0 && end.x < 0) &&
+				!(start.x > state->graph.img.x_len &&
+				end.x > state->graph.img.x_len))
+				state->draw_line(&state->graph,
+					start, end, state->obj.cons[j].color);
+	}
+}
+
+static void		recalculate_image(t_state *state)
 {
 	int		i;
 	int		j;
 	t_room	room;
+	t_point start;
+	t_point end;
 
+	ft_memset(state->graph.img.data, 0,
+		state->graph.img.y_len * state->graph.img.line_size);
 	j = -1;
-	ft_memset(state->graph.img.data, 0, state->graph.img.y_len * state->graph.img.line_size);
 	while (++j < state->graph.img.y_len && (i = -1) == -1)
 		while (++i < state->graph.img.x_len)
 			state->graph.img.depth[j][i] = -DBL_MAX;
-	j = -1;
-	while (++j < state->obj.cons_cnt)
-	{
-		t_point start, end;
-		start = transform(state, state->obj.cons[j].r1->pos);
-		end = transform(state, state->obj.cons[j].r2->pos);
-		clipping(&start, &end, state); // TODO: doesn't work
-		if (state->proj != perspective_proj || (state->proj == perspective_proj &&
-			(start.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale || end.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)))
-		{
-			if (!(start.x < 0 && end.x < 0))
-			if (!(start.x > state->graph.img.x_len && end.x > state->graph.img.x_len))
-			{
-				state->draw_line(&state->graph,
-					start,
-					end,
-					state->obj.cons[j].color);
-				if (fabs(start.x) > 5000 || fabs(end.x) > 5000 || fabs(start.y) > 5000 || fabs(end.y) > 5000)
-					dprintf(1, "(%f %f)\n(%f %f)\n\n", start.x, start.y, end.x, end.y);
-			}
-		}
-	}
+	draw_connections(state);
 	j = -1;
 	while (++j < state->obj.rooms_cnt)
 	{
@@ -80,10 +106,10 @@ void do_recalc(t_state *state)
 		state->graph.img.y_len * state->graph.img.line_size);
 }
 
-void	render(t_state *state)
+void			render(t_state *state)
 {
 	if (state->dyn.image_changed)
-		do_recalc(state);
+		recalculate_image(state);
 	else
 		ft_memmove(state->graph.img.data, state->graph.img.duplicate,
 			state->graph.img.y_len * state->graph.img.line_size);
