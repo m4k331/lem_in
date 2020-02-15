@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 15:34:45 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 19:15:00 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int			zoom_handle(int keycode, t_state *st)
 
 int			proj_handle(int keycode, t_state *st)
 {
+	dprintf(2, "keycode: %d\n", keycode);
 	if (keycode == KEY_1 || keycode == KEY_2 ||
 		keycode == KEY_3)
 	{

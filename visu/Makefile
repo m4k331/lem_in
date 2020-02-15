@@ -43,7 +43,10 @@ SOURCES =	main.c				\
 			transform.c			\
 			clipping.c			\
 			visu.c				\
-			init_utils.c
+			init_utils.c		\
+			parse_rooms.c		\
+			parse_connections.c	\
+			parse_traces.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
