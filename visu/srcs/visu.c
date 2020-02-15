@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   visu.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 17:49:44 by rnarbo            #+#    #+#             */
+/*   Updated: 2020/02/15 17:51:17 by rnarbo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visu.h"
 #include "key_bindings.h"
 #include "event_handling.h"
@@ -7,19 +19,8 @@
 
 #include <mlx.h>
 
-int key_hook(int keycode, t_state *state)
+static int	dynamics_handle(int keycode, t_state *state)
 {
-	if (keycode == KEY_ESC)
-		exit(0);
-	if (keycode == KEY_Q)
-		state->cam.speed = 0;
-	if (keycode == KEY_E)
-		state->cam.speed += 1;
-	if (rotate_handle(keycode, state) ||
-		zoom_handle(keycode, state) ||
-		proj_handle(keycode, state) ||
-		render_handle(keycode, state))
-		state->dyn.image_changed = 1;
 	if (keycode == KEY_H)
 		state->dyn.menu = !state->dyn.menu;
 	if (keycode == KEY_G)
@@ -36,27 +37,40 @@ int key_hook(int keycode, t_state *state)
 	if (keycode == KEY_TILDA)
 		state->dyn.stat = !state->dyn.stat;
 	if (keycode == KEY_PAGE_UP)
-		state->dyn.ant_speed = state->dyn.ant_speed > 10 ? 10 : state->dyn.ant_speed + 0.1;
+		state->dyn.ant_speed = state->dyn.ant_speed > 10 ?
+			10 : state->dyn.ant_speed + 0.1;
 	if (keycode == KEY_PAGE_DOWN)
-		state->dyn.ant_speed = state->dyn.ant_speed < 0.2 ? 0.2 : state->dyn.ant_speed - 0.1;
+		state->dyn.ant_speed = state->dyn.ant_speed < 0.2 ?
+			0.2 : state->dyn.ant_speed - 0.1;
 	if (keycode == KEY_PAGE_DOWN || keycode == KEY_PAGE_UP)
 		state->dyn.time = 0;
-	if (keycode == KEY_P)
-		state->draw_line = &draw_no_line;
-	render(state);
-	return 0;
 }
 
-// ds = 50 * (sin(pi / 100 * v * (t + 1) - pi / 2) - sin(pi / 100 * v * t - pi / 2))
-// 2 * sin(pi / 100 * v / 2) * cos((pi / 100 * v * (2t + 1) - pi) / 2)
+static int	key_hook(int keycode, t_state *state)
+{
+	if (keycode == KEY_ESC)
+		exit(0);
+	if (keycode == KEY_Q)
+		state->cam.speed = 0;
+	if (keycode == KEY_E)
+		state->cam.speed += 1;
+	if (rotate_handle(keycode, state) ||
+		zoom_handle(keycode, state) ||
+		proj_handle(keycode, state) ||
+		render_handle(keycode, state))
+		state->dyn.image_changed = 1;
+	dynamics_handle(keycode, state);
+	render(state);
+	return (0);
+}
 
-int close_on_red(void *par)
+static int	close_on_red(void *par)
 {
 	(void)par;
 	exit(0);
 }
 
-int visu(t_state *state)
+int			visu(t_state *state)
 {
 	state->pr_init(state);
 	state->dyn.image_changed = 1;
@@ -67,5 +81,5 @@ int visu(t_state *state)
 	mlx_hook(state->graph.w_p, 5, 0, &mouse_release, state);
 	mlx_hook(state->graph.w_p, 17, 0, &close_on_red, state);
 	mlx_loop(state->graph.mlx_p);
-	return 0;
+	return (0);
 }

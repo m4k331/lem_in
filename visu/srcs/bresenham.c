@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 22:22:10 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 17:55:32 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,6 @@ static void	bresenham_x(t_graphics *graph_p, t_point start,
 void		bresenham(t_graphics *graph_p,
 	t_point start, t_point end, unsigned int line_color)
 {
-	if ((start.x < 0 && end.x < 0) ||
-		(start.x > graph_p->img.x_len && end.x > graph_p->img.x_len) ||
-		(start.y < 0 && end.y < 0) ||
-		(start.y > graph_p->img.y_len && end.y > graph_p->img.y_len))
-		return ;
 	if (fabs(end.y - start.y) < fabs(end.x - start.x))
 		bresenham_x(graph_p, start, end, line_color);
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/29 13:36:11 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 19:40:54 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 17:37:26 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,74 +24,66 @@
 
 // TODO: FIXME: НЕ ЗАБЫТЬ ДОБАВИТЬ ЗАВИСИМОСТИ В MAKEFILE!!
 
-int ft_round(double);
-void render(t_state *state);
-void do_recalc(t_state *state);
-
-int usage(char *prog_name)
+int	print_invalid_option(char opt, char *prog_name)
 {
-	ft_putstr("Usage: ");
-	ft_putstr(prog_name);
-	ft_putstr(" [-hc] [-s size_x size_y]\n");
-	ft_putstr("\t-h - print usage and exit.\n");
-	ft_putstr("\t-c - use circle as ant ferm map.\n");
-	ft_putstr("\t-s - use size_x size_y as window sizes.\n");
+	ft_putstr("Invalid option: ");
+	ft_putchar(opt);
+	ft_putchar('\n');
+	usage(prog_name);
 	return (-1);
 }
 
-int parse_options(int argc, char **argv)
+int	handle_opt(char opt_c, char *prog_name)
 {
-	int	i = 1;
-	int	opt = 0;
+	int opt;
+
+	opt = 0;
+	if (opt_c == 'h')
+		exit(usage(prog_name) + 1);
+	else if (opt_c == 'c')
+		opt |= 1;
+	else if (opt_c == 's')
+		opt |= 2;
+	else
+		exit(print_invalid_option(opt_c, prog_name));
+	return (opt);
+}
+
+int	parse_options(int argc, char **argv)
+{
+	int	i;
+	int	opt;
 	int	j;
 
-	while (i < argc)
-	{
+	opt = 0;
+	i = 0;
+	while (++i < argc)
 		if (argv[i][0] == '-')
 		{
-			j = 1;
-			while (argv[i][j])
-			{
-				if (argv[i][j] == 'h')
-					exit(usage(argv[0]) + 1);
-				else if (argv[i][j] == 'c')
-					opt |= 1;
-				else if (argv[i][j] == 's')
-					opt |= 2;
-				else
-				{
-					ft_putstr("Invalid option: ");
-					ft_putchar(argv[i][j]);
-					ft_putchar('\n');
-					exit(usage(argv[0]));
-				}
-				j++;
-			}
+			j = 0;
+			while (argv[i][++j])
+				opt |= handle_opt(argv[i][j], argv[0]);
 			if (j == 1)
-			{
-				ft_putstr("Invalid option: -");
-				ft_putchar('\n');
-				exit(usage(argv[0]));
-			}
+				exit(print_invalid_option('-', argv[0]));
 		}
 		else if (argc - i != 2)
 			exit(usage(argv[0]));
 		else
 			break ;
-		i++;
-	}
 	return (opt);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_state	state;
-	int		opt = 0;
+	int		opt;
 
+	opt = 0;
 	errno = 0;
 	opt = parse_options(argc, argv);
 	if ((opt & 2) && argc > 2)
-		state_init(&state, ft_atoi(argv[argc - 2]), ft_atoi(argv[argc - 1]), opt & 1);
+		state_init(&state, ft_atoi(argv[argc - 2]),
+			ft_atoi(argv[argc - 1]), opt & 1);
 	else
 		state_init(&state, SIZE_X, SIZE_Y, opt & 1);
 	visu(&state);

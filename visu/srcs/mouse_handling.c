@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 19:08:07 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/14 19:20:01 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 17:37:59 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ int		mouse_wheel_handle(int button, int x, int y, t_state *st)
 	(void)y;
 	sign = (button == MOUSE_WHL_UP ? 1 : -0.5);
 	if ((button == MOUSE_WHL_UP || button == MOUSE_WHL_DOWN) &&
-		st->cam.scale + sign * (st->cam.speed ? st->cam.scale : 1 / fabs(sign)) > 0)
+		st->cam.scale + sign * (st->cam.speed ?
+			st->cam.scale : 1 / fabs(sign)) > 0)
 		st->cam.scale = st->cam.scale +
 			sign * (st->cam.speed ? st->cam.scale : 1 / fabs(sign));
 	st->dyn.image_changed = 1;

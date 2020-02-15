@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 15:26:16 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 17:40:26 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # define HEADER_TEXT_COLOR 0xff00
 
 # define MENU_BACKGROUND_COLOR 0x131313
+
+# define ROOM_SIZE 3
+# define ANT_SIZE 2
 
 typedef struct	s_img
 {

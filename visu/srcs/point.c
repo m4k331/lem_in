@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   point.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 22:41:30 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/01/19 04:22:10 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 17:38:15 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "point.h"
 #include "visu.h"
 
 int		point_is_zero(t_point p)

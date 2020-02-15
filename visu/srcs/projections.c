@@ -6,14 +6,12 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:43 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/12 22:26:30 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 17:38:30 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "projections.h"
-// #include "point.h"
-// #include "draw_line.h"
 #include "libft.h"
 #include "matrix.h"
 
