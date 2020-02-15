@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 14:27:45 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 15:26:16 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,18 @@
 # define MIN_WIN_SIZE_Y 600
 
 # define ANT_COLOR 0xff00ff
+
 # define REGULAR_ROOM_COLOR 0xff00
-# define START_ROOM_COLOR 0xff
-# define END_ROOM_COLOR 0xff0000
-# define TRACE_COLOR 0xffff
-# define LINE_COLOR 0xffffff
+# define START_ROOM_COLOR 0xff0000
+# define END_ROOM_COLOR 0xff
+
+# define TRACE_COLOR 0xffff00
+# define CONN_COLOR 0xffffff
+
+# define TEXT_COLOR 0xffffff
+# define HEADER_TEXT_COLOR 0xff00
+
+# define MENU_BACKGROUND_COLOR 0x131313
 
 typedef struct	s_img
 {

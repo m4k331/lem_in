@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/11 21:54:07 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 15:29:00 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ int is_room_line(char *line)
 void set_color(t_room *room)
 {
 	if (room->type == ROOM_TYPE_START)
-		room->color = 0xff0000;
+		room->color = START_ROOM_COLOR;
 	else if (room->type == ROOM_TYPE_END)
-		room->color = 0xff;
+		room->color = END_ROOM_COLOR;
 	else
-		room->color = 0xff00;
+		room->color = REGULAR_ROOM_COLOR;
 }
 
 // char		*get_rooms_list(t_list **list)
@@ -517,7 +517,7 @@ void	get_conn(t_obj *obj, t_dict *rooms, char *line)
 		obj->cons[i] = *(t_conn *)ft_vpop_back(conns);
 		printf("%d (%s-%s)\n", i, obj->cons[i].r1->name, obj->cons[i].r2->name);
 		// obj->cons[i] = *((t_conn *)tmp->content);
-		obj->cons[i++].color = 0xffffff;
+		obj->cons[i++].color = CONN_COLOR;
 		// tmp = tmp->next;
 	}
 	ft_vdel(&conns);
@@ -646,28 +646,26 @@ int colorize_conns(t_obj *obj)
 	int j;
 	int k;
 
-	i = 0;
-	while (i < obj->routes_cnt)
+	i = -1;
+	while (++i < obj->routes_cnt)
 	{
 		k = 0;
 		while (obj->routes[i][k] && obj->routes[i][k + 1])
 		{
-			j = 0;
-			while (j < obj->cons_cnt)
-			{
-				if ((obj->cons[j].r1 == obj->routes[i][k] && obj->cons[j].r2 == obj->routes[i][k + 1]) ||
-					(obj->cons[j].r2 == obj->routes[i][k] && obj->cons[j].r1 == obj->routes[i][k + 1]))
+			j = -1;
+			while (++j < obj->cons_cnt)
+				if ((obj->cons[j].r1 == obj->routes[i][k] &&
+						obj->cons[j].r2 == obj->routes[i][k + 1]) ||
+					(obj->cons[j].r2 == obj->routes[i][k] &&
+						obj->cons[j].r1 == obj->routes[i][k + 1]))
 				{
-					obj->cons[j].color = 0xffff00;
+					obj->cons[j].color = TRACE_COLOR;
 					break ;
 				}
-				j++;
-			}
 			if (j == obj->cons_cnt)
 				return (-1);
 			k++;
 		}
-		i++;
 	}
 	return (0);
 }
@@ -842,62 +840,6 @@ int			get_traces(t_obj *obj)
 	return 0;
 }
 
-void print_routes(t_obj *obj)
-{
-	int i;
-	t_room **room;
-
-	i = 0;
-	while (i < obj->routes_cnt)
-	{
-		printf("route #%d\n", i);
-		room = obj->routes[i];
-		printf("\t");
-		for (int j = 0; room[j]; j++)
-			printf("(%s)->", room[j]->name);
-		printf("\n");
-		i++;
-	}
-}
-
-void print_traces(t_obj *obj)
-{
-	int i;
-	t_room **room;
-
-	i = 0;
-	while (i < obj->ants_cnt)
-	{
-		printf("trace #%d route #%d\n", i, obj->ants_traces[i].route);
-		room = obj->routes[obj->ants_traces[i].route];
-		printf("\t");
-		for (int j = 0; j < obj->ants_traces[i].step; j++)
-			printf("(pass)->");
-		for (int j = 0; room[j]; j++)
-			printf("(%s)->", room[j]->name);
-		printf("\n");
-		i++;
-	}
-}
-
-int colorize_rooms(t_obj *obj)
-{
-	int i;
-
-	i = 0;
-	while (i < obj->rooms_cnt)
-	{
-		if (obj->rooms[i].type == 1)
-			obj->rooms[i].color = 0xff0000;
-		else if (obj->rooms[i].type == 2)
-			obj->rooms[i].color = 0xff;
-		else
-			obj->rooms[i].color = 0xff00;
-		 i++;
-	}
-	return 0;
-}
-
 int			parse_input(t_obj *obj)
 {
 	int			ants;
@@ -909,8 +851,6 @@ int			parse_input(t_obj *obj)
 		exit(print_error("Invalid ants count!"));
 	if ((line = get_rooms_dict(&rooms)) == 0)
 		exit(print_error(""));
-	// if (colorize_rooms(obj) < 0)
-	// 	exit(-1);
 	rooms = rooms_dict2array(obj, rooms);
 	get_conn(obj, rooms, line);
 	ft_dictdel(&rooms, 0);
@@ -919,10 +859,5 @@ int			parse_input(t_obj *obj)
 		exit(-1);
 	if (colorize_conns(obj) < 0)
 		exit(-1);
-	print_rooms(obj);
-	print_conns(obj);
-	// exit(0);
-	// print_routes(obj);
-	// print_traces(obj);
 	return (0);
 }

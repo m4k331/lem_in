@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/14 19:16:26 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 15:34:45 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ static int	axis_zoom_handle(int keycode, t_state *st)
 	double	sign;
 
 	sign = (keycode == KEY_GRTR || keycode == KEY_CL_BRACKET) ? 1 : -0.5;
-	if ((keycode == KEY_LESS && st->cam.zoom.z + sign *
-		(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign)) >= -FOCUS_SHIFT_K) ||
-		(keycode == KEY_GRTR && st->cam.zoom.z + sign *
-		(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign)) <= FOCUS_SHIFT_K))
+	if ((keycode == KEY_GRTR && st->cam.zoom.z + sign *
+		(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign)) <= FOCUS_SHIFT_K) ||
+		(keycode == KEY_LESS && st->cam.zoom.z + sign *
+		(st->cam.speed ? st->cam.zoom.z : 0.1 / fabs(sign)) >= -FOCUS_SHIFT_K))
 		st->cam.zoom = point_init(
 			(st->cam.zoom.x), (st->cam.zoom.y),
 			(st->cam.zoom.z + sign *

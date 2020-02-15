@@ -6,7 +6,7 @@
 /*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 19:27:18 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/14 19:20:14 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/15 15:45:54 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int		ants_loop(t_state *state)
 	if (!state->dyn.pause)
 	{
 		state->dyn.step_percent = 50 +
-			50 * sin(M_PI / 100 * state->dyn.time * state->dyn.ant_speed - M_PI_2);
+			50 * sin(M_PI / 100 *
+				state->dyn.time * state->dyn.ant_speed - M_PI_2);
 		state->dyn.time++;
 		if (state->dyn.ant_speed * state->dyn.time > 100)
 		{

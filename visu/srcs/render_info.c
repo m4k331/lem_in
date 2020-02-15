@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_info.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 15:25:20 by rnarbo            #+#    #+#             */
+/*   Updated: 2020/02/15 15:29:45 by rnarbo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visu.h"
 #include "render.h"
 
 #include <mlx.h>
 
-const char *help_strs[] = 
+const char *g_help_strs[] =
 {
 	"HELP:",
 	"\tShow / hide help (this): H",
@@ -38,22 +50,23 @@ const char *help_strs[] =
 void	render_stat(t_state *state, t_point start)
 {
 	int		h;
-	char	*str;
-	char	*tmp;
-	int		i;
-	t_room	**route;
-	int		j;
 
 	h = start.y + 30;
 	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
-		start.x + 30, h, 0xff00, "STATISTICS:");
+		start.x + 30, h, HEADER_TEXT_COLOR, "STATISTICS:");
 	h += 20;
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Ants number: ", state->obj.ants_cnt);
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Ants in start room: ", count_ants_left(state));
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Rooms number: ", state->obj.rooms_cnt);
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Connections number: ", state->obj.cons_cnt);
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Routes number: ", state->obj.routes_cnt);
-	put_stat_entry(state, point_init(start.x + 30, h += 20, 0), "    Step: ", state->dyn.step + 1); // TODO:
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
+		"    Ants number: ", state->obj.ants_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
+		"    Ants in start room: ", count_ants_left(state));
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
+		"    Rooms number: ", state->obj.rooms_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
+		"    Connections number: ", state->obj.cons_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
+		"    Routes number: ", state->obj.routes_cnt);
+	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
+		"    Step: ", state->dyn.step + 1);
 }
 
 void	render_menu(t_state *state, t_point start)
@@ -65,14 +78,15 @@ void	render_menu(t_state *state, t_point start)
 
 	h = start.y + 30;
 	i = 0;
-	while (help_strs[i])
+	while (g_help_strs[i])
 	{
 		shift = 0;
 		j = 0;
-		while (help_strs[i][j++] == '\t')
+		while (g_help_strs[i][j++] == '\t')
 			shift += 40;
 		mlx_string_put(state->graph.mlx_p, state->graph.w_p,
-			start.x + 30 + shift, h, i == 0 ? 0xff00 : 0xffffff, help_strs[i]);
+			start.x + 30 + shift, h, i == 0 ?
+				HEADER_TEXT_COLOR : TEXT_COLOR, g_help_strs[i]);
 		h += 20;
 		i++;
 	}

@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_info_utils.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/15 16:02:31 by rnarbo            #+#    #+#             */
+/*   Updated: 2020/02/15 16:05:15 by rnarbo           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "visu.h"
 #include "utils.h"
 #include "render.h"
 
 #include <mlx.h>
 
-unsigned int	menu_intense_reducing(unsigned int i1, unsigned int i2, double transparency_k)
+unsigned int	menu_intense_reducing
+	(unsigned int i1, unsigned int i2, double transparency_k)
 {
 	unsigned int	a;
 	unsigned int	res;
@@ -21,7 +34,7 @@ unsigned int	menu_intense_reducing(unsigned int i1, unsigned int i2, double tran
 	return (res);
 }
 
-void	render_menu_board(t_state *state, t_point start, t_point end)
+void			render_menu_board(t_state *state, t_point start, t_point end)
 {
 	int i;
 	int j;
@@ -32,27 +45,31 @@ void	render_menu_board(t_state *state, t_point start, t_point end)
 		i = start.x;
 		while (i < (int)end.x)
 		{
-			putpoint(&state->graph, i, j, menu_intense_reducing(((unsigned int *)state->graph.img.data)[i + j * state->graph.img.k], 0x131313, 0.15));
+			putpoint(&state->graph, i, j,
+				menu_intense_reducing(
+					((int *)state->graph.img.data)[i + j * state->graph.img.k],
+					MENU_BACKGROUND_COLOR, 0.15));
 			i++;
 		}
 		j++;
 	}
 }
 
-int route_len(t_room **route)
-{
-	int i = 0;
-
-	while (route[i])
-		i++;
-	return i;
-}
-
-size_t	count_ants_left(t_state *state)
+int				route_len(t_room **route)
 {
 	int i;
-	int j;
-	t_room **route;
+
+	i = 0;
+	while (route[i])
+		i++;
+	return (i);
+}
+
+size_t			count_ants_left(t_state *state)
+{
+	int		i;
+	int		j;
+	t_room	**route;
 
 	i = 0;
 	while (i < state->obj.ants_cnt)
@@ -65,7 +82,8 @@ size_t	count_ants_left(t_state *state)
 	return (state->obj.ants_cnt - i);
 }
 
-void put_stat_entry(t_state *state, t_point pos, char *ename, int eval)
+void			put_stat_entry
+	(t_state *state, t_point pos, char *ename, int eval)
 {
 	char	*str;
 	char	*tmp;
@@ -73,8 +91,7 @@ void put_stat_entry(t_state *state, t_point pos, char *ename, int eval)
 	tmp = ft_itoa(eval);
 	str = ft_strjoin(ename, tmp);
 	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
-		pos.x, pos.y, 0xffffff, str);
+		pos.x, pos.y, TEXT_COLOR, str);
 	free(tmp);
 	free(str);
 }
-
