@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 18:45:19 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:06:17 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,7 @@
 #include "libft.h"
 #include "visu.h"
 
-void		del(void *content, size_t content_size)
-{
-	(void)content_size;
-	free(content);
-}
-
-int			get_ants_cnt(t_obj *obj)
+static int	get_ants_cnt(t_obj *obj)
 {
 	char	*line;
 	ssize_t	line_size;
@@ -42,32 +36,24 @@ int			get_ants_cnt(t_obj *obj)
 	return (res);
 }
 
-void		del4dict(t_room **room)
+static int	set_height(t_room *r1, t_room *r2, int height)
 {
-	free(*room);
+	if (r1->pos.z - height < 0.1 && r1->pos.z != 0 &&
+		(r2->pos.z > 0.1 + height || r2->pos.z == 0))
+	{
+		r2->pos.z = height + 1;
+		return (1);
+	}
+	return (0);
 }
 
-int			set_heights(t_obj *obj)
+static void	set_heights(t_obj *obj)
 {
 	int	i;
 	int	height;
 	int flag;
 
-	i = -1;
-	while (++i < obj->cons_cnt)
-	{
-		if (obj->cons[i].r1->type == 1 || obj->cons[i].r1->type == 2)
-		{
-			obj->cons[i].r1->pos.z = 1;
-			obj->cons[i].r2->pos.z = 2;
-		}
-		if (obj->cons[i].r2->type == 1 || obj->cons[i].r2->type == 2)
-		{
-			obj->cons[i].r1->pos.z = 2;
-			obj->cons[i].r2->pos.z = 1;
-		}
-	}
-	height = 2;
+	height = 1;
 	flag = 1;
 	while (flag)
 	{
@@ -75,40 +61,22 @@ int			set_heights(t_obj *obj)
 		i = -1;
 		while (++i < obj->cons_cnt)
 		{
-			if (obj->cons[i].r1->pos.z - height < 0.1 &&
-				obj->cons[i].r1->pos.z != 0 &&
-				(obj->cons[i].r2->pos.z > 0.1 + height ||
-				obj->cons[i].r2->pos.z == 0))
-			{
-				obj->cons[i].r2->pos.z = height + 1;
-				flag = 1;
-			} else
-			if (obj->cons[i].r2->pos.z - height < 0.1 &&
-				obj->cons[i].r2->pos.z != 0 &&
-				(obj->cons[i].r1->pos.z > 0.1 + height ||
-				obj->cons[i].r1->pos.z == 0))
-			{
-				obj->cons[i].r1->pos.z = height + 1;
-				flag = 1;
-			}
+			flag |= set_height(obj->cons[i].r1, obj->cons[i].r2, height);
+			flag |= set_height(obj->cons[i].r2, obj->cons[i].r1, height);
 		}
 		height++;
 	}
 }
 
-int			check_routes_buffer(char *buffer)
+static int	colorize_conns(t_obj *obj)
 {
-	return (0);
-}
-
-int			colorize_conns(t_obj *obj)
-{
-	int i;
-	int j;
-	int k;
+	size_t	i;
+	size_t	j;
+	size_t	k;
 
 	i = -1;
 	while (++i < obj->routes_cnt && (k = 0) == 0)
+	{
 		while (obj->routes[i][k] && obj->routes[i][k + 1])
 		{
 			j = -1;
@@ -125,6 +93,7 @@ int			colorize_conns(t_obj *obj)
 				return (-1);
 			k++;
 		}
+	}
 	return (0);
 }
 
@@ -137,8 +106,8 @@ int			parse_input(t_obj *obj)
 
 	if ((obj->ants_cnt = get_ants_cnt(obj)) < 0)
 		exit(print_error("Invalid ants count!"));
-	if ((line = get_rooms_dict(&rooms)) == 0)
-		exit(print_error(""));
+	line = get_rooms_dict(&rooms);
+	check_rooms_dict(rooms);
 	rooms = rooms_dict2array(obj, rooms);
 	get_conn(obj, rooms, line);
 	ft_dictdel(&rooms, 0);

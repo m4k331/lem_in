@@ -46,7 +46,9 @@ SOURCES =	main.c				\
 			init_utils.c		\
 			parse_rooms.c		\
 			parse_connections.c	\
-			parse_traces.c
+			parse_traces.c		\
+			parse_utils.c		\
+			parse_destroy.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
@@ -84,5 +86,5 @@ re: fclean all
 MAKEOVERRIDES =
 libs:
 	@for i in $(LBDIRS); do \
-		make -C $$i; \
+		make -C $$i 2> /dev/null ; \
 	done

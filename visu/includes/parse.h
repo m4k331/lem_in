@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:30:25 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 18:33:53 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:00:21 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,25 @@
 
 #include "visu.h"
 
-int			get_room(t_room *room, char *line);
+int			parse_input(t_obj *obj);
+
 t_dict		*rooms_dict2array(t_obj *obj, t_dict *rooms);
-int			is_room_line(char *line);
 char		*get_rooms_dict(t_dict **dict);
 void		get_conn(t_obj *obj, t_dict *rooms, char *line);
-int			remove_sim_room_conn(t_list **head);
-void		get_conn_vector(t_vector **conns, t_dict *rooms, char *line);
-int			is_conn(char *line);
-int			set_conn_rooms(t_conn *conn, t_dict *rooms, char *line);
-int			is_comment(char *line);
-char		*lem_itoa(int n);
-int			get_routes_cnt(char *buff);
-t_room	*find_room(t_obj *obj, char *name);
-t_room	*find_start(t_obj *obj);
-t_room		**get_route_n(t_obj *obj, char *buff, int n);
-void	set_trace(t_obj *obj, char *buff, int n);
 int			get_traces(t_obj *obj);
+void		check_rooms_dict(t_dict *dict);
+
+void		del4dict(t_room **room);
+void		del(void *content, size_t content_size);
+
+/*
+** Utils
+*/
+
+int			is_room_line(char *line);
+int			is_conn(char *line);
+char		*lem_itoa(int n);
+t_room		*find_room(t_obj *obj, char *name);
+t_room		*find_start(t_obj *obj);
 
 #endif

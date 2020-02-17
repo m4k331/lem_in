@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/22 21:30:10 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 19:16:03 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:04:17 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "visu.h"
 #include "draw.h"
 #include "utils.h"
+#include "parse.h"
+#include "matrix.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -56,14 +58,15 @@ static void	obj_init(t_state *state, int map2circle)
 	t_point		anchor;
 	t_point		p_min;
 	t_point		p_max;
-	int			i;
+	size_t		i;
 
 	parse_input(&state->obj);
-	i = -1;
-	while (map2circle && ++i < state->obj.rooms_cnt)
+	i = 0;
+	while (map2circle && i < state->obj.rooms_cnt)
 	{
 		state->obj.rooms[i].pos.x = sin(2 * M_PI * i / (state->obj.rooms_cnt));
 		state->obj.rooms[i].pos.y = -cos(2 * M_PI * i / (state->obj.rooms_cnt));
+		i++;
 	}
 	set_rooms_min_max(&p_min, &p_max, state);
 	anchor = point_init((p_max.x + p_min.x) / 2,
