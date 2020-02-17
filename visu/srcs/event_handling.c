@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   event_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/09 12:08:23 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 19:15:00 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:18:39 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int			rotate_handle(int keycode, t_state *state)
 	return (0);
 }
 
-static int	axis_zoom_handle(int keycode, t_state *st)
+static void	axis_zoom_handle(int keycode, t_state *st)
 {
 	double	sign;
 
@@ -132,11 +132,11 @@ int			render_handle(int keycode, t_state *st)
 			st->pr_init(st);
 		}
 		if (keycode == KEY_X)
-			st->draw_line = &xiolin_wu;
+			st->draw_line = (t_draw_line *)&xiolin_wu;
 		if (keycode == KEY_B)
-			st->draw_line = &bresenham;
+			st->draw_line = (t_draw_line *)&bresenham;
 		if (keycode == KEY_P)
-			st->draw_line = &draw_no_line;
+			st->draw_line = (t_draw_line *)&draw_no_line;
 		return (1);
 	}
 	return (0);

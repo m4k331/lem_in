@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:28:50 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 20:08:02 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:31:23 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "projections.h"
 #include "render.h"
+#include "utils.h"
+#include "put.h"
 
 #include <float.h>
 #include <mlx.h>
@@ -29,8 +31,8 @@ static t_point	get_ant_position(t_point start, t_point end, double percent)
 
 static void		draw_ants_movement(t_state *state)
 {
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 	t_room	**route;
 	t_point	ant_pos;
 	char	flag;
@@ -58,8 +60,7 @@ static void		draw_ants_movement(t_state *state)
 
 static void		draw_connections(t_state *state)
 {
-	int		i;
-	int		j;
+	size_t	j;
 	t_point	start;
 	t_point	end;
 
@@ -69,7 +70,7 @@ static void		draw_connections(t_state *state)
 		start = transform(state, state->obj.cons[j].r1->pos);
 		end = transform(state, state->obj.cons[j].r2->pos);
 		clipping(&start, &end, state);
-		if (state->proj != perspective_proj ||
+		if (state->proj != (t_proj *)perspective_proj ||
 			((start.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale ||
 				end.z < FOCUS_SHIFT_K * state->obj.radius * state->cam.scale)))
 			if (!(start.x < 0 && end.x < 0) &&
@@ -84,9 +85,8 @@ static void		recalculate_image(t_state *state)
 {
 	int		i;
 	int		j;
+	size_t	k;
 	t_room	room;
-	t_point start;
-	t_point end;
 
 	ft_memset(state->graph.img.data, 0,
 		state->graph.img.y_len * state->graph.img.line_size);
@@ -95,11 +95,11 @@ static void		recalculate_image(t_state *state)
 		while (++i < state->graph.img.x_len)
 			state->graph.img.depth[j][i] = -DBL_MAX;
 	draw_connections(state);
-	j = -1;
-	while (++j < state->obj.rooms_cnt)
+	k = -1;
+	while (++k < state->obj.rooms_cnt)
 	{
-		room = state->obj.rooms[j];
-		room.pos = transform(state, state->obj.rooms[j].pos);
+		room = state->obj.rooms[k];
+		room.pos = transform(state, state->obj.rooms[k].pos);
 		put_room(state, &room);
 	}
 	ft_memmove(state->graph.img.duplicate, state->graph.img.data,

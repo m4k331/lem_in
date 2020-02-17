@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_info.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:25:20 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 15:29:45 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:32:35 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <mlx.h>
 
-const char *g_help_strs[] =
+char *g_help_strs[] =
 {
 	"HELP:",
 	"\tShow / hide help (this): H",

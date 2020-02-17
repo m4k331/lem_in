@@ -70,10 +70,10 @@ $(ODIR)/%.o: $(CDIR)/%.c includes/visu.h
 
 clean:
 	rm -rf $(ODIR)
-	@for i in $(LBDIRS); do \
-		if ! $(MAKE) -C $$i fclean 2> /dev/null; then \
-			$(MAKE) -C $$i clean; \
-		fi; \
+	# @for i in $(LBDIRS); do \
+	# 	if ! $(MAKE) -C $$i fclean 2> /dev/null; then \
+	# 		$(MAKE) -C $$i clean; \
+	# 	fi; \
 	done
 
 clean_name:

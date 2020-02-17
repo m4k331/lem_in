@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   loops.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 19:27:18 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 15:45:54 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:19:16 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "loops.h"
 #include "visu.h"
 #include "mlx.h"
+#include "matrix.h"
+#include "render.h"
 
 #include <math.h>
 

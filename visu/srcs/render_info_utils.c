@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render_info_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 16:02:31 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 16:05:15 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:32:02 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "utils.h"
 #include "render.h"
+#include "put.h"
 
 #include <mlx.h>
 
@@ -55,9 +56,9 @@ void			render_menu_board(t_state *state, t_point start, t_point end)
 	}
 }
 
-int				route_len(t_room **route)
+size_t			route_len(t_room **route)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (route[i])
@@ -67,8 +68,7 @@ int				route_len(t_room **route)
 
 size_t			count_ants_left(t_state *state)
 {
-	int		i;
-	int		j;
+	size_t	i;
 	t_room	**route;
 
 	i = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   xiolin_wu.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/23 21:36:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 17:57:55 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:26:24 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "visu.h"
 #include "utils.h"
 #include "draw.h"
+#include "put.h"
 
 #include <mlx.h>
 

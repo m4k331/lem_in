@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:06:17 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:16:28 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "visu.h"
 
-static int	get_ants_cnt(t_obj *obj)
+static int	get_ants_cnt()
 {
 	char	*line;
 	ssize_t	line_size;
@@ -49,9 +49,9 @@ static int	set_height(t_room *r1, t_room *r2, int height)
 
 static void	set_heights(t_obj *obj)
 {
-	int	i;
-	int	height;
-	int flag;
+	size_t	i;
+	int		height;
+	int		flag;
 
 	height = 1;
 	flag = 1;
@@ -99,12 +99,10 @@ static int	colorize_conns(t_obj *obj)
 
 int			parse_input(t_obj *obj)
 {
-	int			ants;
 	t_dict		*rooms;
-	t_list		*con;
 	char		*line;
 
-	if ((obj->ants_cnt = get_ants_cnt(obj)) < 0)
+	if ((obj->ants_cnt = get_ants_cnt()) < 0)
 		exit(print_error("Invalid ants count!"));
 	line = get_rooms_dict(&rooms);
 	check_rooms_dict(rooms);

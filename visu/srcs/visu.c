@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 17:49:44 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 17:51:17 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:33:07 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,11 @@
 #include "projections.h"
 #include "draw.h"
 #include "loops.h"
+#include "render.h"
 
 #include <mlx.h>
 
-static int	dynamics_handle(int keycode, t_state *state)
+static void	dynamics_handle(int keycode, t_state *state)
 {
 	if (keycode == KEY_H)
 		state->dyn.menu = !state->dyn.menu;

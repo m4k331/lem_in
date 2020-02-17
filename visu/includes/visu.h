@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:03:08 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:25:30 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef struct	s_dynamic
 	char		auto_rotate;
 	double		ant_speed;
 	int			time;
-	int			step;
+	size_t		step;
 	double		step_percent;
 	char		image_changed;
 	t_point		prev_mouse_pos;
