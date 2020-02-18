@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 16:02:31 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:32:02 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:16:14 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ void			render_menu_board(t_state *state, t_point start, t_point end)
 	}
 }
 
-size_t			route_len(t_room **route)
+ssize_t			route_len(t_room **route)
 {
-	size_t i;
+	ssize_t i;
 
 	i = 0;
 	while (route[i])
@@ -68,7 +68,7 @@ size_t			route_len(t_room **route)
 
 size_t			count_ants_left(t_state *state)
 {
-	size_t	i;
+	ssize_t	i;
 	t_room	**route;
 
 	i = 0;

@@ -35,7 +35,7 @@ char		*lem_itoa(int n)
 
 t_room	*find_room(t_obj *obj, char *name) // dict
 {
-	size_t	i;
+	ssize_t	i;
 	char	*str;
 	char	*n_p;
 
@@ -58,7 +58,7 @@ t_room	*find_room(t_obj *obj, char *name) // dict
 
 t_room	*find_start(t_obj *obj)
 {
-	size_t i;
+	ssize_t i;
 
 	i = 0;
 	while (i < obj->rooms_cnt)

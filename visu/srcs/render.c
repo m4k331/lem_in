@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 14:28:50 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:31:23 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:14:01 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static t_point	get_ant_position(t_point start, t_point end, double percent)
 
 static void		draw_ants_movement(t_state *state)
 {
-	size_t	i;
-	size_t	j;
+	ssize_t	i;
+	ssize_t	j;
 	t_room	**route;
 	t_point	ant_pos;
 	char	flag;
@@ -60,7 +60,7 @@ static void		draw_ants_movement(t_state *state)
 
 static void		draw_connections(t_state *state)
 {
-	size_t	j;
+	ssize_t	j;
 	t_point	start;
 	t_point	end;
 
@@ -85,7 +85,7 @@ static void		recalculate_image(t_state *state)
 {
 	int		i;
 	int		j;
-	size_t	k;
+	ssize_t	k;
 	t_room	room;
 
 	ft_memset(state->graph.img.data, 0,

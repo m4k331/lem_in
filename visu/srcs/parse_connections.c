@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:37:44 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 04:18:21 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:42:26 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	get_conn_vector(t_vector **conns, t_dict *rooms, char *line)
 {
 	t_conn	conn;
 	int		comment;
-	int		i;
+	ssize_t	i;
 
 	*conns = ft_vnew(1024 * sizeof(t_conn), sizeof(t_conn));
 	i = 1;
@@ -97,7 +97,7 @@ static void	get_conn_vector(t_vector **conns, t_dict *rooms, char *line)
 void		get_conn(t_obj *obj, t_dict *rooms, char *line)
 {
 	t_vector	*conns;
-	size_t	i;
+	ssize_t	i;
 
 	get_conn_vector(&conns, rooms, line);
 	// remove_sim_room_conn(conns);

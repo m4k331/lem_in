@@ -26,7 +26,7 @@ void			render_stat(t_state *state, t_point start);
 void			render_menu(t_state *state, t_point start);
 void			render(t_state *state);
 
-size_t			route_len(t_room **route);
+ssize_t			route_len(t_room **route);
 size_t			count_ants_left(t_state *state);
 void			put_stat_entry(t_state *state,
 	t_point pos, char *ename, int eval);

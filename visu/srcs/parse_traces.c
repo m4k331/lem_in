@@ -90,7 +90,7 @@ static void		set_trace(t_obj *obj, char *buff, int n)
 	char	*lem;
 	char	*tmp;
 	t_room	*room;
-	size_t	i;
+	ssize_t	i;
 
 	lem = lem_itoa(n);
 	if ((tmp = ft_strstr(buff, lem)) == 0)
@@ -115,7 +115,7 @@ static void		set_trace(t_obj *obj, char *buff, int n)
 int				get_traces(t_obj *obj)
 {
 	char	*buff;
-	size_t	i;
+	ssize_t	i;
 
 	if ((buff = get_buffer()) == 0)
 		exit(print_error("Zero routes found!"));

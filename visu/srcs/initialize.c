@@ -58,7 +58,7 @@ static void	obj_init(t_state *state, int map2circle)
 	t_point		anchor;
 	t_point		p_min;
 	t_point		p_max;
-	size_t		i;
+	ssize_t		i;
 
 	parse_input(&state->obj);
 	i = 0;

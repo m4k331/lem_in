@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:37 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:25:30 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:16:44 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,16 @@ typedef struct	s_obj
 	double		radius;
 
 	t_room		*rooms;
-	size_t		rooms_cnt;
+	ssize_t		rooms_cnt;
 
 	t_conn		*cons;
-	size_t		cons_cnt;
+	ssize_t		cons_cnt;
 
 	t_trace		*ants_traces;
-	size_t		ants_cnt;
+	ssize_t		ants_cnt;
 
 	t_room		***routes;
-	size_t		routes_cnt;
+	ssize_t		routes_cnt;
 }				t_obj;
 
 typedef struct	s_camera

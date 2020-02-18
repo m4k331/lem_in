@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 17:23:12 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:38:30 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:40:32 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ double	sqr(double x)
 
 void	rooms_centrize(t_obj *obj, t_point anchor)
 {
-	size_t i;
+	ssize_t i;
 
 	i = 0;
 	while (i < obj->rooms_cnt)
@@ -37,7 +37,7 @@ void	rooms_centrize(t_obj *obj, t_point anchor)
 
 void	set_rooms_min_max(t_point *min, t_point *max, t_state *state)
 {
-	size_t i;
+	ssize_t i;
 
 	*max = point_init(-INFINITY, -INFINITY, -INFINITY);
 	*min = point_init(INFINITY, INFINITY, INFINITY);

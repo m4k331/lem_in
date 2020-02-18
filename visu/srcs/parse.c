@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:16:28 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 13:17:31 by ahugh            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	set_height(t_room *r1, t_room *r2, int height)
 
 static void	set_heights(t_obj *obj)
 {
-	size_t	i;
+	ssize_t	i;
 	int		height;
 	int		flag;
 
@@ -70,9 +70,9 @@ static void	set_heights(t_obj *obj)
 
 static int	colorize_conns(t_obj *obj)
 {
-	size_t	i;
-	size_t	j;
-	size_t	k;
+	ssize_t	i;
+	ssize_t	j;
+	ssize_t	k;
 
 	i = -1;
 	while (++i < obj->routes_cnt && (k = 0) == 0)
@@ -102,7 +102,8 @@ int			parse_input(t_obj *obj)
 	t_dict		*rooms;
 	char		*line;
 
-	if ((obj->ants_cnt = get_ants_cnt()) < 0)
+    obj->ants_cnt = get_ants_cnt();
+	if (obj->ants_cnt < 0)
 		exit(print_error("Invalid ants count!"));
 	line = get_rooms_dict(&rooms);
 	check_rooms_dict(rooms);

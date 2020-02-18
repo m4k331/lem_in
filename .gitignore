@@ -4,8 +4,9 @@ lem-in
 obj/*
 CMakeFiles/*
 cmake_install.cmake
-libft.cbp
+*.cbp
 libft.a
+*.a
 *.sw*
 *.o
 *.dSYM/*

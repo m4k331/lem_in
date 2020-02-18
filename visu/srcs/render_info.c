@@ -52,7 +52,7 @@ char *g_help_strs[] =
 
 void	render_stat(t_state *state, t_point start)
 {
-	int		h;
+	ssize_t h;
 
 	h = start.y + 30;
 	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
@@ -73,10 +73,10 @@ void	render_stat(t_state *state, t_point start)
 
 void	render_menu(t_state *state, t_point start)
 {
-	int h;
-	int i;
-	int j;
-	int shift;
+	ssize_t h;
+	ssize_t i;
+	ssize_t j;
+	ssize_t shift;
 
 	h = start.y + 30;
 	i = 0;

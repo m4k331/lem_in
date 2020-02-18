@@ -104,7 +104,7 @@ char		*get_rooms_dict(t_dict **dict)
 
 t_dict		*rooms_dict2array(t_obj *obj, t_dict *rooms)
 {
-	size_t	i;
+	ssize_t	i;
 
 	rooms->items->iter = -1;
 	while (ft_dictnext_item(rooms))
