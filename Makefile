@@ -3,14 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ahugh <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 18:51:35 by ahugh             #+#    #+#              #
-#    Updated: 2019/12/10 23:16:13 by ahugh            ###   ########.fr        #
+#    Updated: 2020/01/30 10:46:33 by rnarbo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			=	lem-in
+VISU_NAME		=	lem-visu
+VISU_DIR		=	visu
+VISU_BIN_DIR	=	.
 
 # colors
 
@@ -33,6 +36,8 @@ LBLUE			=	'\033[1;34m'
 LMAGENTA		=	'\033[1;35m'
 LCYAN			=	'\033[1;36m'
 WHITE			=	'\033[1;37m'
+
+COLOR_RESET		=	'\033[0m'
 
 # name files
 
@@ -117,9 +122,13 @@ SRC				=	$(addprefix $(SRC_DIR), $(FILES))
 
 # exceptions
 
-.PHONY:				all clean fclean re
+.PHONY:				all clean fclean re visu
 
-all: $(NAME)
+all: $(NAME) visu
+
+visu:
+	@echo $(COLOR_RESET)""
+	make -C $(VISU_DIR) "NAME=$(VISU_NAME)" "BIN_DIR=../$(VISU_BIN_DIR)"
 
 $(FT_LIB):
 	make -C $(FT) >> /dev/null
@@ -144,12 +153,14 @@ norm:
 clean:
 	@echo $(LRED)"clean!"$(DGRAY)
 	make -C $(FT) clean >> /dev/null
+	make -C $(VISU_DIR) clean
 	rm -rf $(OBJ_DIR)
 	@echo $(RED)"deleted dir: "$(WHITE) $(OBJ_DIR)
 
 fclean: clean
 	@echo $(LRED)"all clean!"$(DGRAY)
 	make -C $(FT) fclean >> /dev/null
+	make -C $(VISU_DIR) clean_name
 	rm -f $(NAME)
 
 re: fclean all
@@ -209,3 +220,21 @@ horde:
                              ####                                            \n\
 "$(DGRAY)
 
+condidat_ot_naroda:
+	@echo $(BLUE) "\n\
+⣿⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣵⣿⣿⣿⠿⡟⣛⣧⣿⣯⣿⣝⡻⢿⣿⣿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⣿⠋⠁⣴⣶⣿⣿⣿⣿⣿⣿⣿⣦⣍⢿⣿⣿⣿⣿⣿\n\
+⣿⣿⣿⣿⢷⠄⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⢼⣿⣿⣿⣿\n\
+⢹⣿⣿⢻⠎⠔⣛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⣿⣿⣿⣿\n\
+⢸⣿⣿⠇⡶⠄⣿⣿⠿⠟⡛⠛⠻⣿⡿⠿⠿⣿⣗⢣⣿⣿⣿⣿\n\
+⠐⣿⣿⡿⣷⣾⣿⣿⣿⣾⣶⣶⣶⣿⣁⣔⣤⣀⣼⢲⣿⣿⣿⣿\n\
+⠄⣿⣿⣿⣿⣾⣟⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⢟⣾⣿⣿⣿⣿\n\
+⠄⣟⣿⣿⣿⡷⣿⣿⣿⣿⣿⣮⣽⠛⢻⣽⣿⡇⣾⣿⣿⣿⣿⣿\n\
+⠄⢻⣿⣿⣿⡷⠻⢻⡻⣯⣝⢿⣟⣛⣛⣛⠝⢻⣿⣿⣿⣿⣿⣿\n\
+⠄⠸⣿⣿⡟⣹⣦⠄⠋⠻⢿⣶⣶⣶⡾⠃⡂⢾⣿⣿⣿⣿⣿⣿\n\
+⠄⠄⠟⠋⠄⢻⣿⣧⣲⡀⡀⠄⠉⠱⣠⣾⡇⠄⠉⠛⢿⣿⣿⣿\n\
+⠄⠄⠄⠄⠄⠈⣿⣿⣿⣷⣿⣿⢾⣾⣿⣿⣇⠄⠄⠄⠄⠄⠉⠉\n\
+⠄⠄⠄⠄⠄⠄⠸⣿⣿⠟⠃⠄⠄⢈⣻⣿⣿⠄⠄⠄⠄⠄⠄⠄\n\
+⠄⠄⠄⠄⠄⠄⠄⢿⣿⣾⣷⡄⠄⢾⣿⣿⣿⡄⠄⠄⠄⠄⠄⡀\n\
+⠄⠄⠄⠄⠄⠄⠄⠸⣿⣿⣿⠃⠄⠈⢿⣿⣿⡄⠄⠄⠄⠄⠄⠄"
