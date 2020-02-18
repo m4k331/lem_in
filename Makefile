@@ -6,7 +6,7 @@
 #    By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 18:51:35 by ahugh             #+#    #+#              #
-#    Updated: 2020/02/18 20:33:07 by rnarbo           ###   ########.fr        #
+#    Updated: 2020/02/18 20:38:54 by rnarbo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ FILES			=	add_ant_to_room.c \
 # flags && compile
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -MMD -c
+CFLAGS			=	-Wall -Wextra -Werror -c
 
 # ft library
 
