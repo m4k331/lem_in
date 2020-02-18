@@ -1,6 +1,7 @@
 .idea/*
 cmake-build-debug/*
 lem-in
+lem-out
 obj/*
 CMakeFiles/*
 cmake_install.cmake
@@ -12,4 +13,3 @@ libft.a
 *.dSYM/*
 mm
 test
-lem_in
