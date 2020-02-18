@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_info.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:25:20 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 03:38:19 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:58:16 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,10 @@ char *g_help_strs[] =
 	"\tRotate: Arrows",
 	"\tShift: mouse (left button)",
 	"\tShift axis Z: mouse (right button)",
-	"\tReset: R",
 	"\tCentrize: 0",
 	"\tFreeze ants: F",
 	"\tAuto rotate: SPACE",
-	"\tZoom: + -",
+	"\tZoom: + -, mouse wheel",
 	"\tScale Z: < >",
 	"\tScale X and Y: [ ]",
 	"\tProjections: 1-3",
@@ -39,8 +38,9 @@ char *g_help_strs[] =
 	"\t\tBresenham: B",
 	"\t\tXiolin Wu: X",
 	"\t\tPoints: P",
-	"\t\tTransformations: R",
+	"\tReset:",
 	"\t\tAnts: G",
+	"\t\tTranformations: R",
 	"\tSpeed:",
 	"\t\tAnts: Page up / Page Down",
 	"\t\tTransformations:",
