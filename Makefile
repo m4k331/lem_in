@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/23 18:51:35 by ahugh             #+#    #+#              #
-#    Updated: 2020/01/30 10:46:33 by rnarbo           ###   ########.fr        #
+#    Updated: 2020/02/18 20:33:07 by rnarbo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ FILES			=	add_ant_to_room.c \
 # flags && compile
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -c
+CFLAGS			=	-Wall -Wextra -Werror -MMD -c
 
 # ft library
 
@@ -164,7 +164,7 @@ clean:
 fclean: clean
 	@echo $(LRED)"all clean!"$(DGRAY)
 	make -C $(FT) fclean >> /dev/null
-	make -C $(VISU_DIR) clean_name
+	make -C $(VISU_DIR) clean_name "NAME=$(VISU_NAME)" "BIN_DIR=../$(VISU_BIN_DIR)"
 	rm -f $(NAME)
 
 re: fclean all
@@ -242,3 +242,275 @@ condidat_ot_naroda:
 ⠄⠄⠄⠄⠄⠄⠸⣿⣿⠟⠃⠄⠄⢈⣻⣿⣿⠄⠄⠄⠄⠄⠄⠄\n\
 ⠄⠄⠄⠄⠄⠄⠄⢿⣿⣾⣷⡄⠄⢾⣿⣿⣿⡄⠄⠄⠄⠄⠄⡀\n\
 ⠄⠄⠄⠄⠄⠄⠄⠸⣿⣿⣿⠃⠄⠈⢿⣿⣿⡄⠄⠄⠄⠄⠄⠄"
+
+obj/add_ant_to_room.o: src/add_ant_to_room.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/add_edge_to_node.o: src/add_edge_to_node.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/add_node_to_farm.o: src/add_node_to_farm.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/augment_flow.o: src/augment_flow.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/build_direct_flow.o: src/build_direct_flow.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/build_farm.o: src/build_farm.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/build_flows.o: src/build_flows.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/build_residual_network.o: src/build_residual_network.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/calculation_of_flow_parameters.o: \
+  src/calculation_of_flow_parameters.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/cmp_node.o: src/cmp_node.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/convert_path_to_printable.o: src/convert_path_to_printable.c \
+  inc/lem_in.h libft/includes/libft.h libft/includes/vector.h \
+  libft/includes/list.h libft/includes/dlist.h libft/includes/dict.h \
+  libft/includes/fib.h libft/includes/get_next_line.h \
+  libft/includes/tstr.h inc/node.h inc/flow.h
+obj/create_edge.o: src/create_edge.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/create_flow.o: src/create_flow.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/create_hash_node.o: src/create_hash_node.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/create_node.o: src/create_node.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/create_path.o: src/create_path.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/create_room.o: src/create_room.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/del_edge.o: src/del_edge.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/del_unmarked_nodes.o: src/del_unmarked_nodes.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_buffer.o: src/destroy_buffer.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_farm.o: src/destroy_farm.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_flow.o: src/destroy_flow.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_flows.o: src/destroy_flows.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_node.o: src/destroy_node.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_path.o: src/destroy_path.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/destroy_room.o: src/destroy_room.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/dijkstra.o: src/dijkstra.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/display_path.o: src/display_path.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/display_solution.o: src/display_solution.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/get_colors.o: src/get_colors.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/get_count_files.o: src/get_count_files.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/get_fd_buffer.o: src/get_fd_buffer.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/get_hash_name.o: src/get_hash_name.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/get_hash_node.o: src/get_hash_node.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/get_length_node_name.o: src/get_length_node_name.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/indent_control.o: src/indent_control.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/insert_number_inline.o: src/insert_number_inline.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/main.o: src/main.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/marks_reachable_nodes.o: src/marks_reachable_nodes.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_buffer.o: src/print_buffer.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_complex_path.o: src/print_complex_path.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_direct_path.o: src/print_direct_path.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_flows.o: src/print_flows.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_paths.o: src/print_paths.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_short.o: src/print_short.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/print_steps.o: src/print_steps.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/process_supplied_options.o: src/process_supplied_options.c \
+  inc/lem_in.h libft/includes/libft.h libft/includes/vector.h \
+  libft/includes/list.h libft/includes/dlist.h libft/includes/dict.h \
+  libft/includes/fib.h libft/includes/get_next_line.h \
+  libft/includes/tstr.h inc/node.h inc/flow.h
+obj/push_ants_one_wave.o: src/push_ants_one_wave.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/run.o: src/run.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/search_flows.o: src/search_flows.c inc/lem_in.h \
+  libft/includes/libft.h libft/includes/vector.h libft/includes/list.h \
+  libft/includes/dlist.h libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/set_ants.o: src/set_ants.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/set_edges.o: src/set_edges.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/set_nodes.o: src/set_nodes.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
+obj/show_usage.o: src/show_usage.c inc/lem_in.h libft/includes/libft.h \
+  libft/includes/vector.h libft/includes/list.h libft/includes/dlist.h \
+  libft/includes/dict.h libft/includes/fib.h \
+  libft/includes/get_next_line.h libft/includes/tstr.h inc/node.h \
+  inc/flow.h
