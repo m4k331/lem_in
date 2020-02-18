@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:30:25 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:39:26 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:40:00 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define ROOM_TYPE_START	1
 # define ROOM_TYPE_END		2
 
-#include "visu.h"
+# include "visu.h"
 
 int			parse_input(t_obj *obj);
 
