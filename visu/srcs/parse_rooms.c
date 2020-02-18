@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_rooms.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:33:30 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:40:43 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:43:50 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	get_room(t_room *room, char *line)
 static void	add_room2dict(t_dict *dict, t_room *room, char *line)
 {
 	t_room *to_dict;
-	
+
 	if (get_room(room, line) < 0)
 		exit(print_error("Unable to get some room!"));
 	if (ft_dictget(dict, room->name) != 0)
@@ -58,8 +58,8 @@ static void	add_room2dict(t_dict *dict, t_room *room, char *line)
 
 void		check_rooms_dict(t_dict *dict)
 {
-	t_room *room;
-	char has_start_end;
+	t_room	*room;
+	char	has_start_end;
 
 	has_start_end = 0;
 	dict->items->iter = -1;

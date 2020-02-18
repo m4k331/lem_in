@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 15:34:33 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 13:17:31 by ahugh            ###   ########.fr       */
+/*   Updated: 2020/02/18 20:41:44 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "visu.h"
 
-static int	get_ants_cnt()
+static int	get_ants_cnt(void)
 {
 	char	*line;
 	ssize_t	line_size;
@@ -102,7 +102,7 @@ int			parse_input(t_obj *obj)
 	t_dict		*rooms;
 	char		*line;
 
-    obj->ants_cnt = get_ants_cnt();
+	obj->ants_cnt = get_ants_cnt();
 	if (obj->ants_cnt < 0)
 		exit(print_error("Invalid ants count!"));
 	line = get_rooms_dict(&rooms);

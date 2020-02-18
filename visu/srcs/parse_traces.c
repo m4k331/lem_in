@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse_traces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:40:12 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 04:19:17 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:46:34 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "visu.h"
 #include "parse.h"
 
-static char		*get_buffer()
+static char		*get_buffer(void)
 {
 	int		gnl_ret;
 	char	*buff;
@@ -63,7 +63,7 @@ static t_room	**get_route_n(t_obj *obj, char *buff, int n)
 	int		lem_len;
 	char	*tmp;
 	t_room	**route;
-	
+
 	lem = lem_itoa(n);
 	lem_len = ft_strlen(lem);
 	tmp = buff;
@@ -101,9 +101,9 @@ static void		set_trace(t_obj *obj, char *buff, int n)
 	i = -1;
 	while (++i < obj->routes_cnt)
 		if (obj->routes[i][1] == room)
-			break;
+			break ;
 	if (i == obj->routes_cnt)
-		exit(print_error("Invalid route!")); // TODO: add route
+		exit(print_error("Invalid route!"));
 	obj->ants_traces[n].route = i;
 	obj->ants_traces[n].step = 0;
 	while (tmp != buff)

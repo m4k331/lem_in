@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 01:03:21 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 04:21:02 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 20:45:36 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 char		*lem_itoa(int n)
 {
-	char *lem;
-	char *tmp;
-	int i_len;
+	char	*lem;
+	char	*tmp;
+	int		i_len;
 
 	if ((tmp = ft_itoa(n + 1)) == 0)
 		exit(-1);
@@ -32,8 +32,7 @@ char		*lem_itoa(int n)
 	return (lem);
 }
 
-
-t_room	*find_room(t_obj *obj, char *name) // dict
+t_room		*find_room(t_obj *obj, char *name)
 {
 	ssize_t	i;
 	char	*str;
@@ -56,7 +55,7 @@ t_room	*find_room(t_obj *obj, char *name) // dict
 	return (0);
 }
 
-t_room	*find_start(t_obj *obj)
+t_room		*find_start(t_obj *obj)
 {
 	ssize_t i;
 
@@ -88,7 +87,7 @@ int			handle_commands(char *line, char *type)
 	return (1);
 }
 
-int is_room_line(char *line)
+int			is_room_line(char *line)
 {
 	char	*space_p;
 	int		i;

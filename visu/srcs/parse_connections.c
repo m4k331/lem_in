@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_connections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:37:44 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 13:42:26 by ahugh            ###   ########.fr       */
+/*   Updated: 2020/02/18 20:42:51 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,37 +70,12 @@ static void	get_conn_vector(t_vector **conns, t_dict *rooms, char *line)
 	free(line);
 }
 
-// static int	remove_sim_room_conn(t_vector *conns)
-// {
-// 	size_t i;
-// 	size_t j;
-// 	t_conn *conn1;
-// 	t_conn *conn2;
-
-// 	i = 0;
-// 	while ((conn1 = ft_vat(conns, i)) != 0)
-// 	{
-// 		j = i + 1;
-// 		while ((conn2 = ft_vat(conns, j)) != 0)
-// 		{
-// 			if (conn1->r1 == conn2->r1 &&
-// 				conn1->r2 == conn2->r2 ||
-// 				conn1->r1 == conn2->r2 &&
-// 				conn1->r2 == conn2->r1)
-// 				ft_vpop_at(conns, j);
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
 void		get_conn(t_obj *obj, t_dict *rooms, char *line)
 {
 	t_vector	*conns;
-	ssize_t	i;
+	ssize_t		i;
 
 	get_conn_vector(&conns, rooms, line);
-	// remove_sim_room_conn(conns);
 	if ((obj->cons_cnt = conns->head) == 0)
 		exit(print_error("Zero conns found!"));
 	if ((obj->cons = (t_conn *)malloc(sizeof(t_conn) * obj->cons_cnt)) == 0)
