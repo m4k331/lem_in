@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME			=	lem-in
-VISU_NAME		=	lem-visu
+VISU_NAME		=	lem-out
 VISU_DIR		=	visu
 VISU_BIN_DIR	=	.
 
@@ -147,8 +147,12 @@ $(NAME): obj $(FT_LIB) $(OBJ)
 	@echo $(LMAGENTA)$(NAME)" - ready!"$(DGRAY)
 
 norm:
-	@echo $(GREEN)"cheking is norminette:"$(DGRAY)
-	@norminette $(FT)/includes inc/ $(FT)/srcs $(SRC)
+	@echo $(GREEN)"cheking is norminette:\n"$(NAME)$(DGRAY)
+	@norminette $(SRC_DIR) $(INC_DIR)
+	@echo "\n"$(GREEN)$(FT)$(DGRAY)"\n"
+	@make -C $(FT) norm
+	@echo "\n"$(GREEN)$(VISU_DIR)$(DGRAY)"\n"
+	@make -C $(VISU_DIR) norm
 
 clean:
 	@echo $(LRED)"clean!"$(DGRAY)

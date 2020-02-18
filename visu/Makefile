@@ -83,6 +83,9 @@ fclean: clean clean_name
 
 re: fclean all
 
+norm:
+	norminette $(addprefix $(CDIR)/, $(SOURCES)) $(HDIR) 
+
 MAKEOVERRIDES =
 libs:
 	@for i in $(LBDIRS); do \
