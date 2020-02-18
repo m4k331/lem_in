@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:37:44 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 01:10:21 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 04:18:21 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	is_comment(char *line)
 static int	set_conn_rooms(t_conn *conn, t_dict *rooms, char *line)
 {
 	char	*dash_p;
-	int		i;
 
 	if ((dash_p = ft_strchr(line, '-')) == 0)
 		return (-1);
@@ -71,38 +70,37 @@ static void	get_conn_vector(t_vector **conns, t_dict *rooms, char *line)
 	free(line);
 }
 
-static int	remove_sim_room_conn(t_list **head)
-{
-	t_list *tmp;
-	t_list *tmp_prev;
+// static int	remove_sim_room_conn(t_vector *conns)
+// {
+// 	size_t i;
+// 	size_t j;
+// 	t_conn *conn1;
+// 	t_conn *conn2;
 
-	tmp = head;
-	tmp_prev = 0;
-	while (tmp)
-	{
-		if (((t_conn *)tmp->content)->r1 == ((t_conn *)tmp->content)->r2)
-		{
-			if (tmp == *head)
-				*head = tmp->next;
-			else
-				tmp_prev->next = tmp->next;
-			free(tmp->content);
-			free(tmp);
-			tmp = (tmp_prev != 0 ? tmp_prev : *head);
-		}
-		tmp_prev = tmp;
-		tmp = tmp->next;
-	}
-}
+// 	i = 0;
+// 	while ((conn1 = ft_vat(conns, i)) != 0)
+// 	{
+// 		j = i + 1;
+// 		while ((conn2 = ft_vat(conns, j)) != 0)
+// 		{
+// 			if (conn1->r1 == conn2->r1 &&
+// 				conn1->r2 == conn2->r2 ||
+// 				conn1->r1 == conn2->r2 &&
+// 				conn1->r2 == conn2->r1)
+// 				ft_vpop_at(conns, j);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void		get_conn(t_obj *obj, t_dict *rooms, char *line)
 {
 	t_vector	*conns;
-	t_list	*tmp;
-	t_conn	path;
 	size_t	i;
 
 	get_conn_vector(&conns, rooms, line);
+	// remove_sim_room_conn(conns);
 	if ((obj->cons_cnt = conns->head) == 0)
 		exit(print_error("Zero conns found!"));
 	if ((obj->cons = (t_conn *)malloc(sizeof(t_conn) * obj->cons_cnt)) == 0)

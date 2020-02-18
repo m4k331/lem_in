@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:30:25 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:00:21 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:39:26 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void		del(void *content, size_t content_size);
 
 int			is_room_line(char *line);
 int			is_conn(char *line);
+int			handle_commands(char *line, char *type);
 char		*lem_itoa(int n);
 t_room		*find_room(t_obj *obj, char *name);
 t_room		*find_start(t_obj *obj);

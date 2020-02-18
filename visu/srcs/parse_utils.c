@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/18 01:03:21 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 01:04:17 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 04:21:02 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,11 @@ char		*lem_itoa(int n)
 }
 
 
-t_room	*find_room(t_obj *obj, char *name)
+t_room	*find_room(t_obj *obj, char *name) // dict
 {
-	int		i;
+	size_t	i;
 	char	*str;
 	char	*n_p;
-	int		cmp;
 
 	i = 0;
 	while (i < obj->rooms_cnt)
@@ -59,7 +58,7 @@ t_room	*find_room(t_obj *obj, char *name)
 
 t_room	*find_start(t_obj *obj)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (i < obj->rooms_cnt)

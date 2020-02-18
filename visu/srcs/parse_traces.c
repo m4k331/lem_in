@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:40:12 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 01:06:47 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 04:19:17 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static void		set_trace(t_obj *obj, char *buff, int n)
 	char	*lem;
 	char	*tmp;
 	t_room	*room;
-	int i;
+	size_t	i;
 
 	lem = lem_itoa(n);
 	if ((tmp = ft_strstr(buff, lem)) == 0)
@@ -115,7 +115,7 @@ static void		set_trace(t_obj *obj, char *buff, int n)
 int				get_traces(t_obj *obj)
 {
 	char	*buff;
-	int		i;
+	size_t	i;
 
 	if ((buff = get_buffer()) == 0)
 		exit(print_error("Zero routes found!"));

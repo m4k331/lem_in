@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/15 15:25:20 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 02:32:35 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 03:38:19 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,27 @@ char *g_help_strs[] =
 	"HELP:",
 	"\tShow / hide help (this): H",
 	"\tRotate: Arrows",
+	"\tShift: mouse (left button)",
+	"\tShift axis Z: mouse (right button)",
+	"\tReset: R",
+	"\tCentrize: 0",
 	"\tFreeze ants: F",
 	"\tAuto rotate: SPACE",
 	"\tZoom: + -",
 	"\tScale Z: < >",
 	"\tScale X and Y: [ ]",
-	"\tProjections: 1-4",
+	"\tProjections: 1-3",
 	"\t\tz(x): 1",
 	"\t\ty(x): 2",
 	"\t\tIsometric: 3",
 	"\t\tPerspective : 4",
+	"\t\tAxonometry : 5",
 	"\tLine algorithm:",
 	"\t\tBresenham: B",
 	"\t\tXiolin Wu: X",
 	"\t\tPoints: P",
-	"\tReset:",
 	"\t\tTransformations: R",
 	"\t\tAnts: G",
-	"\tCentrize: 0",
 	"\tSpeed:",
 	"\t\tAnts: Page up / Page Down",
 	"\t\tTransformations:",
@@ -54,7 +57,6 @@ void	render_stat(t_state *state, t_point start)
 	h = start.y + 30;
 	mlx_string_put(state->graph.mlx_p, state->graph.w_p,
 		start.x + 30, h, HEADER_TEXT_COLOR, "STATISTICS:");
-	h += 20;
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
 		"    Ants number: ", state->obj.ants_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
@@ -66,7 +68,7 @@ void	render_stat(t_state *state, t_point start)
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
 		"    Routes number: ", state->obj.routes_cnt);
 	put_stat_entry(state, point_init(start.x + 30, h += 20, 0),
-		"    Step: ", state->dyn.step + 1);
+		"    Step: ", state->dyn.step);
 }
 
 void	render_menu(t_state *state, t_point start)

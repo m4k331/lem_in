@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/17 15:33:30 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/18 01:15:11 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:40:43 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,11 +115,14 @@ t_dict		*rooms_dict2array(t_obj *obj, t_dict *rooms)
 	rooms->items->iter = -1;
 	while (i < obj->rooms_cnt)
 		obj->rooms[i++] = *(t_room *)ft_dictnext_item(rooms);
-	ft_dictdel(&rooms, del4dict);
+	ft_dictdel(&rooms, (void (*)(void *))del4dict);
 	rooms = ft_dictnew(32);
 	i = 0;
 	while (i < obj->rooms_cnt)
-		if (ft_dictset(rooms, obj->rooms[i].name, obj->rooms + i++) == 0)
+	{
+		if (ft_dictset(rooms, obj->rooms[i].name, obj->rooms + i) == 0)
 			exit(-1);
+		i++;
+	}
 	return (rooms);
 }

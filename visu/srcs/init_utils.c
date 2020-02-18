@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rnarbo <rnarbo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 17:23:12 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/02/15 15:59:13 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/02/18 02:38:30 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ double	sqr(double x)
 
 void	rooms_centrize(t_obj *obj, t_point anchor)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (i < obj->rooms_cnt)
@@ -37,7 +37,7 @@ void	rooms_centrize(t_obj *obj, t_point anchor)
 
 void	set_rooms_min_max(t_point *min, t_point *max, t_state *state)
 {
-	int i;
+	size_t i;
 
 	*max = point_init(-INFINITY, -INFINITY, -INFINITY);
 	*min = point_init(INFINITY, INFINITY, INFINITY);
