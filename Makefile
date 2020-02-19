@@ -100,7 +100,7 @@ FILES			=	add_ant_to_room.c \
 # flags && compile
 
 CC				=	gcc
-CFLAGS			=	-Wall -Wextra -Werror -c
+CFLAGS			=	-Wall -Wextra -Werror -Ofast -march=native -c
 
 # ft library
 
