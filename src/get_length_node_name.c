@@ -36,8 +36,7 @@ size_t					get_length_node_name(t_str *raw_str)
 	}
 	*first = SPACE;
 	len = (size_t)second - (size_t)raw_str->con;
-	if ((*raw_str->con == '#' || *raw_str->con == 'L') || \
-											ft_memchr(raw_str->con, SEP, len))
+	if (*raw_str->con == '#' || *raw_str->con == 'L')
 		return (0);
 	return (len);
 }
